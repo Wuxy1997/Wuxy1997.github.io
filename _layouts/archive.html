@@ -1,0 +1,26 @@
+---
+layout: default
+---
+<div class="archive">
+    <h1 class="archive-title">{{ page.title }}</h1>
+
+    {% assign terms = site.tags %}
+    {% if page.type == "categories" %}
+        {% assign terms = site.categories %}
+    {% endif %}
+
+    {% for term in terms %}
+        {% assign term_name = term | first %}
+        {% assign posts = term | last %}
+        
+        <h2 id="{{ term_name | slugify }}">{{ term_name }}</h2>
+        <ul class="post-list">
+            {% for post in posts %}
+                <li>
+                    <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+                    <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %-d, %Y" }}</time>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+</div> 
