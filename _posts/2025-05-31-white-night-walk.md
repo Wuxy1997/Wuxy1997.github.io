@@ -2,7 +2,7 @@
 layout: post
 title: "白夜行摘录"
 date: 2025-05-31
-author: Wu Xiaoyu
+author: 大木头WU
 tags: [novel]
 ---
 
