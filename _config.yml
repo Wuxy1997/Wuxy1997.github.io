@@ -3,11 +3,11 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 大木头WU的 Blog
-subtitle: ''
-description: A beautiful blog powered by Hexo
-keywords:
-author: 大木头WU
+title: 大木头WU的技术博客
+subtitle: '代码改变世界，开源连接你我'
+description: 专注于人工智能、联邦学习、边缘计算和全栈开发的技术博客。分享项目经验、开源代码和学习心得。
+keywords: Python, TypeScript, Vue.js, 人工智能, 机器学习, 联邦学习, 边缘计算, Web开发, 开源项目, GitHub
+author: 大木头WU (Wuxy1997)
 language: zh-CN
 timezone: 'Asia/Shanghai'
 
@@ -96,7 +96,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: particle
+theme: redefine
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
