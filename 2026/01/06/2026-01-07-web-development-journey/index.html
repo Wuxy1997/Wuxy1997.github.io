@@ -1,0 +1,370 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大木头WU的 Blog || 从零开始的 Web 开发之旅</title>
+    <meta name="author" content="大木头WU">
+    <meta name="description" content="A beautiful blog powered by Hexo ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/images/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/maiden-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">大木头WU的 Blog</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997">
+            <span>
+                <a-icon type="github" theme="filled" />
+            </span>
+            <span>GitHub</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>大木头WU的 Blog</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="github" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">GitHub</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>从零开始的 Web 开发之旅 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2026/1/7
+        </span>
+
+        
+        <span class="category">
+            <a href="/categories/技术教程">
+                <span class="icon">
+                    <a-icon type="book" theme="filled" />
+                </span>
+                技术教程
+            </a>
+        </span>
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/Web开发" style=color:#00bcd4>
+                    Web开发
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/TypeScript" style=color:#ff7d73>
+                    TypeScript
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/Vue.js" style=color:#ff7d73>
+                    Vue.js
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/JavaScript" style=color:#00bcd4>
+                    JavaScript
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/前端" style=color:#ff7d73>
+                    前端
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <h1 id="从零开始的-Web-开发之旅"><a href="#从零开始的-Web-开发之旅" class="headerlink" title="从零开始的 Web 开发之旅"></a>从零开始的 Web 开发之旅</h1><p>作为一名开发者，我在 Web 开发领域积累了不少经验。从 TypeScript 到 Vue.js，从前端到全栈，今天分享一些实战经验。</p>
+<h2 id="🎯-技术栈选择"><a href="#🎯-技术栈选择" class="headerlink" title="🎯 技术栈选择"></a>🎯 技术栈选择</h2><p>在我的项目中，我主要使用以下技术栈：</p>
+<h3 id="前端框架"><a href="#前端框架" class="headerlink" title="前端框架"></a>前端框架</h3><ul>
+<li><strong>Vue.js</strong>: 渐进式框架，易学易用</li>
+<li><strong>TypeScript</strong>: 类型安全的 JavaScript</li>
+<li><strong>Vite</strong>: 极速的构建工具</li>
+</ul>
+<h3 id="项目实例"><a href="#项目实例" class="headerlink" title="项目实例"></a>项目实例</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Wuxy1997/Com6102gp5">Com6102gp5</a> - TypeScript 项目</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Wuxy1997/6102">6102</a> - Vue.js 应用</li>
+</ul>
+<h2 id="🚀-TypeScript：JavaScript-的超集"><a href="#🚀-TypeScript：JavaScript-的超集" class="headerlink" title="🚀 TypeScript：JavaScript 的超集"></a>🚀 TypeScript：JavaScript 的超集</h2><h3 id="为什么选择-TypeScript？"><a href="#为什么选择-TypeScript？" class="headerlink" title="为什么选择 TypeScript？"></a>为什么选择 TypeScript？</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// JavaScript - 运行时才发现错误</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params">a, b</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">add</span>(<span class="number">1</span>, <span class="string">&quot;2&quot;</span>);  <span class="comment">// &quot;12&quot; - 意外的字符串拼接！</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// TypeScript - 编译时就能发现问题</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params"><span class="attr">a</span>: <span class="built_in">number</span>, <span class="attr">b</span>: <span class="built_in">number</span></span>): <span class="built_in">number</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">add</span>(<span class="number">1</span>, <span class="string">&quot;2&quot;</span>);  <span class="comment">// 编译错误：类型不匹配</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="接口与类型"><a href="#接口与类型" class="headerlink" title="接口与类型"></a>接口与类型</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义接口</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="attr">id</span>: <span class="built_in">number</span>;</span><br><span class="line">    <span class="attr">name</span>: <span class="built_in">string</span>;</span><br><span class="line">    <span class="attr">email</span>: <span class="built_in">string</span>;</span><br><span class="line">    <span class="attr">role</span>?: <span class="string">&#x27;admin&#x27;</span> | <span class="string">&#x27;user&#x27;</span>;  <span class="comment">// 可选属性</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用接口</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getUser</span>(<span class="params"><span class="attr">id</span>: <span class="built_in">number</span></span>): <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        id,</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&quot;大木头WU&quot;</span>,</span><br><span class="line">        <span class="attr">email</span>: <span class="string">&quot;user@example.com&quot;</span>,</span><br><span class="line">        <span class="attr">role</span>: <span class="string">&quot;admin&quot;</span></span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 类型别名</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Point</span> = &#123;</span><br><span class="line">    <span class="attr">x</span>: <span class="built_in">number</span>;</span><br><span class="line">    <span class="attr">y</span>: <span class="built_in">number</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 联合类型</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Status</span> = <span class="string">&#x27;pending&#x27;</span> | <span class="string">&#x27;success&#x27;</span> | <span class="string">&#x27;error&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="泛型的威力"><a href="#泛型的威力" class="headerlink" title="泛型的威力"></a>泛型的威力</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 泛型函数</span></span><br><span class="line"><span class="keyword">function</span> firstElement&lt;T&gt;(<span class="attr">arr</span>: T[]): T | <span class="literal">undefined</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> arr[<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">const</span> first = <span class="title function_">firstElement</span>(numbers);  <span class="comment">// 类型: number | undefined</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 泛型类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DataStore</span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="attr">data</span>: T[] = [];</span><br><span class="line">    </span><br><span class="line">    <span class="title function_">add</span>(<span class="attr">item</span>: T): <span class="built_in">void</span> &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">data</span>.<span class="title function_">push</span>(item);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="title function_">getAll</span>(): T[] &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">data</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> userStore = <span class="keyword">new</span> <span class="title class_">DataStore</span>&lt;<span class="title class_">User</span>&gt;();</span><br><span class="line">userStore.<span class="title function_">add</span>(&#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">name</span>: <span class="string">&quot;Alice&quot;</span>, <span class="attr">email</span>: <span class="string">&quot;alice@example.com&quot;</span> &#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="🎨-Vue-js-开发实践"><a href="#🎨-Vue-js-开发实践" class="headerlink" title="🎨 Vue.js 开发实践"></a>🎨 Vue.js 开发实践</h2><h3 id="组合式-API-Composition-API"><a href="#组合式-API-Composition-API" class="headerlink" title="组合式 API (Composition API)"></a>组合式 API (Composition API)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">import &#123; ref, computed, onMounted &#125; from &#x27;vue&#x27;;</span><br><span class="line"></span><br><span class="line">// 响应式状态</span><br><span class="line">const count = ref(0);</span><br><span class="line">const name = ref(&#x27;大木头WU&#x27;);</span><br><span class="line"></span><br><span class="line">// 计算属性</span><br><span class="line">const doubleCount = computed(() =&gt; count.value * 2);</span><br><span class="line"></span><br><span class="line">// 方法</span><br><span class="line">const increment = () =&gt; &#123;</span><br><span class="line">    count.value++;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 生命周期钩子</span><br><span class="line">onMounted(() =&gt; &#123;</span><br><span class="line">    console.log(&#x27;组件已挂载&#x27;);</span><br><span class="line">&#125;);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div class=&quot;container&quot;&gt;</span><br><span class="line">        &lt;h1&gt;Hello, &#123;&#123; name &#125;&#125;&lt;/h1&gt;</span><br><span class="line">        &lt;p&gt;Count: &#123;&#123; count &#125;&#125;&lt;/p&gt;</span><br><span class="line">        &lt;p&gt;Double: &#123;&#123; doubleCount &#125;&#125;&lt;/p&gt;</span><br><span class="line">        &lt;button @click=&quot;increment&quot;&gt;增加&lt;/button&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">.container &#123;</span><br><span class="line">    padding: 20px;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义-Hooks"><a href="#自定义-Hooks" class="headerlink" title="自定义 Hooks"></a>自定义 Hooks</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// useCounter.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; ref, computed &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">useCounter</span>(<span class="params">initialValue = <span class="number">0</span></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> count = <span class="title function_">ref</span>(initialValue);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">increment</span> = (<span class="params"></span>) =&gt; count.<span class="property">value</span>++;</span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">decrement</span> = (<span class="params"></span>) =&gt; count.<span class="property">value</span>--;</span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">reset</span> = (<span class="params"></span>) =&gt; count.<span class="property">value</span> = initialValue;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">const</span> isPositive = <span class="title function_">computed</span>(<span class="function">() =&gt;</span> count.<span class="property">value</span> &gt; <span class="number">0</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        count,</span><br><span class="line">        increment,</span><br><span class="line">        decrement,</span><br><span class="line">        reset,</span><br><span class="line">        isPositive</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在组件中使用</span></span><br><span class="line"><span class="keyword">import</span> &#123; useCounter &#125; <span class="keyword">from</span> <span class="string">&#x27;./useCounter&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; count, increment, decrement, isPositive &#125; = <span class="title function_">useCounter</span>(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="状态管理-Pinia"><a href="#状态管理-Pinia" class="headerlink" title="状态管理 - Pinia"></a>状态管理 - Pinia</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// stores/user.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; defineStore &#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useUserStore = <span class="title function_">defineStore</span>(<span class="string">&#x27;user&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">state</span>: <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">        <span class="attr">currentUser</span>: <span class="literal">null</span> <span class="keyword">as</span> <span class="title class_">User</span> | <span class="literal">null</span>,</span><br><span class="line">        <span class="attr">isLoggedIn</span>: <span class="literal">false</span></span><br><span class="line">    &#125;),</span><br><span class="line">    </span><br><span class="line">    <span class="attr">getters</span>: &#123;</span><br><span class="line">        <span class="attr">userName</span>: <span class="function">(<span class="params">state</span>) =&gt;</span> state.<span class="property">currentUser</span>?.<span class="property">name</span> ?? <span class="string">&#x27;Guest&#x27;</span>,</span><br><span class="line">        <span class="attr">isAdmin</span>: <span class="function">(<span class="params">state</span>) =&gt;</span> state.<span class="property">currentUser</span>?.<span class="property">role</span> === <span class="string">&#x27;admin&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    </span><br><span class="line">    <span class="attr">actions</span>: &#123;</span><br><span class="line">        <span class="keyword">async</span> <span class="title function_">login</span>(<span class="params"><span class="attr">email</span>: <span class="built_in">string</span>, <span class="attr">password</span>: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">const</span> user = <span class="keyword">await</span> api.<span class="title function_">login</span>(email, password);</span><br><span class="line">                <span class="variable language_">this</span>.<span class="property">currentUser</span> = user;</span><br><span class="line">                <span class="variable language_">this</span>.<span class="property">isLoggedIn</span> = <span class="literal">true</span>;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;登录失败&#x27;</span>, error);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        </span><br><span class="line">        <span class="title function_">logout</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">currentUser</span> = <span class="literal">null</span>;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">isLoggedIn</span> = <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="🛠️-开发工具配置"><a href="#🛠️-开发工具配置" class="headerlink" title="🛠️ 开发工具配置"></a>🛠️ 开发工具配置</h2><h3 id="Vite-配置"><a href="#Vite-配置" class="headerlink" title="Vite 配置"></a>Vite 配置</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vite.config.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; defineConfig &#125; <span class="keyword">from</span> <span class="string">&#x27;vite&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> vue <span class="keyword">from</span> <span class="string">&#x27;@vitejs/plugin-vue&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> path <span class="keyword">from</span> <span class="string">&#x27;path&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineConfig</span>(&#123;</span><br><span class="line">    <span class="attr">plugins</span>: [<span class="title function_">vue</span>()],</span><br><span class="line">    <span class="attr">resolve</span>: &#123;</span><br><span class="line">        <span class="attr">alias</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;@&#x27;</span>: path.<span class="title function_">resolve</span>(__dirname, <span class="string">&#x27;./src&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">server</span>: &#123;</span><br><span class="line">        <span class="attr">port</span>: <span class="number">3000</span>,</span><br><span class="line">        <span class="attr">open</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">proxy</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;/api&#x27;</span>: &#123;</span><br><span class="line">                <span class="attr">target</span>: <span class="string">&#x27;http://localhost:8080&#x27;</span>,</span><br><span class="line">                <span class="attr">changeOrigin</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="attr">rewrite</span>: <span class="function">(<span class="params">path</span>) =&gt;</span> path.<span class="title function_">replace</span>(<span class="regexp">/^\/api/</span>, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="TypeScript-配置"><a href="#TypeScript-配置" class="headerlink" title="TypeScript 配置"></a>TypeScript 配置</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;compilerOptions&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;target&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ES2020&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;module&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ESNext&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;lib&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;ES2020&quot;</span><span class="punctuation">,</span> <span class="string">&quot;DOM&quot;</span><span class="punctuation">,</span> <span class="string">&quot;DOM.Iterable&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;jsx&quot;</span><span class="punctuation">:</span> <span class="string">&quot;preserve&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;strict&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;moduleResolution&quot;</span><span class="punctuation">:</span> <span class="string">&quot;node&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;resolveJsonModule&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;esModuleInterop&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;skipLibCheck&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;baseUrl&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;paths&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;@/*&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;src/*&quot;</span><span class="punctuation">]</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;include&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;src/**/*.ts&quot;</span><span class="punctuation">,</span> <span class="string">&quot;src/**/*.vue&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;exclude&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;node_modules&quot;</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="🎯-最佳实践"><a href="#🎯-最佳实践" class="headerlink" title="🎯 最佳实践"></a>🎯 最佳实践</h2><h3 id="1-组件设计原则"><a href="#1-组件设计原则" class="headerlink" title="1. 组件设计原则"></a>1. 组件设计原则</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- Bad - 组件做太多事 --&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;input v-model=&quot;searchTerm&quot; /&gt;</span><br><span class="line">        &lt;div v-for=&quot;item in filteredItems&quot;&gt;...&lt;/div&gt;</span><br><span class="line">        &lt;button @click=&quot;saveData&quot;&gt;保存&lt;/button&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- Good - 单一职责 --&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;SearchInput v-model=&quot;searchTerm&quot; /&gt;</span><br><span class="line">        &lt;ItemList :items=&quot;filteredItems&quot; /&gt;</span><br><span class="line">        &lt;SaveButton @click=&quot;handleSave&quot; /&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-Props-类型定义"><a href="#2-Props-类型定义" class="headerlink" title="2. Props 类型定义"></a>2. Props 类型定义</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用 TypeScript 定义 Props</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Props</span> &#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="built_in">string</span>;</span><br><span class="line">    <span class="attr">count</span>?: <span class="built_in">number</span>;</span><br><span class="line">    <span class="attr">items</span>: <span class="title class_">Item</span>[];</span><br><span class="line">    <span class="attr">onUpdate</span>: <span class="function">(<span class="params"><span class="attr">id</span>: <span class="built_in">number</span></span>) =&gt;</span> <span class="built_in">void</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 或使用 defineProps with 泛型</span></span><br><span class="line"><span class="keyword">const</span> props = defineProps&lt;<span class="title class_">Props</span>&gt;();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 带默认值</span></span><br><span class="line"><span class="keyword">const</span> props = <span class="title function_">withDefaults</span>(defineProps&lt;<span class="title class_">Props</span>&gt;(), &#123;</span><br><span class="line">    <span class="attr">count</span>: <span class="number">0</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-错误处理"><a href="#3-错误处理" class="headerlink" title="3. 错误处理"></a>3. 错误处理</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 全局错误处理</span></span><br><span class="line">app.<span class="property">config</span>.<span class="property">errorHandler</span> = <span class="function">(<span class="params">err, instance, info</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;全局错误:&#x27;</span>, err);</span><br><span class="line">    <span class="comment">// 上报到错误追踪系统</span></span><br><span class="line">    errorTracker.<span class="title function_">report</span>(err);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 组件内错误处理</span></span><br><span class="line"><span class="keyword">import</span> &#123; onErrorCaptured &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">onErrorCaptured</span>(<span class="function">(<span class="params">err, instance, info</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;捕获到错误:&#x27;</span>, err);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;  <span class="comment">// 阻止错误继续传播</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="🧪-测试"><a href="#🧪-测试" class="headerlink" title="🧪 测试"></a>🧪 测试</h2><h3 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; describe, it, expect &#125; <span class="keyword">from</span> <span class="string">&#x27;vitest&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; mount &#125; <span class="keyword">from</span> <span class="string">&#x27;@vue/test-utils&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Counter</span> <span class="keyword">from</span> <span class="string">&#x27;./Counter.vue&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">describe</span>(<span class="string">&#x27;Counter&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">it</span>(<span class="string">&#x27;增加计数&#x27;</span>, <span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">        <span class="keyword">const</span> wrapper = <span class="title function_">mount</span>(<span class="title class_">Counter</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">await</span> wrapper.<span class="title function_">find</span>(<span class="string">&#x27;button&#x27;</span>).<span class="title function_">trigger</span>(<span class="string">&#x27;click&#x27;</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="title function_">expect</span>(wrapper.<span class="title function_">find</span>(<span class="string">&#x27;.count&#x27;</span>).<span class="title function_">text</span>()).<span class="title function_">toBe</span>(<span class="string">&#x27;1&#x27;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    <span class="title function_">it</span>(<span class="string">&#x27;显示正确的 props&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> wrapper = <span class="title function_">mount</span>(<span class="title class_">Counter</span>, &#123;</span><br><span class="line">            <span class="attr">props</span>: &#123; <span class="attr">initialCount</span>: <span class="number">10</span> &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        </span><br><span class="line">        <span class="title function_">expect</span>(wrapper.<span class="title function_">find</span>(<span class="string">&#x27;.count&#x27;</span>).<span class="title function_">text</span>()).<span class="title function_">toBe</span>(<span class="string">&#x27;10&#x27;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="🚢-部署"><a href="#🚢-部署" class="headerlink" title="🚢 部署"></a>🚢 部署</h2><h3 id="构建优化"><a href="#构建优化" class="headerlink" title="构建优化"></a>构建优化</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vite.config.ts</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineConfig</span>(&#123;</span><br><span class="line">    <span class="attr">build</span>: &#123;</span><br><span class="line">        <span class="attr">rollupOptions</span>: &#123;</span><br><span class="line">            <span class="attr">output</span>: &#123;</span><br><span class="line">                <span class="attr">manualChunks</span>: &#123;</span><br><span class="line">                    <span class="string">&#x27;vendor&#x27;</span>: [<span class="string">&#x27;vue&#x27;</span>, <span class="string">&#x27;vue-router&#x27;</span>, <span class="string">&#x27;pinia&#x27;</span>],</span><br><span class="line">                    <span class="string">&#x27;ui&#x27;</span>: [<span class="string">&#x27;element-plus&#x27;</span>]</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">chunkSizeWarningLimit</span>: <span class="number">1000</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># .env.development</span></span><br><span class="line">VITE_API_URL=http://localhost:8080/api</span><br><span class="line">VITE_APP_TITLE=开发环境</span><br><span class="line"></span><br><span class="line"><span class="comment"># .env.production</span></span><br><span class="line">VITE_API_URL=https://api.example.com</span><br><span class="line">VITE_APP_TITLE=生产环境</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用环境变量</span></span><br><span class="line"><span class="keyword">const</span> apiUrl = <span class="keyword">import</span>.<span class="property">meta</span>.<span class="property">env</span>.<span class="property">VITE_API_URL</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="📱-响应式设计"><a href="#📱-响应式设计" class="headerlink" title="📱 响应式设计"></a>📱 响应式设计</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 移动优先 */</span></span><br><span class="line"><span class="selector-class">.container</span> &#123;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">1rem</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 平板 */</span></span><br><span class="line"><span class="keyword">@media</span> (<span class="attribute">min-width</span>: <span class="number">768px</span>) &#123;</span><br><span class="line">    <span class="selector-class">.container</span> &#123;</span><br><span class="line">        <span class="attribute">padding</span>: <span class="number">2rem</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 桌面 */</span></span><br><span class="line"><span class="keyword">@media</span> (<span class="attribute">min-width</span>: <span class="number">1024px</span>) &#123;</span><br><span class="line">    <span class="selector-class">.container</span> &#123;</span><br><span class="line">        <span class="attribute">max-width</span>: <span class="number">1200px</span>;</span><br><span class="line">        <span class="attribute">margin</span>: <span class="number">0</span> auto;</span><br><span class="line">        <span class="attribute">padding</span>: <span class="number">3rem</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="🎓-学习资源"><a href="#🎓-学习资源" class="headerlink" title="🎓 学习资源"></a>🎓 学习资源</h2><ul>
+<li><strong>Vue 3 官方文档</strong>: 最权威的学习资料</li>
+<li><strong>TypeScript Handbook</strong>: 深入理解 TypeScript</li>
+<li><strong>Vite 文档</strong>: 了解现代构建工具</li>
+<li><strong>Vue Mastery</strong>: 高质量的视频课程</li>
+</ul>
+<h2 id="💡-项目展示"><a href="#💡-项目展示" class="headerlink" title="💡 项目展示"></a>💡 项目展示</h2><p>查看我的实际项目：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Wuxy1997/Com6102gp5">Com6102gp5</a> - TypeScript 全栈项目</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Wuxy1997/6102">6102</a> - Vue.js 单页应用</li>
+</ul>
+<h2 id="🎯-总结"><a href="#🎯-总结" class="headerlink" title="🎯 总结"></a>🎯 总结</h2><p>Web 开发是一个快速发展的领域，保持学习的态度很重要：</p>
+<p>✅ 掌握基础：HTML, CSS, JavaScript<br>✅ 拥抱新工具：TypeScript, Vue 3, Vite<br>✅ 重视实践：多做项目，多写代码<br>✅ 关注社区：跟上最新技术趋势</p>
+<hr>
+<p>希望这篇文章能帮助你在 Web 开发之路上走得更远！</p>
+<p>欢迎在评论区分享你的经验和问题 💬</p>
+
+    </div>
+
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2024 - 2026 大木头WU的 Blog
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @大木头WU
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,303 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大木头WU的 Blog || 关于我</title>
+    <meta name="author" content="大木头WU">
+    <meta name="description" content="A beautiful blog powered by Hexo ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/images/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/maiden-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">大木头WU的 Blog</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997">
+            <span>
+                <a-icon type="github" theme="filled" />
+            </span>
+            <span>GitHub</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>大木头WU的 Blog</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="github" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">GitHub</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>关于我 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2026/1/7
+        </span>
+
+        
+
+        
+    </div>
+
+    <div class="content" v-pre>
+        <h1 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h1><p>你好！我是<strong>大木头WU</strong>，一名充满热情的开发者和技术爱好者。</p>
+<h2 id="🎓-技术栈"><a href="#🎓-技术栈" class="headerlink" title="🎓 技术栈"></a>🎓 技术栈</h2><p>我在多个技术领域都有涉猎：</p>
+<ul>
+<li><strong>后端开发</strong>: Python, C#, Java</li>
+<li><strong>前端开发</strong>: JavaScript, TypeScript, Vue.js</li>
+<li><strong>移动开发</strong>: 跨平台应用开发</li>
+<li><strong>人工智能</strong>: 机器学习、深度学习、联邦学习</li>
+<li><strong>云服务</strong>: 阿里云 OSS</li>
+<li><strong>其他</strong>: HTML, CSS, Git</li>
+</ul>
+<h2 id="💼-项目经验"><a href="#💼-项目经验" class="headerlink" title="💼 项目经验"></a>💼 项目经验</h2><h3 id="🔬-研究项目"><a href="#🔬-研究项目" class="headerlink" title="🔬 研究项目"></a>🔬 研究项目</h3><ul>
+<li><strong>联邦强化学习</strong>: 移动边缘计算环境下的联邦强化学习研究</li>
+<li><strong>SARS-CoV-2 AI 分析器</strong>: 基于 AI 的新冠病毒数据分析工具</li>
+</ul>
+<h3 id="🛠️-实用工具"><a href="#🛠️-实用工具" class="headerlink" title="🛠️ 实用工具"></a>🛠️ 实用工具</h3><ul>
+<li><strong>阿里云 OSS 批量管理工具</strong>: C# 开发的云存储文件批量操作工具</li>
+<li><strong>PDF 分割合并器</strong>: Python 实现的 PDF 处理工具</li>
+<li><strong>自动报告生成系统</strong>: AI 驱动的报告自动化系统</li>
+</ul>
+<h3 id="🎮-小游戏"><a href="#🎮-小游戏" class="headerlink" title="🎮 小游戏"></a>🎮 小游戏</h3><ul>
+<li><strong>贪吃蛇游戏</strong>: Python 实现</li>
+<li><strong>井字棋游戏</strong>: Python 实现</li>
+<li><strong>猜数字游戏</strong>: Java 实现</li>
+<li><strong>Icebreak</strong>: Java 小游戏</li>
+</ul>
+<h2 id="🌟-技术兴趣"><a href="#🌟-技术兴趣" class="headerlink" title="🌟 技术兴趣"></a>🌟 技术兴趣</h2><ul>
+<li>🤖 人工智能与机器学习</li>
+<li>☁️ 云计算与边缘计算</li>
+<li>🔐 联邦学习与隐私保护</li>
+<li>🌐 全栈 Web 开发</li>
+<li>📱 移动应用开发</li>
+</ul>
+<h2 id="📚-学习态度"><a href="#📚-学习态度" class="headerlink" title="📚 学习态度"></a>📚 学习态度</h2><p>我相信持续学习和实践是成长的关键。我喜欢探索新技术，解决实际问题，并通过开源项目分享知识。</p>
+<h2 id="📫-联系方式"><a href="#📫-联系方式" class="headerlink" title="📫 联系方式"></a>📫 联系方式</h2><ul>
+<li><strong>GitHub</strong>: <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997">Wuxy1997</a></li>
+<li><strong>Email</strong>: 欢迎通过 GitHub 联系我</li>
+<li><strong>Blog</strong>: 你现在所在的地方 😊</li>
+</ul>
+<h2 id="💭-关于这个博客"><a href="#💭-关于这个博客" class="headerlink" title="💭 关于这个博客"></a>💭 关于这个博客</h2><p>这个博客是我分享技术见解、项目经验和生活感悟的地方。我希望通过文字记录自己的成长历程，也希望能对访问这里的你有所帮助。</p>
+<blockquote>
+<p>“我的天空里没有太阳，总是黑夜，但并不暗，因为有东西代替了太阳。” —— 《白夜行》</p>
+</blockquote>
+<hr>
+<p>感谢你访问我的博客！如果你对我的项目感兴趣，欢迎在 GitHub 上 Star 和 Fork。让我们一起学习进步！</p>
+
+    </div>
+
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2024 - 2026 大木头WU的 Blog
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @大木头WU
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+</body>
+
+</html>

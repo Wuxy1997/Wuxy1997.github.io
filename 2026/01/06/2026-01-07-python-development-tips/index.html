@@ -1,0 +1,361 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大木头WU的 Blog || Python 开发技巧分享</title>
+    <meta name="author" content="大木头WU">
+    <meta name="description" content="A beautiful blog powered by Hexo ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/images/avatar.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/maiden-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">大木头WU的 Blog</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>home</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>about</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>archives</span>
+        </a>
+        
+        <a href="/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>categories</span>
+        </a>
+        
+        <a href="/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>tags</span>
+        </a>
+        
+        <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997">
+            <span>
+                <a-icon type="github" theme="filled" />
+            </span>
+            <span>GitHub</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>大木头WU的 Blog</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
+                </div>
+            </a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="github" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">GitHub</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1>Python 开发技巧分享 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2026/1/7
+        </span>
+
+        
+        <span class="category">
+            <a href="/categories/技术分享">
+                <span class="icon">
+                    <a-icon type="book" theme="filled" />
+                </span>
+                技术分享
+            </a>
+        </span>
+        
+
+        
+
+        <span class="tags">
+            <span class="icon">
+                <a-icon type="tags" theme="filled" />
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/Python" style=color:#ff7d73>
+                    Python
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/编程" style=color:#1bccbc>
+                    编程
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/最佳实践" style=color:#1bccbc>
+                    最佳实践
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/代码技巧" style=color:#1bccbc>
+                    代码技巧
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+
+    <div class="content" v-pre>
+        <h1 id="Python-开发技巧分享"><a href="#Python-开发技巧分享" class="headerlink" title="Python 开发技巧分享"></a>Python 开发技巧分享</h1><p>作为一名经常使用 Python 的开发者，我在实际项目中积累了一些实用的技巧和最佳实践。今天分享给大家。</p>
+<h2 id="🎯-项目结构最佳实践"><a href="#🎯-项目结构最佳实践" class="headerlink" title="🎯 项目结构最佳实践"></a>🎯 项目结构最佳实践</h2><p>一个清晰的项目结构能让代码更易维护：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">my_project/</span><br><span class="line">├── src/</span><br><span class="line">│   ├── __init__.py</span><br><span class="line">│   ├── main.py</span><br><span class="line">│   └── utils/</span><br><span class="line">├── tests/</span><br><span class="line">│   ├── __init__.py</span><br><span class="line">│   └── test_main.py</span><br><span class="line">├── requirements.txt</span><br><span class="line">├── README.md</span><br><span class="line">└── .gitignore</span><br></pre></td></tr></table></figure>
+
+<h2 id="💡-常用代码片段"><a href="#💡-常用代码片段" class="headerlink" title="💡 常用代码片段"></a>💡 常用代码片段</h2><h3 id="1-文件读写的优雅方式"><a href="#1-文件读写的优雅方式" class="headerlink" title="1. 文件读写的优雅方式"></a>1. 文件读写的优雅方式</h3><p>使用上下文管理器自动处理文件关闭：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 推荐写法</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;file.txt&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    content = f.read()</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 写入 JSON 数据</span></span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;data.json&#x27;</span>, <span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    json.dump(data, f, ensure_ascii=<span class="literal">False</span>, indent=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-列表推导式的高效使用"><a href="#2-列表推导式的高效使用" class="headerlink" title="2. 列表推导式的高效使用"></a>2. 列表推导式的高效使用</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 基础用法</span></span><br><span class="line">squares = [x**<span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>)]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 带条件过滤</span></span><br><span class="line">even_squares = [x**<span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>) <span class="keyword">if</span> x % <span class="number">2</span> == <span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 字典推导式</span></span><br><span class="line">word_lengths = &#123;word: <span class="built_in">len</span>(word) <span class="keyword">for</span> word <span class="keyword">in</span> [<span class="string">&#x27;hello&#x27;</span>, <span class="string">&#x27;world&#x27;</span>, <span class="string">&#x27;python&#x27;</span>]&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-装饰器模式"><a href="#3-装饰器模式" class="headerlink" title="3. 装饰器模式"></a>3. 装饰器模式</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> wraps</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">timer</span>(<span class="params">func</span>):</span><br><span class="line"><span class="meta">    @wraps(<span class="params">func</span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">wrapper</span>(<span class="params">*args, **kwargs</span>):</span><br><span class="line">        start = time.time()</span><br><span class="line">        result = func(*args, **kwargs)</span><br><span class="line">        end = time.time()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;func.__name__&#125;</span> took <span class="subst">&#123;end - start:<span class="number">.2</span>f&#125;</span> seconds&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"><span class="meta">@timer</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">slow_function</span>():</span><br><span class="line">    time.sleep(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;Done&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="🔧-实用工具库推荐"><a href="#🔧-实用工具库推荐" class="headerlink" title="🔧 实用工具库推荐"></a>🔧 实用工具库推荐</h2><h3 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h3><ul>
+<li><strong>pandas</strong>: 数据分析必备</li>
+<li><strong>numpy</strong>: 科学计算基础</li>
+<li><strong>polars</strong>: 更快的 DataFrame 处理</li>
+</ul>
+<h3 id="Web-开发"><a href="#Web-开发" class="headerlink" title="Web 开发"></a>Web 开发</h3><ul>
+<li><strong>FastAPI</strong>: 现代化的 API 框架</li>
+<li><strong>requests</strong>: HTTP 请求库</li>
+<li><strong>beautifulsoup4</strong>: HTML 解析</li>
+</ul>
+<h3 id="工具类"><a href="#工具类" class="headerlink" title="工具类"></a>工具类</h3><ul>
+<li><strong>pathlib</strong>: 路径处理</li>
+<li><strong>loguru</strong>: 更好的日志库</li>
+<li><strong>rich</strong>: 终端美化输出</li>
+</ul>
+<h2 id="🚀-性能优化技巧"><a href="#🚀-性能优化技巧" class="headerlink" title="🚀 性能优化技巧"></a>🚀 性能优化技巧</h2><h3 id="1-使用生成器节省内存"><a href="#1-使用生成器节省内存" class="headerlink" title="1. 使用生成器节省内存"></a>1. 使用生成器节省内存</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不好的做法 - 占用大量内存</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_numbers</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">return</span> [i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n)]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 好的做法 - 按需生成</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_numbers</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        <span class="keyword">yield</span> i</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-使用-set-进行快速查找"><a href="#2-使用-set-进行快速查找" class="headerlink" title="2. 使用 set 进行快速查找"></a>2. 使用 set 进行快速查找</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列表查找 O(n)</span></span><br><span class="line">my_list = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line"><span class="keyword">if</span> <span class="number">3</span> <span class="keyword">in</span> my_list:  <span class="comment"># 较慢</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Found&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 集合查找 O(1)</span></span><br><span class="line">my_set = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;</span><br><span class="line"><span class="keyword">if</span> <span class="number">3</span> <span class="keyword">in</span> my_set:  <span class="comment"># 更快</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Found&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="🛡️-错误处理"><a href="#🛡️-错误处理" class="headerlink" title="🛡️ 错误处理"></a>🛡️ 错误处理</h2><h3 id="具体的异常处理"><a href="#具体的异常处理" class="headerlink" title="具体的异常处理"></a>具体的异常处理</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;file.txt&#x27;</span>, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        data = json.load(f)</span><br><span class="line"><span class="keyword">except</span> FileNotFoundError:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;文件不存在&quot;</span>)</span><br><span class="line"><span class="keyword">except</span> json.JSONDecodeError:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;JSON 格式错误&quot;</span>)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;未知错误: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;清理资源&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="📝-代码风格"><a href="#📝-代码风格" class="headerlink" title="📝 代码风格"></a>📝 代码风格</h2><h3 id="遵循-PEP-8"><a href="#遵循-PEP-8" class="headerlink" title="遵循 PEP 8"></a>遵循 PEP 8</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 命名规范</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:  <span class="comment"># 类名用大驼峰</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_function</span>():  <span class="comment"># 函数名用小写+下划线</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">MY_CONSTANT = <span class="number">100</span>  <span class="comment"># 常量用大写</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 适当的空格</span></span><br><span class="line">result = (a + b) * c  <span class="comment"># 运算符两边加空格</span></span><br><span class="line">my_list[<span class="number">0</span>:<span class="number">2</span>]  <span class="comment"># 切片不加空格</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="🎨-实战案例：PDF-处理工具"><a href="#🎨-实战案例：PDF-处理工具" class="headerlink" title="🎨 实战案例：PDF 处理工具"></a>🎨 实战案例：PDF 处理工具</h2><p>我在 <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997/PDFsplitmerger">PDFsplitmerger</a> 项目中使用了这些技巧：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PyPDF2 <span class="keyword">import</span> PdfReader, PdfWriter</span><br><span class="line"><span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">split_pdf</span>(<span class="params">input_path, output_dir, pages_per_file=<span class="number">10</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;将 PDF 文件分割成多个小文件&quot;&quot;&quot;</span></span><br><span class="line">    pdf = PdfReader(input_path)</span><br><span class="line">    total_pages = <span class="built_in">len</span>(pdf.pages)</span><br><span class="line">    </span><br><span class="line">    output_dir = Path(output_dir)</span><br><span class="line">    output_dir.mkdir(exist_ok=<span class="literal">True</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> start_page <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, total_pages, pages_per_file):</span><br><span class="line">        writer = PdfWriter()</span><br><span class="line">        end_page = <span class="built_in">min</span>(start_page + pages_per_file, total_pages)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> page_num <span class="keyword">in</span> <span class="built_in">range</span>(start_page, end_page):</span><br><span class="line">            writer.add_page(pdf.pages[page_num])</span><br><span class="line">        </span><br><span class="line">        output_file = output_dir / <span class="string">f&quot;split_<span class="subst">&#123;start_page+<span class="number">1</span>&#125;</span>-<span class="subst">&#123;end_page&#125;</span>.pdf&quot;</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(output_file, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            writer.write(f)</span><br></pre></td></tr></table></figure>
+
+<h2 id="🔍-调试技巧"><a href="#🔍-调试技巧" class="headerlink" title="🔍 调试技巧"></a>🔍 调试技巧</h2><h3 id="使用-pdb-调试"><a href="#使用-pdb-调试" class="headerlink" title="使用 pdb 调试"></a>使用 pdb 调试</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pdb</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">complex_function</span>(<span class="params">data</span>):</span><br><span class="line">    result = process_data(data)</span><br><span class="line">    pdb.set_trace()  <span class="comment"># 在这里设置断点</span></span><br><span class="line">    <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用-logging-而不是-print"><a href="#使用-logging-而不是-print" class="headerlink" title="使用 logging 而不是 print"></a>使用 logging 而不是 print</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line">logging.basicConfig(level=logging.INFO)</span><br><span class="line">logger = logging.getLogger(__name__)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_function</span>():</span><br><span class="line">    logger.info(<span class="string">&quot;开始处理&quot;</span>)</span><br><span class="line">    logger.debug(<span class="string">&quot;详细信息&quot;</span>)</span><br><span class="line">    logger.error(<span class="string">&quot;出错了&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="📚-学习资源"><a href="#📚-学习资源" class="headerlink" title="📚 学习资源"></a>📚 学习资源</h2><ul>
+<li><strong>官方文档</strong>: <a target="_blank" rel="noopener" href="https://docs.python.org/">python.org</a></li>
+<li><strong>Real Python</strong>: 高质量的 Python 教程</li>
+<li><strong>Python Weekly</strong>: 每周 Python 资讯</li>
+<li><strong>GitHub</strong>: 阅读优秀的开源项目代码</li>
+</ul>
+<h2 id="🎯-总结"><a href="#🎯-总结" class="headerlink" title="🎯 总结"></a>🎯 总结</h2><p>Python 是一门优雅而强大的语言，掌握这些技巧能让你的代码更加：</p>
+<ul>
+<li>✅ 可读性强</li>
+<li>✅ 性能优秀</li>
+<li>✅ 易于维护</li>
+<li>✅ 符合规范</li>
+</ul>
+<p>记住：<strong>代码是写给人看的，只是顺便让机器执行。</strong></p>
+<hr>
+<p>希望这些技巧对你有帮助！如果你有更好的建议，欢迎在评论区分享。</p>
+
+    </div>
+
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2024 - 2026 大木头WU的 Blog
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @大木头WU
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+</body>
+
+</html>
