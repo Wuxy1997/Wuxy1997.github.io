@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Python, TypeScript, Vue.js, 人工智能, 机器学习, 联邦学习, 边缘计算, Web开发, 开源项目, GitHub">
+    
+    <meta name="author" content="The Redefine Team">
+    
+    <!-- Completely eliminate flash of wrong theme -->
+    <script>
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes ASAP (before DOMContentLoaded)
+            (function() {
+                const addBodyClass = () => {
+                    const b = document.body;
+                    if (!b) return false;
+                    b.classList.add(theme + "-mode");
+                    return true;
+                };
+
+                // Try immediately
+                if (addBodyClass()) return;
+
+                // Observe until body exists
+                const mo = new MutationObserver(() => {
+                    if (addBodyClass()) mo.disconnect();
+                });
+                mo.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+        })();
+    </script>
+    
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://Wuxy1997.github.io/2026/01/07/2026-01-07-typescript-vue3-best-practices/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TypeScript + Vue 3 实战：现代前端开发最佳实践">
+<meta property="og:url" content="https://wuxy1997.github.io/2026/01/07/2026-01-07-typescript-vue3-best-practices/index.html">
+<meta property="og:site_name" content="大木头WU的技术博客">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wuxy1997.github.io/images/redefine-og.webp">
+<meta property="article:published_time" content="2026-01-07T08:00:00.000Z">
+<meta property="article:modified_time" content="2026-01-07T07:41:41.264Z">
+<meta property="article:author" content="大木头WU (Wuxy1997)">
+<meta property="article:tag" content="TypeScript">
+<meta property="article:tag" content="Vue.js">
+<meta property="article:tag" content="Web开发">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="最佳实践">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wuxy1997.github.io/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            TypeScript + Vue 3 实战：现代前端开发最佳实践 | Theme Redefine
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"wuxy1997.github.io","root":"/","language":"zh-CN"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Theme Redefine","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.5","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Theme Redefine
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    首页
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                首页
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">31</div>
+        <div class="label text-third-text-color text-sm">标签</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">6</div>
+        <div class="label text-third-text-color text-sm">分类</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">10</div>
+        <div class="label text-third-text-color text-sm">文章</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">TypeScript + Vue 3 实战：现代前端开发最佳实践</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/images/redefine-avatar.svg">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">The Redefine Team</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv2</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2026-01-07 16:00</span>
+        <span class="mobile">2026-01-07 16:00</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2026-01-07 15:41:41</span>
+            <span class="mobile">2026-01-07 15:41:41</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/">技术分享</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">最佳实践</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/TypeScript/">TypeScript</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Vue-js/">Vue.js</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%89%8D%E7%AB%AF/">前端</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Web%E5%BC%80%E5%8F%91/">Web开发</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<h1 id="TypeScript-Vue-3-实战：现代前端开发最佳实践"><a href="#TypeScript-Vue-3-实战：现代前端开发最佳实践" class="headerlink" title="TypeScript + Vue 3 实战：现代前端开发最佳实践"></a>TypeScript + Vue 3 实战：现代前端开发最佳实践</h1><p>在参与 <a class="link"   target="_blank" rel="noopener" href="https://github.com/Wuxy1997/Com6102gp5" >Com6102gp5<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> 团队项目的过程中，我深入实践了 TypeScript 和 Vue 3 的组合开发。这篇文章分享一些实战经验和最佳实践。</p>
+<h2 id="🎯-为什么选择-TypeScript-Vue-3？"><a href="#🎯-为什么选择-TypeScript-Vue-3？" class="headerlink" title="🎯 为什么选择 TypeScript + Vue 3？"></a>🎯 为什么选择 TypeScript + Vue 3？</h2><h3 id="TypeScript-的优势"><a href="#TypeScript-的优势" class="headerlink" title="TypeScript 的优势"></a>TypeScript 的优势</h3><ol>
+<li><strong>类型安全</strong>：编译时捕获错误，减少运行时 bug</li>
+<li><strong>智能提示</strong>：IDE 提供更好的代码补全和提示</li>
+<li><strong>代码可维护性</strong>：类型定义即文档，易于理解和维护</li>
+<li><strong>重构友好</strong>：重命名、查找引用等操作更安全</li>
+</ol>
+<h3 id="Vue-3-的改进"><a href="#Vue-3-的改进" class="headerlink" title="Vue 3 的改进"></a>Vue 3 的改进</h3><ol>
+<li><strong>Composition API</strong>：更灵活的逻辑组织方式</li>
+<li><strong>性能提升</strong>：更快的渲染和更小的包体积</li>
+<li><strong>TypeScript 支持</strong>：原生 TypeScript 支持，类型推导更完善</li>
+<li><strong>Teleport &#x2F; Suspense</strong>：新的内置组件</li>
+</ol>
+<h2 id="🛠️-项目搭建"><a href="#🛠️-项目搭建" class="headerlink" title="🛠️ 项目搭建"></a>🛠️ 项目搭建</h2><h3 id="使用-Vite-创建项目"><a href="#使用-Vite-创建项目" class="headerlink" title="使用 Vite 创建项目"></a>使用 Vite 创建项目</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用 Vite 创建 Vue 3 + TypeScript 项目</span></span><br><span class="line">npm create vite@latest my-vue-app -- --template vue-ts</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> my-vue-app</span><br><span class="line">npm install</span><br><span class="line">npm run dev</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="推荐的项目结构"><a href="#推荐的项目结构" class="headerlink" title="推荐的项目结构"></a>推荐的项目结构</h3><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">src/</span><br><span class="line">├── assets/          # 静态资源</span><br><span class="line">├── components/      # 公共组件</span><br><span class="line">│   ├── common/      # 基础组件</span><br><span class="line">│   └── business/    # 业务组件</span><br><span class="line">├── composables/     # 组合式函数</span><br><span class="line">├── router/          # 路由配置</span><br><span class="line">├── stores/          # 状态管理 (Pinia)</span><br><span class="line">├── types/           # TypeScript 类型定义</span><br><span class="line">├── utils/           # 工具函数</span><br><span class="line">├── views/           # 页面组件</span><br><span class="line">├── App.vue</span><br><span class="line">└── main.ts</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="💡-核心实践"><a href="#💡-核心实践" class="headerlink" title="💡 核心实践"></a>💡 核心实践</h2><h3 id="1-使用-Composition-API"><a href="#1-使用-Composition-API" class="headerlink" title="1. 使用 Composition API"></a>1. 使用 Composition API</h3><p><strong>传统 Options API</strong>：</p>
+<div class="code-container" data-rel="Typescript"><figure class="iseeu highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="title function_">data</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="attr">count</span>: <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">methods</span>: &#123;</span><br><span class="line">    <span class="title function_">increment</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">count</span>++</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>Composition API（推荐）</strong>：</p>
+<div class="code-container" data-rel="Typescript"><figure class="iseeu highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ref &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="title function_">setup</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> count = <span class="title function_">ref</span>(<span class="number">0</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">increment</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">      count.<span class="property">value</span>++</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> &#123; count, increment &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>使用 <code>&lt;script setup&gt;</code>（最推荐）</strong>：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">import &#123; ref &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">const count = ref(0)</span><br><span class="line"></span><br><span class="line">const increment = () =&gt; &#123;</span><br><span class="line">  count.value++</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;button @click=&quot;increment&quot;&gt;Count: &#123;&#123; count &#125;&#125;&lt;/button&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="2-TypeScript-类型定义"><a href="#2-TypeScript-类型定义" class="headerlink" title="2. TypeScript 类型定义"></a>2. TypeScript 类型定义</h3><p><strong>定义接口</strong>：</p>
+<div class="code-container" data-rel="Typescript"><figure class="iseeu highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// types/user.ts</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> <span class="title class_">User</span> &#123;</span><br><span class="line">  <span class="attr">id</span>: <span class="built_in">number</span></span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">email</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">avatar</span>?: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">role</span>: <span class="string">&#x27;admin&#x27;</span> | <span class="string">&#x27;user&#x27;</span> | <span class="string">&#x27;guest&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> <span class="title class_">ApiResponse</span>&lt;T&gt; &#123;</span><br><span class="line">  <span class="attr">code</span>: <span class="built_in">number</span></span><br><span class="line">  <span class="attr">message</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">data</span>: T</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>在组件中使用</strong>：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">import &#123; ref &#125; from &#x27;vue&#x27;</span><br><span class="line">import type &#123; User &#125; from &#x27;@/types/user&#x27;</span><br><span class="line"></span><br><span class="line">const user = ref&lt;User | null&gt;(null)</span><br><span class="line"></span><br><span class="line">const fetchUser = async (id: number): Promise&lt;void&gt; =&gt; &#123;</span><br><span class="line">  const response = await fetch(`/api/users/$&#123;id&#125;`)</span><br><span class="line">  const data: ApiResponse&lt;User&gt; = await response.json()</span><br><span class="line">  user.value = data.data</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="3-组合式函数（Composables）"><a href="#3-组合式函数（Composables）" class="headerlink" title="3. 组合式函数（Composables）"></a>3. 组合式函数（Composables）</h3><p><strong>创建可复用逻辑</strong>：</p>
+<div class="code-container" data-rel="Typescript"><figure class="iseeu highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// composables/useMouse.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; ref, onMounted, onUnmounted &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">useMouse</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> x = <span class="title function_">ref</span>(<span class="number">0</span>)</span><br><span class="line">  <span class="keyword">const</span> y = <span class="title function_">ref</span>(<span class="number">0</span>)</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">update</span> = (<span class="params"><span class="attr">event</span>: <span class="title class_">MouseEvent</span></span>) =&gt; &#123;</span><br><span class="line">    x.<span class="property">value</span> = event.<span class="property">pageX</span></span><br><span class="line">    y.<span class="property">value</span> = event.<span class="property">pageY</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="title function_">onMounted</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;mousemove&#x27;</span>, update)</span><br><span class="line">  &#125;)</span><br><span class="line">  </span><br><span class="line">  <span class="title function_">onUnmounted</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">window</span>.<span class="title function_">removeEventListener</span>(<span class="string">&#x27;mousemove&#x27;</span>, update)</span><br><span class="line">  &#125;)</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> &#123; x, y &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>在组件中使用</strong>：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">import &#123; useMouse &#125; from &#x27;@/composables/useMouse&#x27;</span><br><span class="line"></span><br><span class="line">const &#123; x, y &#125; = useMouse()</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;Mouse position: &#123;&#123; x &#125;&#125;, &#123;&#123; y &#125;&#125;&lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="4-使用-Pinia-进行状态管理"><a href="#4-使用-Pinia-进行状态管理" class="headerlink" title="4. 使用 Pinia 进行状态管理"></a>4. 使用 Pinia 进行状态管理</h3><div class="code-container" data-rel="Typescript"><figure class="iseeu highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// stores/user.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; defineStore &#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">type</span> &#123; <span class="title class_">User</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@/types/user&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useUserStore = <span class="title function_">defineStore</span>(<span class="string">&#x27;user&#x27;</span>, &#123;</span><br><span class="line">  <span class="attr">state</span>: <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">    <span class="attr">currentUser</span>: <span class="literal">null</span> <span class="keyword">as</span> <span class="title class_">User</span> | <span class="literal">null</span>,</span><br><span class="line">    <span class="attr">isLoggedIn</span>: <span class="literal">false</span></span><br><span class="line">  &#125;),</span><br><span class="line">  </span><br><span class="line">  <span class="attr">getters</span>: &#123;</span><br><span class="line">    <span class="attr">userName</span>: <span class="function">(<span class="params">state</span>) =&gt;</span> state.<span class="property">currentUser</span>?.<span class="property">name</span> ?? <span class="string">&#x27;Guest&#x27;</span>,</span><br><span class="line">    <span class="attr">isAdmin</span>: <span class="function">(<span class="params">state</span>) =&gt;</span> state.<span class="property">currentUser</span>?.<span class="property">role</span> === <span class="string">&#x27;admin&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  </span><br><span class="line">  <span class="attr">actions</span>: &#123;</span><br><span class="line">    <span class="keyword">async</span> <span class="title function_">login</span>(<span class="params"><span class="attr">email</span>: <span class="built_in">string</span>, <span class="attr">password</span>: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> response = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">&#x27;/api/login&#x27;</span>, &#123;</span><br><span class="line">          <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">          <span class="attr">body</span>: <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123; email, password &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="keyword">const</span> data = <span class="keyword">await</span> response.<span class="title function_">json</span>()</span><br><span class="line">        </span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">currentUser</span> = data.<span class="property">user</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">isLoggedIn</span> = <span class="literal">true</span></span><br><span class="line">      &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;Login failed:&#x27;</span>, error)</span><br><span class="line">        <span class="keyword">throw</span> error</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    </span><br><span class="line">    <span class="title function_">logout</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">currentUser</span> = <span class="literal">null</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">isLoggedIn</span> = <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="5-组件通信"><a href="#5-组件通信" class="headerlink" title="5. 组件通信"></a>5. 组件通信</h3><p><strong>Props 和 Emits</strong>：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">interface Props &#123;</span><br><span class="line">  title: string</span><br><span class="line">  count?: number</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface Emits &#123;</span><br><span class="line">  (e: &#x27;update&#x27;, value: number): void</span><br><span class="line">  (e: &#x27;delete&#x27;): void</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const props = withDefaults(defineProps&lt;Props&gt;(), &#123;</span><br><span class="line">  count: 0</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">const emit = defineEmits&lt;Emits&gt;()</span><br><span class="line"></span><br><span class="line">const handleUpdate = () =&gt; &#123;</span><br><span class="line">  emit(&#x27;update&#x27;, props.count + 1)</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;h2&gt;&#123;&#123; title &#125;&#125;&lt;/h2&gt;</span><br><span class="line">    &lt;p&gt;Count: &#123;&#123; count &#125;&#125;&lt;/p&gt;</span><br><span class="line">    &lt;button @click=&quot;handleUpdate&quot;&gt;Update&lt;/button&gt;</span><br><span class="line">    &lt;button @click=&quot;emit(&#x27;delete&#x27;)&quot;&gt;Delete&lt;/button&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="6-Vue-Router-类型安全"><a href="#6-Vue-Router-类型安全" class="headerlink" title="6. Vue Router 类型安全"></a>6. Vue Router 类型安全</h3><div class="code-container" data-rel="Typescript"><figure class="iseeu highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// router/index.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; createRouter, createWebHistory &#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">type</span> &#123; <span class="title class_">RouteRecordRaw</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">routes</span>: <span class="title class_">RouteRecordRaw</span>[] = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Home&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;@/views/Home.vue&#x27;</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;/user/:id&#x27;</span>,</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;UserProfile&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;@/views/UserProfile.vue&#x27;</span>),</span><br><span class="line">    <span class="attr">props</span>: <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="title function_">createRouter</span>(&#123;</span><br><span class="line">  <span class="attr">history</span>: <span class="title function_">createWebHistory</span>(),</span><br><span class="line">  routes</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 路由守卫</span></span><br><span class="line">router.<span class="title function_">beforeEach</span>(<span class="function">(<span class="params">to, <span class="keyword">from</span>, next</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> userStore = <span class="title function_">useUserStore</span>()</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (to.<span class="property">meta</span>.<span class="property">requiresAuth</span> &amp;&amp; !userStore.<span class="property">isLoggedIn</span>) &#123;</span><br><span class="line">    <span class="title function_">next</span>(<span class="string">&#x27;/login&#x27;</span>)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="title function_">next</span>()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="🎨-UI-组件库集成"><a href="#🎨-UI-组件库集成" class="headerlink" title="🎨 UI 组件库集成"></a>🎨 UI 组件库集成</h2><h3 id="推荐的组件库"><a href="#推荐的组件库" class="headerlink" title="推荐的组件库"></a>推荐的组件库</h3><ol>
+<li><strong>Element Plus</strong>：企业级应用</li>
+<li><strong>Ant Design Vue</strong>：阿里巴巴设计体系</li>
+<li><strong>Naive UI</strong>：完整的 TypeScript 支持</li>
+<li><strong>Vuetify</strong>：Material Design 风格</li>
+</ol>
+<h3 id="Element-Plus-示例"><a href="#Element-Plus-示例" class="headerlink" title="Element Plus 示例"></a>Element Plus 示例</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install element-plus</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Typescript"><figure class="iseeu highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">ElementPlus</span> <span class="keyword">from</span> <span class="string">&#x27;element-plus&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;element-plus/dist/index.css&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">App</span> <span class="keyword">from</span> <span class="string">&#x27;./App.vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">createApp</span>(<span class="title class_">App</span>)</span><br><span class="line">app.<span class="title function_">use</span>(<span class="title class_">ElementPlus</span>)</span><br><span class="line">app.<span class="title function_">mount</span>(<span class="string">&#x27;#app&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">import &#123; ElMessage &#125; from &#x27;element-plus&#x27;</span><br><span class="line"></span><br><span class="line">const handleSubmit = () =&gt; &#123;</span><br><span class="line">  ElMessage.success(&#x27;提交成功！&#x27;)</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;el-form&gt;</span><br><span class="line">    &lt;el-form-item label=&quot;用户名&quot;&gt;</span><br><span class="line">      &lt;el-input v-model=&quot;username&quot; /&gt;</span><br><span class="line">    &lt;/el-form-item&gt;</span><br><span class="line">    &lt;el-button type=&quot;primary&quot; @click=&quot;handleSubmit&quot;&gt;提交&lt;/el-button&gt;</span><br><span class="line">  &lt;/el-form&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="🔧-开发工具配置"><a href="#🔧-开发工具配置" class="headerlink" title="🔧 开发工具配置"></a>🔧 开发工具配置</h2><h3 id="VSCode-推荐插件"><a href="#VSCode-推荐插件" class="headerlink" title="VSCode 推荐插件"></a>VSCode 推荐插件</h3><ul>
+<li><strong>Vue Language Features (Volar)</strong>：Vue 3 官方推荐</li>
+<li><strong>TypeScript Vue Plugin (Volar)</strong>：TS 支持</li>
+<li><strong>ESLint</strong>：代码检查</li>
+<li><strong>Prettier</strong>：代码格式化</li>
+</ul>
+<h3 id="ESLint-Prettier-配置"><a href="#ESLint-Prettier-配置" class="headerlink" title="ESLint + Prettier 配置"></a>ESLint + Prettier 配置</h3><div class="code-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// .eslintrc.js</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">extends</span>: [</span><br><span class="line">    <span class="string">&#x27;plugin:vue/vue3-recommended&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;@vue/typescript/recommended&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;prettier&#x27;</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">rules</span>: &#123;</span><br><span class="line">    <span class="string">&#x27;@typescript-eslint/no-unused-vars&#x27;</span>: <span class="string">&#x27;warn&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;vue/multi-word-component-names&#x27;</span>: <span class="string">&#x27;off&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// .prettierrc</span></span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;semi&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;singleQuote&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;trailingComma&quot;</span><span class="punctuation">:</span> <span class="string">&quot;none&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;printWidth&quot;</span><span class="punctuation">:</span> <span class="number">100</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="🚀-性能优化"><a href="#🚀-性能优化" class="headerlink" title="🚀 性能优化"></a>🚀 性能优化</h2><h3 id="1-懒加载路由"><a href="#1-懒加载路由" class="headerlink" title="1. 懒加载路由"></a>1. 懒加载路由</h3><div class="code-container" data-rel="Typescript"><figure class="iseeu highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;/about&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;@/views/About.vue&#x27;</span>) <span class="comment">// 懒加载</span></span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="2-使用-defineAsyncComponent"><a href="#2-使用-defineAsyncComponent" class="headerlink" title="2. 使用 defineAsyncComponent"></a>2. 使用 <code>defineAsyncComponent</code></h3><div class="code-container" data-rel="Typescript"><figure class="iseeu highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; defineAsyncComponent &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">HeavyComponent</span> = <span class="title function_">defineAsyncComponent</span>(<span class="function">() =&gt;</span></span><br><span class="line">  <span class="keyword">import</span>(<span class="string">&#x27;@/components/HeavyComponent.vue&#x27;</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="3-合理使用-v-memo"><a href="#3-合理使用-v-memo" class="headerlink" title="3. 合理使用 v-memo"></a>3. 合理使用 <code>v-memo</code></h3><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div v-for=&quot;item in list&quot; :key=&quot;item.id&quot; v-memo=&quot;[item.id]&quot;&gt;</span><br><span class="line">    &#123;&#123; item.name &#125;&#125;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="📦-项目实战：Com6102gp5"><a href="#📦-项目实战：Com6102gp5" class="headerlink" title="📦 项目实战：Com6102gp5"></a>📦 项目实战：Com6102gp5</h2><p>在 <a class="link"   target="_blank" rel="noopener" href="https://github.com/Wuxy1997/Com6102gp5" >Com6102gp5<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> 项目中，我们：</p>
+<ol>
+<li><strong>采用 Monorepo 结构</strong>：前后端代码在同一仓库</li>
+<li><strong>使用 Vite</strong>：快速的开发体验</li>
+<li><strong>集成 CI&#x2F;CD</strong>：自动化测试和部署</li>
+<li><strong>代码规范</strong>：统一的 ESLint 和 Prettier 配置</li>
+<li><strong>类型安全</strong>：全项目 TypeScript</li>
+</ol>
+<h3 id="团队协作经验"><a href="#团队协作经验" class="headerlink" title="团队协作经验"></a>团队协作经验</h3><ul>
+<li>📋 使用 Git Flow 工作流</li>
+<li>🔍 强制 Code Review</li>
+<li>🧪 编写单元测试</li>
+<li>📝 维护完善的文档</li>
+</ul>
+<h2 id="💭-最佳实践总结"><a href="#💭-最佳实践总结" class="headerlink" title="💭 最佳实践总结"></a>💭 最佳实践总结</h2><ol>
+<li>✅ 始终使用 TypeScript，不要用 <code>any</code></li>
+<li>✅ 优先使用 Composition API 和 <code>&lt;script setup&gt;</code></li>
+<li>✅ 提取可复用逻辑到 composables</li>
+<li>✅ 合理拆分组件，保持单一职责</li>
+<li>✅ 使用 Pinia 管理全局状态</li>
+<li>✅ 配置 ESLint 和 Prettier</li>
+<li>✅ 编写必要的单元测试</li>
+</ol>
+<h2 id="🔗-资源链接"><a href="#🔗-资源链接" class="headerlink" title="🔗 资源链接"></a>🔗 资源链接</h2><ul>
+<li><strong>项目地址</strong>：<a class="link"   target="_blank" rel="noopener" href="https://github.com/Wuxy1997/Com6102gp5" >Com6102gp5<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
+<li><strong>Vue 3 文档</strong>：<a class="link"   target="_blank" rel="noopener" href="https://vuejs.org/" >https://vuejs.org/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
+<li><strong>TypeScript 文档</strong>：<a class="link"   target="_blank" rel="noopener" href="https://www.typescriptlang.org/" >https://www.typescriptlang.org/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
+<li><strong>Vite 文档</strong>：<a class="link"   target="_blank" rel="noopener" href="https://vitejs.dev/" >https://vitejs.dev/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
+</ul>
+<hr>
+<p><em>TypeScript 和 Vue 3 的组合为现代前端开发提供了强大的工具链。虽然有学习曲线，但带来的类型安全和开发体验提升是值得的。</em></p>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>标题:</strong> TypeScript + Vue 3 实战：现代前端开发最佳实践</li>
+        <li><strong>作者:</strong> The Redefine Team</li>
+        <li><strong>创建于
+                :</strong> 2026-01-07 16:00:00</li>
+        
+            <li>
+                <strong>更新于
+                    :</strong> 2026-01-07 15:41:41
+            </li>
+        
+        <li>
+            <strong>链接:</strong> https://redefine.ohevan.com/2026/01/07/2026-01-07-typescript-vue3-best-practices/
+        </li>
+        <li>
+            <strong>
+                版权声明:
+            </strong>
+            
+
+            
+                本文章采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a> 进行许可。
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">#最佳实践</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/TypeScript/">#TypeScript</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/Vue-js/">#Vue.js</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E5%89%8D%E7%AB%AF/">#前端</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/Web%E5%BC%80%E5%8F%91/">#Web开发</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2026/01/07/2026-01-07-federated-reinforcement-learning-project/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">联邦强化学习：隐私保护下的分布式学习探索</span>
+						<span class="post-nav-item">下一篇</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        评论
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.js';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+                    lang: 'zh-CN',
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+		</div>
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">目录</div>
+		<div class="page-title">TypeScript + Vue 3 实战：现代前端开发最佳实践</div>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TypeScript-Vue-3-%E5%AE%9E%E6%88%98%EF%BC%9A%E7%8E%B0%E4%BB%A3%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-text">TypeScript + Vue 3 实战：现代前端开发最佳实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8E%AF-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9-TypeScript-Vue-3%EF%BC%9F"><span class="nav-text">🎯 为什么选择 TypeScript + Vue 3？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TypeScript-%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-text">TypeScript 的优势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-3-%E7%9A%84%E6%94%B9%E8%BF%9B"><span class="nav-text">Vue 3 的改进</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%9B%A0%EF%B8%8F-%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA"><span class="nav-text">🛠️ 项目搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Vite-%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="nav-text">使用 Vite 创建项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E7%9A%84%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="nav-text">推荐的项目结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%92%A1-%E6%A0%B8%E5%BF%83%E5%AE%9E%E8%B7%B5"><span class="nav-text">💡 核心实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BD%BF%E7%94%A8-Composition-API"><span class="nav-text">1. 使用 Composition API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-TypeScript-%E7%B1%BB%E5%9E%8B%E5%AE%9A%E4%B9%89"><span class="nav-text">2. TypeScript 类型定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%BB%84%E5%90%88%E5%BC%8F%E5%87%BD%E6%95%B0%EF%BC%88Composables%EF%BC%89"><span class="nav-text">3. 组合式函数（Composables）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E4%BD%BF%E7%94%A8-Pinia-%E8%BF%9B%E8%A1%8C%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86"><span class="nav-text">4. 使用 Pinia 进行状态管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1"><span class="nav-text">5. 组件通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-Vue-Router-%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8"><span class="nav-text">6. Vue Router 类型安全</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8E%A8-UI-%E7%BB%84%E4%BB%B6%E5%BA%93%E9%9B%86%E6%88%90"><span class="nav-text">🎨 UI 组件库集成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E7%9A%84%E7%BB%84%E4%BB%B6%E5%BA%93"><span class="nav-text">推荐的组件库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Element-Plus-%E7%A4%BA%E4%BE%8B"><span class="nav-text">Element Plus 示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%A7-%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE"><span class="nav-text">🔧 开发工具配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#VSCode-%E6%8E%A8%E8%8D%90%E6%8F%92%E4%BB%B6"><span class="nav-text">VSCode 推荐插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ESLint-Prettier-%E9%85%8D%E7%BD%AE"><span class="nav-text">ESLint + Prettier 配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%9A%80-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="nav-text">🚀 性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%87%92%E5%8A%A0%E8%BD%BD%E8%B7%AF%E7%94%B1"><span class="nav-text">1. 懒加载路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BD%BF%E7%94%A8-defineAsyncComponent"><span class="nav-text">2. 使用 defineAsyncComponent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%90%88%E7%90%86%E4%BD%BF%E7%94%A8-v-memo"><span class="nav-text">3. 合理使用 v-memo</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%A6-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98%EF%BC%9ACom6102gp5"><span class="nav-text">📦 项目实战：Com6102gp5</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%A2%E9%98%9F%E5%8D%8F%E4%BD%9C%E7%BB%8F%E9%AA%8C"><span class="nav-text">团队协作经验</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%92%AD-%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93"><span class="nav-text">💭 最佳实践总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%97-%E8%B5%84%E6%BA%90%E9%93%BE%E6%8E%A5"><span class="nav-text">🔗 资源链接</span></a></li></ol></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">The Redefine Team</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        共撰写了 10 篇文章
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">访问人数</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">总访问量</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">由 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a> 驱动</span>
+            <span class="text-sm lg:block">主题&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.5</a></span>
+        </div>
+        
+        
+            <div>
+                博客已运行 <span class="odometer" id="runtime_days" ></span> 天 <span class="odometer" id="runtime_hours"></span> 小时 <span class="odometer" id="runtime_minutes"></span> 分钟 <span class="odometer" id="runtime_seconds"></span> 秒
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/runtime.js"></script>
+
+    
+<script src="/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/build/libs/Typed.min.js"></script>
+
+  
+<script src="/js/build/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/build/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
+</body>
+
+</html>
