@@ -1,1238 +1,1255 @@
-
 <!DOCTYPE html>
-<html lang="zh-CN ">
-
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>大木头WU的 Blog || </title>
-    <meta name="author" content="大木头WU">
-    <meta name="description" content="A beautiful blog powered by Hexo ">
-    <meta name="keywords" content=" ">
-    <link rel="icon" href="/images/avatar.png">
-    <link rel="stylesheet" href="/css/antd.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
     
-    <link rel="stylesheet" href="/css/maiden-theme.css">
+    <meta name="author" content="The Redefine Team">
     
-    <script src="/js/vue.js"></script>
-    <script src="/js/antd.min.js"></script>
+    <!-- Completely eliminate flash of wrong theme -->
+    <script>
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes ASAP (before DOMContentLoaded)
+            (function() {
+                const addBodyClass = () => {
+                    const b = document.body;
+                    if (!b) return false;
+                    b.classList.add(theme + "-mode");
+                    return true;
+                };
+
+                // Try immediately
+                if (addBodyClass()) return;
+
+                // Observe until body exists
+                const mo = new MutationObserver(() => {
+                    if (addBodyClass()) mo.disconnect();
+                });
+                mo.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+        })();
+    </script>
+    
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://Wuxy1997.github.io/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="大木头WU的 Blog">
+<meta property="og:url" content="https://wuxy1997.github.io/index.html">
+<meta property="og:site_name" content="大木头WU的 Blog">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wuxy1997.github.io/images/redefine-og.webp">
+<meta property="article:author" content="大木头WU">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wuxy1997.github.io/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            Theme Redefine - Redefine Your Hexo Journey.
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"wuxy1997.github.io","root":"/","language":"zh-CN"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Theme Redefine","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.5","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
 <meta name="generator" content="Hexo 8.1.1"></head>
 
+
+
 <body>
+	<div class="progress-bar-container">
+	
 
-    <div id="loading"
-        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
-        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
-        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
-        <div
-            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
-            <div id="loadcontent"
-                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
-                <div>
-                    <h2>LOADING...</h2>
-                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
-                    <div>
-                        <img src="/dancingkitty.gif" alt="loading">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="layout">
-        <transition name="into">
-            <div v-show="show_page" style="display: none;">
-                <div id="menu_show">
-                     
-<nav id="menu">
-    <div class="desktop-menu">
-        <a href="/">
-            <span class="title">大木头WU的 Blog</span>
-        </a>
-        
-        <a href="/">
-            <span>
-                <a-icon type="home" theme="filled" />
-            </span>
-            <span>home</span>
-        </a>
-        
-        <a href="/about">
-            <span>
-                <a-icon type="idcard" theme="filled" />
-            </span>
-            <span>about</span>
-        </a>
-        
-        <a href="/archives">
-            <span>
-                <a-icon type="folder" theme="filled" />
-            </span>
-            <span>archives</span>
-        </a>
-        
-        <a href="/categories">
-            <span>
-                <a-icon type="book" theme="filled" />
-            </span>
-            <span>categories</span>
-        </a>
-        
-        <a href="/tags">
-            <span>
-                <a-icon type="tags" theme="filled" />
-            </span>
-            <span>tags</span>
-        </a>
-        
-        <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997">
-            <span>
-                <a-icon type="github" theme="filled" />
-            </span>
-            <span>GitHub</span>
-        </a>
-        
-    </div>
-
-    <div :class="'phone-menu ' + menu_show" id="phone-menu">
-        <div :class="'title'" @click="menu_show=!menu_show">
-            <span style="margin-right: 10px;">
-                <a-icon type="appstore" theme="filled" />
-            </span>
-            <span>大木头WU的 Blog</span>
-        </div>
-        <div class="items" v-show="menu_show">
-            
-            <a href="/">
-                <div class="item">
-                    <div style="min-width:20px; max-width:50px; width: 10%">
-                        <a-icon type="home" theme="filled" />
-                    </div>
-                    <div style="min-width:100px;max-width: 150%;width: 20%;">home</div>
-                </div>
-            </a>
-            
-            <a href="/about">
-                <div class="item">
-                    <div style="min-width:20px; max-width:50px; width: 10%">
-                        <a-icon type="idcard" theme="filled" />
-                    </div>
-                    <div style="min-width:100px;max-width: 150%;width: 20%;">about</div>
-                </div>
-            </a>
-            
-            <a href="/archives">
-                <div class="item">
-                    <div style="min-width:20px; max-width:50px; width: 10%">
-                        <a-icon type="folder" theme="filled" />
-                    </div>
-                    <div style="min-width:100px;max-width: 150%;width: 20%;">archives</div>
-                </div>
-            </a>
-            
-            <a href="/categories">
-                <div class="item">
-                    <div style="min-width:20px; max-width:50px; width: 10%">
-                        <a-icon type="book" theme="filled" />
-                    </div>
-                    <div style="min-width:100px;max-width: 150%;width: 20%;">categories</div>
-                </div>
-            </a>
-            
-            <a href="/tags">
-                <div class="item">
-                    <div style="min-width:20px; max-width:50px; width: 10%">
-                        <a-icon type="tags" theme="filled" />
-                    </div>
-                    <div style="min-width:100px;max-width: 150%;width: 20%;">tags</div>
-                </div>
-            </a>
-            
-            <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997">
-                <div class="item">
-                    <div style="min-width:20px; max-width:50px; width: 10%">
-                        <a-icon type="github" theme="filled" />
-                    </div>
-                    <div style="min-width:100px;max-width: 150%;width: 20%;">GitHub</div>
-                </div>
-            </a>
-            
-        </div>
-        <div class="curtain" v-show="menu_show"></div>
-    </div>
-
-</nav>
-                </div>
-
-                <div id="main">
-                    <div id="home-head" style=background-image:url('home.jpg')>
-    <script>
-        var menu = document.getElementById("menu")
-        menu.className += " menu-color"
-    </script>
-     
-    <div id="home-info" class="home-info" @click="home_click">
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="info">
-            <div class="wrap">
-                <h1>大木头WU的 Blog</h1>
-                <h3></h3>
-                <h5>A beautiful blog powered by Hexo</h5>
-            </div>
-        </span>
-    </div>
-     
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
 </div>
 
+<main class="page-container" id="swup">
 
-
-<div id="home-posts-wrap" class=>
-    <div id="home-posts">
-
-        <div id="posts">
-            
-
-<div class="post">
-
-    <a href="/2026/01/07/hello-world/">
-        <h2>
-            Hello World
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2026/1/7
-        </span>
-
+	
+	
+    <style>
+        .home-banner-container {
+            background: none !important;
+        }
+        .home-article-item,
+        .sidebar-links,
+        .sidebar-content,
+        a.page-number,
+        a.extend,
+        .sidebar-links .links:hover,
+        .right-bottom-tools,
+        footer.footer {
+            background-color: var(--background-color-transparent-80) !important;
+        }
+        .right-bottom-tools:hover,
+        a.page-number:hover,
+        a.extend:hover {
+            background-color: var(--primary-color) !important;
+        }
+        .site-info,
+        .home-article-sticky-label {
+            background-color: var(--background-color-transparent-15) !important;
+        }
+        .home-article-sticky-label {
+            backdrop-filter: none !important;
+        }
+    </style>
+    <div class="home-banner-background transition-fade fixed top-0 left-0 w-screen h-screen scale-125 sm:scale-110 box-border will-change-transform bg-cover">
+        <img src="/images/wallhaven-wqery6-light.webp" alt="home-banner-background" class="w-full h-full object-cover dark:hidden">
+        <img src="/images/wallhaven-wqery6-dark.webp" alt="home-banner-background" class="w-full h-full object-cover hidden dark:block">
     </div>
 
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            
-            <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        
-    </div>
-
-    <a href="/2026/01/07/hello-world/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2026/01/06/2026-01-07-federated-learning-edge-computing/">
-        <h2>
-            联邦学习与边缘计算：保护隐私的 AI 未来
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-        <span class="category">
-            <a href="/categories/技术研究">
-                <span class="icon">
-                    <a-icon type="book" theme="filled" /></span>
-                技术研究
-            </a>
-        </span>
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2026/1/7
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            
-            <h1 id="联邦学习与边缘计算：保护隐私的-AI-未来"><a href="#联邦学习与边缘计算：保护隐私的-AI-未来" class="headerlink" title="联邦学习与边缘计算：保护隐私的 AI 未来"></a>联邦学习与边缘计算：保护隐私的 AI 未来</h1><p>在我的研究项目 <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997/Federated-Reinforcement-Learning-for-Mobile-Edge-Computing-Rebuild-t">Federated Reinforcement Learning for Mobile Edge Computing</a> 中，我深入探索了联邦学习在边缘计算场景中的应用。今天和大家分享一些心得。</p>
-<h2 id="🤔-什么是联邦学习？"><a href="#🤔-什么是联邦学习？" class="headerlink" title="🤔 什么是联邦学习？"></a>🤔 什么是联邦学习？</h2><p>联邦学习（Federated Learning）是一种机器学习范式，它能让多个参与方在不共享原始数据的情况下，协同训练一个共享的机器学习模型。</p>
-<h3 id="核心特点"><a href="#核心特点" class="headerlink" title="核心特点"></a>核心特点</h3><ul>
-<li><strong>数据留在本地</strong>: 原始数据永远不离开设备</li>
-<li><strong>模型分布式训练</strong>: 只传输模型参数而非数据</li>
-<li><strong>隐私保护</strong>: 天然的隐私保护机制</li>
-<li><strong>去中心化</strong>: 无需集中存储敏感数据</li>
-</ul>
-<h2 id="🌐-边缘计算的优势"><a href="#🌐-边缘计算的优势" class="headerlink" title="🌐 边缘计算的优势"></a>🌐 边缘计算的优势</h2><p>边缘计算将计算任务从中心云服务器推向网络边缘，带来诸多好处：</p>
-<h3 id="1-低延迟"><a href="#1-低延迟" class="headerlink" title="1. 低延迟"></a>1. 低延迟</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">传统云计算: 设备 → 云端 → 设备 (100-500ms)</span><br><span class="line">边缘计算: 设备 → 边缘节点 → 设备 (1-50ms)</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-减少带宽消耗"><a href="#2-减少带宽消耗" class="headerlink" title="2. 减少带宽消耗"></a>2. 减少带宽消耗</h3><p>只传输必要的模型参数，而非大量原始数据</p>
-<h3 id="3-提高隐私性"><a href="#3-提高隐私性" class="headerlink" title="3. 提高隐私性"></a>3. 提高隐私性</h3><p>敏感数据不需要上传到云端</p>
-<h2 id="🔬-联邦强化学习架构"><a href="#🔬-联邦强化学习架构" class="headerlink" title="🔬 联邦强化学习架构"></a>🔬 联邦强化学习架构</h2><p>在我的项目中，我实现了一个结合联邦学习和强化学习的框架：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">FederatedRLAgent</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, state_dim, action_dim</span>):</span><br><span class="line">        <span class="variable language_">self</span>.local_model = <span class="variable language_">self</span>.build_model(state_dim, action_dim)</span><br><span class="line">        <span class="variable language_">self</span>.global_model = <span class="literal">None</span></span><br><span class="line">        </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">build_model</span>(<span class="params">self, state_dim, action_dim</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;构建强化学习模型&quot;&quot;&quot;</span></span><br><span class="line">        model = Sequential([</span><br><span class="line">            Dense(<span class="number">128</span>, activation=<span class="string">&#x27;relu&#x27;</span>, input_dim=state_dim),</span><br><span class="line">            Dense(<span class="number">64</span>, activation=<span class="string">&#x27;relu&#x27;</span>),</span><br><span class="line">            Dense(action_dim, activation=<span class="string">&#x27;softmax&#x27;</span>)</span><br><span class="line">        ])</span><br><span class="line">        <span class="keyword">return</span> model</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">local_training</span>(<span class="params">self, episodes=<span class="number">100</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;本地训练&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">for</span> episode <span class="keyword">in</span> <span class="built_in">range</span>(episodes):</span><br><span class="line">            state = <span class="variable language_">self</span>.env.reset()</span><br><span class="line">            done = <span class="literal">False</span></span><br><span class="line">            </span><br><span class="line">            <span class="keyword">while</span> <span class="keyword">not</span> done:</span><br><span class="line">                action = <span class="variable language_">self</span>.select_action(state)</span><br><span class="line">                next_state, reward, done = <span class="variable language_">self</span>.env.step(action)</span><br><span class="line">                <span class="variable language_">self</span>.update_model(state, action, reward, next_state)</span><br><span class="line">                state = next_state</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.get_model_weights()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">aggregate_models</span>(<span class="params">self, client_weights</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;聚合多个客户端的模型&quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># 加权平均</span></span><br><span class="line">        global_weights = np.average(client_weights, axis=<span class="number">0</span>, weights=<span class="variable language_">self</span>.client_weights)</span><br><span class="line">        <span class="variable language_">self</span>.global_model.set_weights(global_weights)</span><br></pre></td></tr></table></figure>
-
-<h2 id="📊-应用场景"><a href="#📊-应用场景" class="headerlink" title="📊 应用场景"></a>📊 应用场景</h2><h3 id="1-智能手机"><a href="#1-智能手机" class="headerlink" title="1. 智能手机"></a>1. 智能手机</h3><ul>
-<li>输入法预测</li>
-<li>照片分类</li>
-<li>语音识别</li>
-</ul>
-<h3 id="2-医疗健康"><a href="#2-医疗健康" class="headerlink" title="2. 医疗健康"></a>2. 医疗健康</h3><ul>
-<li>疾病预测</li>
-<li>医疗影像分析</li>
-<li>个性化治疗方案</li>
-</ul>
-<h3 id="3-智能交通"><a href="#3-智能交通" class="headerlink" title="3. 智能交通"></a>3. 智能交通</h3><ul>
-<li>自动驾驶</li>
-<li>交通流量预测</li>
-<li>路径规划</li>
-</ul>
-<h3 id="4-工业-IoT"><a href="#4-工业-IoT" class="headerlink" title="4. 工业 IoT"></a>4. 工业 IoT</h3><ul>
-<li>设备故障预测</li>
-<li>质量控制</li>
-<li>能源优化</li>
-</ul>
-<h2 id="🔐-隐私保护技术"><a href="#🔐-隐私保护技术" class="headerlink" title="🔐 隐私保护技术"></a>🔐 隐私保护技术</h2><h3 id="1-差分隐私（Differential-Privacy）"><a href="#1-差分隐私（Differential-Privacy）" class="headerlink" title="1. 差分隐私（Differential Privacy）"></a>1. 差分隐私（Differential Privacy）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">add_noise</span>(<span class="params">data, epsilon=<span class="number">1.0</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;添加拉普拉斯噪声&quot;&quot;&quot;</span></span><br><span class="line">    sensitivity = <span class="number">1.0</span></span><br><span class="line">    scale = sensitivity / epsilon</span><br><span class="line">    noise = np.random.laplace(<span class="number">0</span>, scale, data.shape)</span><br><span class="line">    <span class="keyword">return</span> data + noise</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-安全多方计算（Secure-Multi-Party-Computation）"><a href="#2-安全多方计算（Secure-Multi-Party-Computation）" class="headerlink" title="2. 安全多方计算（Secure Multi-Party Computation）"></a>2. 安全多方计算（Secure Multi-Party Computation）</h3><p>允许多方在不泄露各自数据的情况下计算结果</p>
-<h3 id="3-同态加密（Homomorphic-Encryption）"><a href="#3-同态加密（Homomorphic-Encryption）" class="headerlink" title="3. 同态加密（Homomorphic Encryption）"></a>3. 同态加密（Homomorphic Encryption）</h3><p>在加密数据上直接进行计算</p>
-<h2 id="🚀-实现挑战"><a href="#🚀-实现挑战" class="headerlink" title="🚀 实现挑战"></a>🚀 实现挑战</h2><h3 id="1-通信效率"><a href="#1-通信效率" class="headerlink" title="1. 通信效率"></a>1. 通信效率</h3><p><strong>问题</strong>: 频繁的模型参数传输消耗大量带宽</p>
-<p><strong>解决方案</strong>:</p>
-<ul>
-<li>模型压缩</li>
-<li>梯度量化</li>
-<li>稀疏化更新</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">compress_gradients</span>(<span class="params">gradients, compression_ratio=<span class="number">0.1</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;梯度压缩：只传输 top-k 重要的梯度&quot;&quot;&quot;</span></span><br><span class="line">    flat_grads = np.concatenate([g.flatten() <span class="keyword">for</span> g <span class="keyword">in</span> gradients])</span><br><span class="line">    k = <span class="built_in">int</span>(<span class="built_in">len</span>(flat_grads) * compression_ratio)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 选择绝对值最大的 k 个梯度</span></span><br><span class="line">    top_k_indices = np.argsort(np.<span class="built_in">abs</span>(flat_grads))[-k:]</span><br><span class="line">    compressed = np.zeros_like(flat_grads)</span><br><span class="line">    compressed[top_k_indices] = flat_grads[top_k_indices]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> compressed</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-数据异构性"><a href="#2-数据异构性" class="headerlink" title="2. 数据异构性"></a>2. 数据异构性</h3><p>不同设备的数据分布可能差异很大（Non-IID 数据）</p>
-<p><strong>解决方案</strong>:</p>
-<ul>
-<li>个性化联邦学习</li>
-<li>元学习方法</li>
-<li>聚类策略</li>
-</ul>
-<h3 id="3-设备异构性"><a href="#3-设备异构性" class="headerlink" title="3. 设备异构性"></a>3. 设备异构性</h3><p>不同设备的计算能力和能源状况不同</p>
-<p><strong>解决方案</strong>:</p>
-<ul>
-<li>自适应聚合策略</li>
-<li>异步更新机制</li>
-<li>设备选择算法</li>
-</ul>
-<h2 id="📈-性能评估"><a href="#📈-性能评估" class="headerlink" title="📈 性能评估"></a>📈 性能评估</h2><p>在我的实验中，联邦强化学习相比传统方法：</p>
-<table>
-<thead>
-<tr>
-<th>指标</th>
-<th>传统集中式</th>
-<th>联邦学习</th>
-<th>改进</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>训练时间</td>
-<td>100%</td>
-<td>120%</td>
-<td>-20%</td>
-</tr>
-<tr>
-<td>通信开销</td>
-<td>100%</td>
-<td>30%</td>
-<td><strong>↓70%</strong></td>
-</tr>
-<tr>
-<td>隐私保护</td>
-<td>❌</td>
-<td>✅</td>
-<td><strong>质的飞跃</strong></td>
-</tr>
-<tr>
-<td>模型准确率</td>
-<td>95%</td>
-<td>93%</td>
-<td>-2%</td>
-</tr>
-</tbody></table>
-<h2 id="🔮-未来展望"><a href="#🔮-未来展望" class="headerlink" title="🔮 未来展望"></a>🔮 未来展望</h2><h3 id="1-跨设备联邦学习"><a href="#1-跨设备联邦学习" class="headerlink" title="1. 跨设备联邦学习"></a>1. 跨设备联邦学习</h3><p>从数百个设备扩展到数百万个设备</p>
-<h3 id="2-联邦迁移学习"><a href="#2-联邦迁移学习" class="headerlink" title="2. 联邦迁移学习"></a>2. 联邦迁移学习</h3><p>在保护隐私的同时实现跨域知识迁移</p>
-<h3 id="3-联邦生成模型"><a href="#3-联邦生成模型" class="headerlink" title="3. 联邦生成模型"></a>3. 联邦生成模型</h3><p>隐私保护的生成式 AI</p>
-<h3 id="4-区块链集成"><a href="#4-区块链集成" class="headerlink" title="4. 区块链集成"></a>4. 区块链集成</h3><p>利用区块链确保联邦学习的透明性和可信度</p>
-<h2 id="💻-开源工具推荐"><a href="#💻-开源工具推荐" class="headerlink" title="💻 开源工具推荐"></a>💻 开源工具推荐</h2><ul>
-<li><strong>TensorFlow Federated</strong>: Google 的联邦学习框架</li>
-<li><strong>PySyft</strong>: 隐私保护机器学习库</li>
-<li><strong>FATE</strong>: 工业级联邦学习平台</li>
-<li><strong>Flower</strong>: 友好的联邦学习框架</li>
-</ul>
-<h2 id="📚-学习资源"><a href="#📚-学习资源" class="headerlink" title="📚 学习资源"></a>📚 学习资源</h2><ul>
-<li><strong>论文</strong>: “Communication-Efficient Learning of Deep Networks from Decentralized Data”</li>
-<li><strong>课程</strong>: Stanford CS329S - Machine Learning Systems Design</li>
-<li><strong>书籍</strong>: “Federated Learning” by Peter Kairouz et al.</li>
-</ul>
-<h2 id="🎯-总结"><a href="#🎯-总结" class="headerlink" title="🎯 总结"></a>🎯 总结</h2><p>联邦学习和边缘计算的结合为我们描绘了一个既智能又尊重隐私的未来：</p>
-<p>✅ <strong>隐私保护</strong>: 数据不出本地<br>✅ <strong>高效计算</strong>: 边缘端快速响应<br>✅ <strong>可扩展性</strong>: 支持大规模部署<br>✅ <strong>实用性</strong>: 适合真实场景应用</p>
-<p>这个领域还有很多待解决的问题和研究机会，欢迎对此感兴趣的朋友一起交流探讨！</p>
-<hr>
-<p><strong>参考我的项目</strong>: <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997/Federated-Reinforcement-Learning-for-Mobile-Edge-Computing-Rebuild-t">Federated-Reinforcement-Learning-for-Mobile-Edge-Computing</a></p>
-<p>如果觉得有帮助，欢迎 Star ⭐！</p>
-
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/人工智能" style=color:#1bccbc>
-                人工智能
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/机器学习" style=color:#1bccbc>
-                机器学习
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/联邦学习" style=color:#1bccbc>
-                联邦学习
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/边缘计算" style=color:#00bcd4>
-                边缘计算
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/隐私保护" style=color:#ffa2c4>
-                隐私保护
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2026/01/06/2026-01-07-federated-learning-edge-computing/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2026/01/06/2026-01-07-my-open-source-projects/">
-        <h2>
-            我的开源项目集合
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-        <span class="category">
-            <a href="/categories/项目展示">
-                <span class="icon">
-                    <a-icon type="book" theme="filled" /></span>
-                项目展示
-            </a>
-        </span>
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2026/1/7
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            
-            <h1 id="我的开源项目集合"><a href="#我的开源项目集合" class="headerlink" title="我的开源项目集合"></a>我的开源项目集合</h1><p>这里是我在 GitHub 上的一些开源项目，涵盖了人工智能、云计算、工具开发和游戏等多个领域。</p>
-<h2 id="🔬-研究与-AI-项目"><a href="#🔬-研究与-AI-项目" class="headerlink" title="🔬 研究与 AI 项目"></a>🔬 研究与 AI 项目</h2><h3 id="Federated-Reinforcement-Learning-for-Mobile-Edge-Computing"><a href="#Federated-Reinforcement-Learning-for-Mobile-Edge-Computing" class="headerlink" title="Federated Reinforcement Learning for Mobile Edge Computing"></a>Federated Reinforcement Learning for Mobile Edge Computing</h3><p><strong>语言</strong>: Python | ⭐ Stars: 1</p>
-<p>这是一个关于移动边缘计算环境下联邦强化学习的研究项目。项目探索了如何在边缘计算场景中应用联邦学习技术，保护用户隐私的同时实现高效的模型训练。</p>
-<p><strong>关键技术</strong>:</p>
-<ul>
-<li>联邦学习 (Federated Learning)</li>
-<li>强化学习 (Reinforcement Learning)</li>
-<li>移动边缘计算 (Mobile Edge Computing)</li>
-</ul>
-<p>🔗 <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997/Federated-Reinforcement-Learning-for-Mobile-Edge-Computing-Rebuild-t">查看项目</a></p>
-<hr>
-<h3 id="SARS-CoV-2-AI-Analyzer"><a href="#SARS-CoV-2-AI-Analyzer" class="headerlink" title="SARS-CoV-2 AI Analyzer"></a>SARS-CoV-2 AI Analyzer</h3><p><strong>语言</strong>: JavaScript</p>
-<p>基于 AI 的新冠病毒数据分析工具，用于处理和分析 SARS-CoV-2 相关数据。这个项目展示了如何利用人工智能技术来辅助公共卫生数据分析。</p>
-<p>🔗 <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997/SARS-CoV-2-AI-Analyzer">查看项目</a></p>
-<hr>
-<h2 id="🛠️-实用工具"><a href="#🛠️-实用工具" class="headerlink" title="🛠️ 实用工具"></a>🛠️ 实用工具</h2><h3 id="Alicloud-OSS-批量管理工具"><a href="#Alicloud-OSS-批量管理工具" class="headerlink" title="Alicloud OSS 批量管理工具"></a>Alicloud OSS 批量管理工具</h3><p><strong>语言</strong>: C#</p>
-<p>这是一个专门为阿里云 OSS (对象存储服务) 开发的批量管理工具。主要功能包括：</p>
-<ul>
-<li>按最后编辑时间排序文件</li>
-<li>批量移动文件</li>
-<li>提高云存储管理效率</li>
-</ul>
-<p>如果你经常需要处理大量的 OSS 文件，这个工具能大大提升你的工作效率。</p>
-<p>🔗 <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997/Alicloud-oss-last-edited-time-sort-and-batch-move">查看项目</a></p>
-<hr>
-<h3 id="PDF-Split-Merger"><a href="#PDF-Split-Merger" class="headerlink" title="PDF Split &amp; Merger"></a>PDF Split &amp; Merger</h3><p><strong>语言</strong>: Python</p>
-<p>一个简单实用的 PDF 处理工具，支持：</p>
-<ul>
-<li>PDF 文件分割</li>
-<li>PDF 文件合并</li>
-<li>批量处理</li>
-</ul>
-<p>使用 Python 实现，轻量级且易于使用。</p>
-<p>🔗 <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997/PDFsplitmerger">查看项目</a></p>
-<hr>
-<h3 id="AI-Auto-Reports-Generator"><a href="#AI-Auto-Reports-Generator" class="headerlink" title="AI Auto Reports Generator"></a>AI Auto Reports Generator</h3><p><strong>语言</strong>: HTML</p>
-<p>AI 驱动的自动报告生成系统，帮助用户快速生成格式化的报告文档。</p>
-<p>🔗 <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997/6104gp-ai-auto-reports">查看项目</a></p>
-<hr>
-<h2 id="🌐-Web-开发项目"><a href="#🌐-Web-开发项目" class="headerlink" title="🌐 Web 开发项目"></a>🌐 Web 开发项目</h2><h3 id="Com6102gp5"><a href="#Com6102gp5" class="headerlink" title="Com6102gp5"></a>Com6102gp5</h3><p><strong>语言</strong>: TypeScript | ⭐ Stars: 1</p>
-<p>使用 TypeScript 开发的 Web 应用项目，展示了现代前端开发技术的应用。</p>
-<p>🔗 <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997/Com6102gp5">查看项目</a></p>
-<hr>
-<h3 id="6102-Project"><a href="#6102-Project" class="headerlink" title="6102 Project"></a>6102 Project</h3><p><strong>语言</strong>: Vue.js</p>
-<p>基于 Vue.js 框架开发的前端应用，展示了 Vue 生态系统的强大功能。</p>
-<p>🔗 <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997/6102">查看项目</a></p>
-<hr>
-<h2 id="🎮-趣味小游戏"><a href="#🎮-趣味小游戏" class="headerlink" title="🎮 趣味小游戏"></a>🎮 趣味小游戏</h2><h3 id="Snake-Game-贪吃蛇"><a href="#Snake-Game-贪吃蛇" class="headerlink" title="Snake Game (贪吃蛇)"></a>Snake Game (贪吃蛇)</h3><p><strong>语言</strong>: Python</p>
-<p>经典的贪吃蛇游戏，使用 Python 实现。这是学习游戏开发和 Python 编程的好例子。</p>
-<p>🔗 <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997/Snake-game-">查看项目</a></p>
-<hr>
-<h3 id="Tic-Tac-Toe-井字棋"><a href="#Tic-Tac-Toe-井字棋" class="headerlink" title="Tic Tac Toe (井字棋)"></a>Tic Tac Toe (井字棋)</h3><p><strong>语言</strong>: Python</p>
-<p>Python 实现的井字棋游戏，包含了基本的游戏逻辑和 AI 对手。</p>
-<p>🔗 <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997/tictactoe">查看项目</a></p>
-<hr>
-<h3 id="Guessing-Number-Game"><a href="#Guessing-Number-Game" class="headerlink" title="Guessing Number Game"></a>Guessing Number Game</h3><p><strong>语言</strong>: Java</p>
-<p>Java 实现的猜数字游戏，适合初学者学习 Java 基础语法。</p>
-<p><strong>游戏特点</strong>:</p>
-<ul>
-<li>随机数生成</li>
-<li>用户输入处理</li>
-<li>游戏逻辑实现</li>
-</ul>
-<p>🔗 <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997/Guessing-game">查看项目</a></p>
-<hr>
-<h3 id="Icebreak"><a href="#Icebreak" class="headerlink" title="Icebreak"></a>Icebreak</h3><p><strong>语言</strong>: Java</p>
-<p>一个用 Java 开发的趣味小游戏。</p>
-<p>🔗 <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997/icebreak">查看项目</a></p>
-<hr>
-<h2 id="📊-项目统计"><a href="#📊-项目统计" class="headerlink" title="📊 项目统计"></a>📊 项目统计</h2><ul>
-<li><strong>总项目数</strong>: 16+ 个公开仓库</li>
-<li><strong>主要语言</strong>: Python, JavaScript, TypeScript, C#, Java, Vue</li>
-<li><strong>研究方向</strong>: AI&#x2F;ML, 联邦学习, 边缘计算</li>
-<li><strong>获得 Stars</strong>: 2+ ⭐</li>
-</ul>
-<hr>
-<h2 id="🤝-参与贡献"><a href="#🤝-参与贡献" class="headerlink" title="🤝 参与贡献"></a>🤝 参与贡献</h2><p>所有项目都是开源的，欢迎：</p>
-<ul>
-<li>⭐ Star 支持</li>
-<li>🍴 Fork 二次开发</li>
-<li>🐛 提交 Issue</li>
-<li>💡 提出建议</li>
-<li>🔧 贡献代码</li>
-</ul>
-<h2 id="📬-联系我"><a href="#📬-联系我" class="headerlink" title="📬 联系我"></a>📬 联系我</h2><p>如果你对任何项目感兴趣或有疑问，欢迎通过以下方式联系：</p>
-<ul>
-<li>GitHub: <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997">@Wuxy1997</a></li>
-<li>在相应的项目仓库提 Issue</li>
-</ul>
-<hr>
-<p>持续更新中… 敬请期待更多有趣的项目！</p>
-
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/开源" style=color:#879cff>
-                开源
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/GitHub" style=color:#ffa2c4>
-                GitHub
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/项目" style=color:#ff7d73>
-                项目
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/AI" style=color:#00bcd4>
-                AI
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/Python" style=color:#00bcd4>
-                Python
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2026/01/06/2026-01-07-my-open-source-projects/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2026/01/06/2026-01-07-python-development-tips/">
-        <h2>
-            Python 开发技巧分享
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-        <span class="category">
-            <a href="/categories/技术分享">
-                <span class="icon">
-                    <a-icon type="book" theme="filled" /></span>
-                技术分享
-            </a>
-        </span>
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2026/1/7
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            
-            <h1 id="Python-开发技巧分享"><a href="#Python-开发技巧分享" class="headerlink" title="Python 开发技巧分享"></a>Python 开发技巧分享</h1><p>作为一名经常使用 Python 的开发者，我在实际项目中积累了一些实用的技巧和最佳实践。今天分享给大家。</p>
-<h2 id="🎯-项目结构最佳实践"><a href="#🎯-项目结构最佳实践" class="headerlink" title="🎯 项目结构最佳实践"></a>🎯 项目结构最佳实践</h2><p>一个清晰的项目结构能让代码更易维护：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">my_project/</span><br><span class="line">├── src/</span><br><span class="line">│   ├── __init__.py</span><br><span class="line">│   ├── main.py</span><br><span class="line">│   └── utils/</span><br><span class="line">├── tests/</span><br><span class="line">│   ├── __init__.py</span><br><span class="line">│   └── test_main.py</span><br><span class="line">├── requirements.txt</span><br><span class="line">├── README.md</span><br><span class="line">└── .gitignore</span><br></pre></td></tr></table></figure>
-
-<h2 id="💡-常用代码片段"><a href="#💡-常用代码片段" class="headerlink" title="💡 常用代码片段"></a>💡 常用代码片段</h2><h3 id="1-文件读写的优雅方式"><a href="#1-文件读写的优雅方式" class="headerlink" title="1. 文件读写的优雅方式"></a>1. 文件读写的优雅方式</h3><p>使用上下文管理器自动处理文件关闭：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 推荐写法</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;file.txt&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    content = f.read()</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 写入 JSON 数据</span></span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;data.json&#x27;</span>, <span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    json.dump(data, f, ensure_ascii=<span class="literal">False</span>, indent=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-列表推导式的高效使用"><a href="#2-列表推导式的高效使用" class="headerlink" title="2. 列表推导式的高效使用"></a>2. 列表推导式的高效使用</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 基础用法</span></span><br><span class="line">squares = [x**<span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>)]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 带条件过滤</span></span><br><span class="line">even_squares = [x**<span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>) <span class="keyword">if</span> x % <span class="number">2</span> == <span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 字典推导式</span></span><br><span class="line">word_lengths = &#123;word: <span class="built_in">len</span>(word) <span class="keyword">for</span> word <span class="keyword">in</span> [<span class="string">&#x27;hello&#x27;</span>, <span class="string">&#x27;world&#x27;</span>, <span class="string">&#x27;python&#x27;</span>]&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-装饰器模式"><a href="#3-装饰器模式" class="headerlink" title="3. 装饰器模式"></a>3. 装饰器模式</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> wraps</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">timer</span>(<span class="params">func</span>):</span><br><span class="line"><span class="meta">    @wraps(<span class="params">func</span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">wrapper</span>(<span class="params">*args, **kwargs</span>):</span><br><span class="line">        start = time.time()</span><br><span class="line">        result = func(*args, **kwargs)</span><br><span class="line">        end = time.time()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;func.__name__&#125;</span> took <span class="subst">&#123;end - start:<span class="number">.2</span>f&#125;</span> seconds&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"><span class="meta">@timer</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">slow_function</span>():</span><br><span class="line">    time.sleep(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;Done&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="🔧-实用工具库推荐"><a href="#🔧-实用工具库推荐" class="headerlink" title="🔧 实用工具库推荐"></a>🔧 实用工具库推荐</h2><h3 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h3><ul>
-<li><strong>pandas</strong>: 数据分析必备</li>
-<li><strong>numpy</strong>: 科学计算基础</li>
-<li><strong>polars</strong>: 更快的 DataFrame 处理</li>
-</ul>
-<h3 id="Web-开发"><a href="#Web-开发" class="headerlink" title="Web 开发"></a>Web 开发</h3><ul>
-<li><strong>FastAPI</strong>: 现代化的 API 框架</li>
-<li><strong>requests</strong>: HTTP 请求库</li>
-<li><strong>beautifulsoup4</strong>: HTML 解析</li>
-</ul>
-<h3 id="工具类"><a href="#工具类" class="headerlink" title="工具类"></a>工具类</h3><ul>
-<li><strong>pathlib</strong>: 路径处理</li>
-<li><strong>loguru</strong>: 更好的日志库</li>
-<li><strong>rich</strong>: 终端美化输出</li>
-</ul>
-<h2 id="🚀-性能优化技巧"><a href="#🚀-性能优化技巧" class="headerlink" title="🚀 性能优化技巧"></a>🚀 性能优化技巧</h2><h3 id="1-使用生成器节省内存"><a href="#1-使用生成器节省内存" class="headerlink" title="1. 使用生成器节省内存"></a>1. 使用生成器节省内存</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不好的做法 - 占用大量内存</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_numbers</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">return</span> [i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n)]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 好的做法 - 按需生成</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_numbers</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        <span class="keyword">yield</span> i</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-使用-set-进行快速查找"><a href="#2-使用-set-进行快速查找" class="headerlink" title="2. 使用 set 进行快速查找"></a>2. 使用 set 进行快速查找</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列表查找 O(n)</span></span><br><span class="line">my_list = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line"><span class="keyword">if</span> <span class="number">3</span> <span class="keyword">in</span> my_list:  <span class="comment"># 较慢</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Found&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 集合查找 O(1)</span></span><br><span class="line">my_set = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;</span><br><span class="line"><span class="keyword">if</span> <span class="number">3</span> <span class="keyword">in</span> my_set:  <span class="comment"># 更快</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Found&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<h2 id="🛡️-错误处理"><a href="#🛡️-错误处理" class="headerlink" title="🛡️ 错误处理"></a>🛡️ 错误处理</h2><h3 id="具体的异常处理"><a href="#具体的异常处理" class="headerlink" title="具体的异常处理"></a>具体的异常处理</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;file.txt&#x27;</span>, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        data = json.load(f)</span><br><span class="line"><span class="keyword">except</span> FileNotFoundError:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;文件不存在&quot;</span>)</span><br><span class="line"><span class="keyword">except</span> json.JSONDecodeError:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;JSON 格式错误&quot;</span>)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;未知错误: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;清理资源&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<h2 id="📝-代码风格"><a href="#📝-代码风格" class="headerlink" title="📝 代码风格"></a>📝 代码风格</h2><h3 id="遵循-PEP-8"><a href="#遵循-PEP-8" class="headerlink" title="遵循 PEP 8"></a>遵循 PEP 8</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 命名规范</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:  <span class="comment"># 类名用大驼峰</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_function</span>():  <span class="comment"># 函数名用小写+下划线</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">MY_CONSTANT = <span class="number">100</span>  <span class="comment"># 常量用大写</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 适当的空格</span></span><br><span class="line">result = (a + b) * c  <span class="comment"># 运算符两边加空格</span></span><br><span class="line">my_list[<span class="number">0</span>:<span class="number">2</span>]  <span class="comment"># 切片不加空格</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="🎨-实战案例：PDF-处理工具"><a href="#🎨-实战案例：PDF-处理工具" class="headerlink" title="🎨 实战案例：PDF 处理工具"></a>🎨 实战案例：PDF 处理工具</h2><p>我在 <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997/PDFsplitmerger">PDFsplitmerger</a> 项目中使用了这些技巧：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PyPDF2 <span class="keyword">import</span> PdfReader, PdfWriter</span><br><span class="line"><span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">split_pdf</span>(<span class="params">input_path, output_dir, pages_per_file=<span class="number">10</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;将 PDF 文件分割成多个小文件&quot;&quot;&quot;</span></span><br><span class="line">    pdf = PdfReader(input_path)</span><br><span class="line">    total_pages = <span class="built_in">len</span>(pdf.pages)</span><br><span class="line">    </span><br><span class="line">    output_dir = Path(output_dir)</span><br><span class="line">    output_dir.mkdir(exist_ok=<span class="literal">True</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> start_page <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, total_pages, pages_per_file):</span><br><span class="line">        writer = PdfWriter()</span><br><span class="line">        end_page = <span class="built_in">min</span>(start_page + pages_per_file, total_pages)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> page_num <span class="keyword">in</span> <span class="built_in">range</span>(start_page, end_page):</span><br><span class="line">            writer.add_page(pdf.pages[page_num])</span><br><span class="line">        </span><br><span class="line">        output_file = output_dir / <span class="string">f&quot;split_<span class="subst">&#123;start_page+<span class="number">1</span>&#125;</span>-<span class="subst">&#123;end_page&#125;</span>.pdf&quot;</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(output_file, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            writer.write(f)</span><br></pre></td></tr></table></figure>
-
-<h2 id="🔍-调试技巧"><a href="#🔍-调试技巧" class="headerlink" title="🔍 调试技巧"></a>🔍 调试技巧</h2><h3 id="使用-pdb-调试"><a href="#使用-pdb-调试" class="headerlink" title="使用 pdb 调试"></a>使用 pdb 调试</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pdb</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">complex_function</span>(<span class="params">data</span>):</span><br><span class="line">    result = process_data(data)</span><br><span class="line">    pdb.set_trace()  <span class="comment"># 在这里设置断点</span></span><br><span class="line">    <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用-logging-而不是-print"><a href="#使用-logging-而不是-print" class="headerlink" title="使用 logging 而不是 print"></a>使用 logging 而不是 print</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line">logging.basicConfig(level=logging.INFO)</span><br><span class="line">logger = logging.getLogger(__name__)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_function</span>():</span><br><span class="line">    logger.info(<span class="string">&quot;开始处理&quot;</span>)</span><br><span class="line">    logger.debug(<span class="string">&quot;详细信息&quot;</span>)</span><br><span class="line">    logger.error(<span class="string">&quot;出错了&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<h2 id="📚-学习资源"><a href="#📚-学习资源" class="headerlink" title="📚 学习资源"></a>📚 学习资源</h2><ul>
-<li><strong>官方文档</strong>: <a target="_blank" rel="noopener" href="https://docs.python.org/">python.org</a></li>
-<li><strong>Real Python</strong>: 高质量的 Python 教程</li>
-<li><strong>Python Weekly</strong>: 每周 Python 资讯</li>
-<li><strong>GitHub</strong>: 阅读优秀的开源项目代码</li>
-</ul>
-<h2 id="🎯-总结"><a href="#🎯-总结" class="headerlink" title="🎯 总结"></a>🎯 总结</h2><p>Python 是一门优雅而强大的语言，掌握这些技巧能让你的代码更加：</p>
-<ul>
-<li>✅ 可读性强</li>
-<li>✅ 性能优秀</li>
-<li>✅ 易于维护</li>
-<li>✅ 符合规范</li>
-</ul>
-<p>记住：<strong>代码是写给人看的，只是顺便让机器执行。</strong></p>
-<hr>
-<p>希望这些技巧对你有帮助！如果你有更好的建议，欢迎在评论区分享。</p>
-
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/Python" style=color:#1bccbc>
-                Python
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/编程" style=color:#1bccbc>
-                编程
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/最佳实践" style=color:#ff7d73>
-                最佳实践
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/代码技巧" style=color:#ff7d73>
-                代码技巧
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2026/01/06/2026-01-07-python-development-tips/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2026/01/06/2026-01-07-web-development-journey/">
-        <h2>
-            从零开始的 Web 开发之旅
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-        <span class="category">
-            <a href="/categories/技术教程">
-                <span class="icon">
-                    <a-icon type="book" theme="filled" /></span>
-                技术教程
-            </a>
-        </span>
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2026/1/7
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            
-            <h1 id="从零开始的-Web-开发之旅"><a href="#从零开始的-Web-开发之旅" class="headerlink" title="从零开始的 Web 开发之旅"></a>从零开始的 Web 开发之旅</h1><p>作为一名开发者，我在 Web 开发领域积累了不少经验。从 TypeScript 到 Vue.js，从前端到全栈，今天分享一些实战经验。</p>
-<h2 id="🎯-技术栈选择"><a href="#🎯-技术栈选择" class="headerlink" title="🎯 技术栈选择"></a>🎯 技术栈选择</h2><p>在我的项目中，我主要使用以下技术栈：</p>
-<h3 id="前端框架"><a href="#前端框架" class="headerlink" title="前端框架"></a>前端框架</h3><ul>
-<li><strong>Vue.js</strong>: 渐进式框架，易学易用</li>
-<li><strong>TypeScript</strong>: 类型安全的 JavaScript</li>
-<li><strong>Vite</strong>: 极速的构建工具</li>
-</ul>
-<h3 id="项目实例"><a href="#项目实例" class="headerlink" title="项目实例"></a>项目实例</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/Wuxy1997/Com6102gp5">Com6102gp5</a> - TypeScript 项目</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/Wuxy1997/6102">6102</a> - Vue.js 应用</li>
-</ul>
-<h2 id="🚀-TypeScript：JavaScript-的超集"><a href="#🚀-TypeScript：JavaScript-的超集" class="headerlink" title="🚀 TypeScript：JavaScript 的超集"></a>🚀 TypeScript：JavaScript 的超集</h2><h3 id="为什么选择-TypeScript？"><a href="#为什么选择-TypeScript？" class="headerlink" title="为什么选择 TypeScript？"></a>为什么选择 TypeScript？</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// JavaScript - 运行时才发现错误</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params">a, b</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">add</span>(<span class="number">1</span>, <span class="string">&quot;2&quot;</span>);  <span class="comment">// &quot;12&quot; - 意外的字符串拼接！</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// TypeScript - 编译时就能发现问题</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params"><span class="attr">a</span>: <span class="built_in">number</span>, <span class="attr">b</span>: <span class="built_in">number</span></span>): <span class="built_in">number</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">add</span>(<span class="number">1</span>, <span class="string">&quot;2&quot;</span>);  <span class="comment">// 编译错误：类型不匹配</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="接口与类型"><a href="#接口与类型" class="headerlink" title="接口与类型"></a>接口与类型</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义接口</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="attr">id</span>: <span class="built_in">number</span>;</span><br><span class="line">    <span class="attr">name</span>: <span class="built_in">string</span>;</span><br><span class="line">    <span class="attr">email</span>: <span class="built_in">string</span>;</span><br><span class="line">    <span class="attr">role</span>?: <span class="string">&#x27;admin&#x27;</span> | <span class="string">&#x27;user&#x27;</span>;  <span class="comment">// 可选属性</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用接口</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getUser</span>(<span class="params"><span class="attr">id</span>: <span class="built_in">number</span></span>): <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        id,</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&quot;大木头WU&quot;</span>,</span><br><span class="line">        <span class="attr">email</span>: <span class="string">&quot;user@example.com&quot;</span>,</span><br><span class="line">        <span class="attr">role</span>: <span class="string">&quot;admin&quot;</span></span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 类型别名</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Point</span> = &#123;</span><br><span class="line">    <span class="attr">x</span>: <span class="built_in">number</span>;</span><br><span class="line">    <span class="attr">y</span>: <span class="built_in">number</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 联合类型</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Status</span> = <span class="string">&#x27;pending&#x27;</span> | <span class="string">&#x27;success&#x27;</span> | <span class="string">&#x27;error&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
-<h3 id="泛型的威力"><a href="#泛型的威力" class="headerlink" title="泛型的威力"></a>泛型的威力</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 泛型函数</span></span><br><span class="line"><span class="keyword">function</span> firstElement&lt;T&gt;(<span class="attr">arr</span>: T[]): T | <span class="literal">undefined</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> arr[<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">const</span> first = <span class="title function_">firstElement</span>(numbers);  <span class="comment">// 类型: number | undefined</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 泛型类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DataStore</span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="attr">data</span>: T[] = [];</span><br><span class="line">    </span><br><span class="line">    <span class="title function_">add</span>(<span class="attr">item</span>: T): <span class="built_in">void</span> &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">data</span>.<span class="title function_">push</span>(item);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="title function_">getAll</span>(): T[] &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">data</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> userStore = <span class="keyword">new</span> <span class="title class_">DataStore</span>&lt;<span class="title class_">User</span>&gt;();</span><br><span class="line">userStore.<span class="title function_">add</span>(&#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">name</span>: <span class="string">&quot;Alice&quot;</span>, <span class="attr">email</span>: <span class="string">&quot;alice@example.com&quot;</span> &#125;);</span><br></pre></td></tr></table></figure>
-
-<h2 id="🎨-Vue-js-开发实践"><a href="#🎨-Vue-js-开发实践" class="headerlink" title="🎨 Vue.js 开发实践"></a>🎨 Vue.js 开发实践</h2><h3 id="组合式-API-Composition-API"><a href="#组合式-API-Composition-API" class="headerlink" title="组合式 API (Composition API)"></a>组合式 API (Composition API)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">import &#123; ref, computed, onMounted &#125; from &#x27;vue&#x27;;</span><br><span class="line"></span><br><span class="line">// 响应式状态</span><br><span class="line">const count = ref(0);</span><br><span class="line">const name = ref(&#x27;大木头WU&#x27;);</span><br><span class="line"></span><br><span class="line">// 计算属性</span><br><span class="line">const doubleCount = computed(() =&gt; count.value * 2);</span><br><span class="line"></span><br><span class="line">// 方法</span><br><span class="line">const increment = () =&gt; &#123;</span><br><span class="line">    count.value++;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 生命周期钩子</span><br><span class="line">onMounted(() =&gt; &#123;</span><br><span class="line">    console.log(&#x27;组件已挂载&#x27;);</span><br><span class="line">&#125;);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div class=&quot;container&quot;&gt;</span><br><span class="line">        &lt;h1&gt;Hello, &#123;&#123; name &#125;&#125;&lt;/h1&gt;</span><br><span class="line">        &lt;p&gt;Count: &#123;&#123; count &#125;&#125;&lt;/p&gt;</span><br><span class="line">        &lt;p&gt;Double: &#123;&#123; doubleCount &#125;&#125;&lt;/p&gt;</span><br><span class="line">        &lt;button @click=&quot;increment&quot;&gt;增加&lt;/button&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">.container &#123;</span><br><span class="line">    padding: 20px;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="自定义-Hooks"><a href="#自定义-Hooks" class="headerlink" title="自定义 Hooks"></a>自定义 Hooks</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// useCounter.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; ref, computed &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">useCounter</span>(<span class="params">initialValue = <span class="number">0</span></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> count = <span class="title function_">ref</span>(initialValue);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">increment</span> = (<span class="params"></span>) =&gt; count.<span class="property">value</span>++;</span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">decrement</span> = (<span class="params"></span>) =&gt; count.<span class="property">value</span>--;</span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">reset</span> = (<span class="params"></span>) =&gt; count.<span class="property">value</span> = initialValue;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">const</span> isPositive = <span class="title function_">computed</span>(<span class="function">() =&gt;</span> count.<span class="property">value</span> &gt; <span class="number">0</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        count,</span><br><span class="line">        increment,</span><br><span class="line">        decrement,</span><br><span class="line">        reset,</span><br><span class="line">        isPositive</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在组件中使用</span></span><br><span class="line"><span class="keyword">import</span> &#123; useCounter &#125; <span class="keyword">from</span> <span class="string">&#x27;./useCounter&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; count, increment, decrement, isPositive &#125; = <span class="title function_">useCounter</span>(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
-
-<h3 id="状态管理-Pinia"><a href="#状态管理-Pinia" class="headerlink" title="状态管理 - Pinia"></a>状态管理 - Pinia</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// stores/user.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; defineStore &#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useUserStore = <span class="title function_">defineStore</span>(<span class="string">&#x27;user&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">state</span>: <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">        <span class="attr">currentUser</span>: <span class="literal">null</span> <span class="keyword">as</span> <span class="title class_">User</span> | <span class="literal">null</span>,</span><br><span class="line">        <span class="attr">isLoggedIn</span>: <span class="literal">false</span></span><br><span class="line">    &#125;),</span><br><span class="line">    </span><br><span class="line">    <span class="attr">getters</span>: &#123;</span><br><span class="line">        <span class="attr">userName</span>: <span class="function">(<span class="params">state</span>) =&gt;</span> state.<span class="property">currentUser</span>?.<span class="property">name</span> ?? <span class="string">&#x27;Guest&#x27;</span>,</span><br><span class="line">        <span class="attr">isAdmin</span>: <span class="function">(<span class="params">state</span>) =&gt;</span> state.<span class="property">currentUser</span>?.<span class="property">role</span> === <span class="string">&#x27;admin&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    </span><br><span class="line">    <span class="attr">actions</span>: &#123;</span><br><span class="line">        <span class="keyword">async</span> <span class="title function_">login</span>(<span class="params"><span class="attr">email</span>: <span class="built_in">string</span>, <span class="attr">password</span>: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">const</span> user = <span class="keyword">await</span> api.<span class="title function_">login</span>(email, password);</span><br><span class="line">                <span class="variable language_">this</span>.<span class="property">currentUser</span> = user;</span><br><span class="line">                <span class="variable language_">this</span>.<span class="property">isLoggedIn</span> = <span class="literal">true</span>;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;登录失败&#x27;</span>, error);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        </span><br><span class="line">        <span class="title function_">logout</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">currentUser</span> = <span class="literal">null</span>;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">isLoggedIn</span> = <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h2 id="🛠️-开发工具配置"><a href="#🛠️-开发工具配置" class="headerlink" title="🛠️ 开发工具配置"></a>🛠️ 开发工具配置</h2><h3 id="Vite-配置"><a href="#Vite-配置" class="headerlink" title="Vite 配置"></a>Vite 配置</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vite.config.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; defineConfig &#125; <span class="keyword">from</span> <span class="string">&#x27;vite&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> vue <span class="keyword">from</span> <span class="string">&#x27;@vitejs/plugin-vue&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> path <span class="keyword">from</span> <span class="string">&#x27;path&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineConfig</span>(&#123;</span><br><span class="line">    <span class="attr">plugins</span>: [<span class="title function_">vue</span>()],</span><br><span class="line">    <span class="attr">resolve</span>: &#123;</span><br><span class="line">        <span class="attr">alias</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;@&#x27;</span>: path.<span class="title function_">resolve</span>(__dirname, <span class="string">&#x27;./src&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">server</span>: &#123;</span><br><span class="line">        <span class="attr">port</span>: <span class="number">3000</span>,</span><br><span class="line">        <span class="attr">open</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">proxy</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;/api&#x27;</span>: &#123;</span><br><span class="line">                <span class="attr">target</span>: <span class="string">&#x27;http://localhost:8080&#x27;</span>,</span><br><span class="line">                <span class="attr">changeOrigin</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="attr">rewrite</span>: <span class="function">(<span class="params">path</span>) =&gt;</span> path.<span class="title function_">replace</span>(<span class="regexp">/^\/api/</span>, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h3 id="TypeScript-配置"><a href="#TypeScript-配置" class="headerlink" title="TypeScript 配置"></a>TypeScript 配置</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;compilerOptions&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;target&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ES2020&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;module&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ESNext&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;lib&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;ES2020&quot;</span><span class="punctuation">,</span> <span class="string">&quot;DOM&quot;</span><span class="punctuation">,</span> <span class="string">&quot;DOM.Iterable&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;jsx&quot;</span><span class="punctuation">:</span> <span class="string">&quot;preserve&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;strict&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;moduleResolution&quot;</span><span class="punctuation">:</span> <span class="string">&quot;node&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;resolveJsonModule&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;esModuleInterop&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;skipLibCheck&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;baseUrl&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;paths&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;@/*&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;src/*&quot;</span><span class="punctuation">]</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;include&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;src/**/*.ts&quot;</span><span class="punctuation">,</span> <span class="string">&quot;src/**/*.vue&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;exclude&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;node_modules&quot;</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="🎯-最佳实践"><a href="#🎯-最佳实践" class="headerlink" title="🎯 最佳实践"></a>🎯 最佳实践</h2><h3 id="1-组件设计原则"><a href="#1-组件设计原则" class="headerlink" title="1. 组件设计原则"></a>1. 组件设计原则</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- Bad - 组件做太多事 --&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;input v-model=&quot;searchTerm&quot; /&gt;</span><br><span class="line">        &lt;div v-for=&quot;item in filteredItems&quot;&gt;...&lt;/div&gt;</span><br><span class="line">        &lt;button @click=&quot;saveData&quot;&gt;保存&lt;/button&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- Good - 单一职责 --&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;SearchInput v-model=&quot;searchTerm&quot; /&gt;</span><br><span class="line">        &lt;ItemList :items=&quot;filteredItems&quot; /&gt;</span><br><span class="line">        &lt;SaveButton @click=&quot;handleSave&quot; /&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-Props-类型定义"><a href="#2-Props-类型定义" class="headerlink" title="2. Props 类型定义"></a>2. Props 类型定义</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用 TypeScript 定义 Props</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Props</span> &#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="built_in">string</span>;</span><br><span class="line">    <span class="attr">count</span>?: <span class="built_in">number</span>;</span><br><span class="line">    <span class="attr">items</span>: <span class="title class_">Item</span>[];</span><br><span class="line">    <span class="attr">onUpdate</span>: <span class="function">(<span class="params"><span class="attr">id</span>: <span class="built_in">number</span></span>) =&gt;</span> <span class="built_in">void</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 或使用 defineProps with 泛型</span></span><br><span class="line"><span class="keyword">const</span> props = defineProps&lt;<span class="title class_">Props</span>&gt;();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 带默认值</span></span><br><span class="line"><span class="keyword">const</span> props = <span class="title function_">withDefaults</span>(defineProps&lt;<span class="title class_">Props</span>&gt;(), &#123;</span><br><span class="line">    <span class="attr">count</span>: <span class="number">0</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-错误处理"><a href="#3-错误处理" class="headerlink" title="3. 错误处理"></a>3. 错误处理</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 全局错误处理</span></span><br><span class="line">app.<span class="property">config</span>.<span class="property">errorHandler</span> = <span class="function">(<span class="params">err, instance, info</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;全局错误:&#x27;</span>, err);</span><br><span class="line">    <span class="comment">// 上报到错误追踪系统</span></span><br><span class="line">    errorTracker.<span class="title function_">report</span>(err);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 组件内错误处理</span></span><br><span class="line"><span class="keyword">import</span> &#123; onErrorCaptured &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">onErrorCaptured</span>(<span class="function">(<span class="params">err, instance, info</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;捕获到错误:&#x27;</span>, err);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;  <span class="comment">// 阻止错误继续传播</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h2 id="🧪-测试"><a href="#🧪-测试" class="headerlink" title="🧪 测试"></a>🧪 测试</h2><h3 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; describe, it, expect &#125; <span class="keyword">from</span> <span class="string">&#x27;vitest&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; mount &#125; <span class="keyword">from</span> <span class="string">&#x27;@vue/test-utils&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Counter</span> <span class="keyword">from</span> <span class="string">&#x27;./Counter.vue&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">describe</span>(<span class="string">&#x27;Counter&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">it</span>(<span class="string">&#x27;增加计数&#x27;</span>, <span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">        <span class="keyword">const</span> wrapper = <span class="title function_">mount</span>(<span class="title class_">Counter</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">await</span> wrapper.<span class="title function_">find</span>(<span class="string">&#x27;button&#x27;</span>).<span class="title function_">trigger</span>(<span class="string">&#x27;click&#x27;</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="title function_">expect</span>(wrapper.<span class="title function_">find</span>(<span class="string">&#x27;.count&#x27;</span>).<span class="title function_">text</span>()).<span class="title function_">toBe</span>(<span class="string">&#x27;1&#x27;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    <span class="title function_">it</span>(<span class="string">&#x27;显示正确的 props&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> wrapper = <span class="title function_">mount</span>(<span class="title class_">Counter</span>, &#123;</span><br><span class="line">            <span class="attr">props</span>: &#123; <span class="attr">initialCount</span>: <span class="number">10</span> &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        </span><br><span class="line">        <span class="title function_">expect</span>(wrapper.<span class="title function_">find</span>(<span class="string">&#x27;.count&#x27;</span>).<span class="title function_">text</span>()).<span class="title function_">toBe</span>(<span class="string">&#x27;10&#x27;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h2 id="🚢-部署"><a href="#🚢-部署" class="headerlink" title="🚢 部署"></a>🚢 部署</h2><h3 id="构建优化"><a href="#构建优化" class="headerlink" title="构建优化"></a>构建优化</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vite.config.ts</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineConfig</span>(&#123;</span><br><span class="line">    <span class="attr">build</span>: &#123;</span><br><span class="line">        <span class="attr">rollupOptions</span>: &#123;</span><br><span class="line">            <span class="attr">output</span>: &#123;</span><br><span class="line">                <span class="attr">manualChunks</span>: &#123;</span><br><span class="line">                    <span class="string">&#x27;vendor&#x27;</span>: [<span class="string">&#x27;vue&#x27;</span>, <span class="string">&#x27;vue-router&#x27;</span>, <span class="string">&#x27;pinia&#x27;</span>],</span><br><span class="line">                    <span class="string">&#x27;ui&#x27;</span>: [<span class="string">&#x27;element-plus&#x27;</span>]</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">chunkSizeWarningLimit</span>: <span class="number">1000</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h3 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># .env.development</span></span><br><span class="line">VITE_API_URL=http://localhost:8080/api</span><br><span class="line">VITE_APP_TITLE=开发环境</span><br><span class="line"></span><br><span class="line"><span class="comment"># .env.production</span></span><br><span class="line">VITE_API_URL=https://api.example.com</span><br><span class="line">VITE_APP_TITLE=生产环境</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用环境变量</span></span><br><span class="line"><span class="keyword">const</span> apiUrl = <span class="keyword">import</span>.<span class="property">meta</span>.<span class="property">env</span>.<span class="property">VITE_API_URL</span>;</span><br></pre></td></tr></table></figure>
-
-<h2 id="📱-响应式设计"><a href="#📱-响应式设计" class="headerlink" title="📱 响应式设计"></a>📱 响应式设计</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 移动优先 */</span></span><br><span class="line"><span class="selector-class">.container</span> &#123;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">1rem</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 平板 */</span></span><br><span class="line"><span class="keyword">@media</span> (<span class="attribute">min-width</span>: <span class="number">768px</span>) &#123;</span><br><span class="line">    <span class="selector-class">.container</span> &#123;</span><br><span class="line">        <span class="attribute">padding</span>: <span class="number">2rem</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 桌面 */</span></span><br><span class="line"><span class="keyword">@media</span> (<span class="attribute">min-width</span>: <span class="number">1024px</span>) &#123;</span><br><span class="line">    <span class="selector-class">.container</span> &#123;</span><br><span class="line">        <span class="attribute">max-width</span>: <span class="number">1200px</span>;</span><br><span class="line">        <span class="attribute">margin</span>: <span class="number">0</span> auto;</span><br><span class="line">        <span class="attribute">padding</span>: <span class="number">3rem</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="🎓-学习资源"><a href="#🎓-学习资源" class="headerlink" title="🎓 学习资源"></a>🎓 学习资源</h2><ul>
-<li><strong>Vue 3 官方文档</strong>: 最权威的学习资料</li>
-<li><strong>TypeScript Handbook</strong>: 深入理解 TypeScript</li>
-<li><strong>Vite 文档</strong>: 了解现代构建工具</li>
-<li><strong>Vue Mastery</strong>: 高质量的视频课程</li>
-</ul>
-<h2 id="💡-项目展示"><a href="#💡-项目展示" class="headerlink" title="💡 项目展示"></a>💡 项目展示</h2><p>查看我的实际项目：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/Wuxy1997/Com6102gp5">Com6102gp5</a> - TypeScript 全栈项目</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/Wuxy1997/6102">6102</a> - Vue.js 单页应用</li>
-</ul>
-<h2 id="🎯-总结"><a href="#🎯-总结" class="headerlink" title="🎯 总结"></a>🎯 总结</h2><p>Web 开发是一个快速发展的领域，保持学习的态度很重要：</p>
-<p>✅ 掌握基础：HTML, CSS, JavaScript<br>✅ 拥抱新工具：TypeScript, Vue 3, Vite<br>✅ 重视实践：多做项目，多写代码<br>✅ 关注社区：跟上最新技术趋势</p>
-<hr>
-<p>希望这篇文章能帮助你在 Web 开发之路上走得更远！</p>
-<p>欢迎在评论区分享你的经验和问题 💬</p>
-
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/Web开发" style=color:#00bcd4>
-                Web开发
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/TypeScript" style=color:#ffa2c4>
-                TypeScript
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/Vue.js" style=color:#879cff>
-                Vue.js
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/JavaScript" style=color:#00bcd4>
-                JavaScript
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/前端" style=color:#879cff>
-                前端
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2026/01/06/2026-01-07-web-development-journey/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2025/05/30/2025-05-31-white-night-walk/">
-        <h2>
-            白夜行摘录
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-        <span class="category">
-            <a href="/categories/读书笔记">
-                <span class="icon">
-                    <a-icon type="book" theme="filled" /></span>
-                读书笔记
-            </a>
-        </span>
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2025/5/31
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            
-            <h1 id="白夜行摘录"><a href="#白夜行摘录" class="headerlink" title="白夜行摘录"></a>白夜行摘录</h1><p>我的天空里没有太阳，总是黑夜，但并不暗，因为有东西代替了太阳。虽然没有太阳那么明亮，但对我来说已经足够。凭借着这份光，我便能把黑夜当成白天。</p>
-<p>他们只是想保护自己的灵魂。结果，雪穗从不以真面目示人，亮司则至今仍在黑暗的通风管中徘徊</p>
-
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/小说" style=color:#00bcd4>
-                小说
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/东野圭吾" style=color:#ff7d73>
-                东野圭吾
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/读书" style=color:#ffa2c4>
-                读书
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/摘录" style=color:#ffa2c4>
-                摘录
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2025/05/30/2025-05-31-white-night-walk/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-<div class="post">
-
-    <a href="/2024/03/19/2024-03-20-welcome-to-my-blog/">
-        <h2>
-            Welcome to My Blog
-        </h2>
-    </a>
-
-    <div class="category-and-date">
-
-        
-        <span class="category">
-            <a href="/categories/博客日志">
-                <span class="icon">
-                    <a-icon type="book" theme="filled" /></span>
-                博客日志
-            </a>
-        </span>
-        
-
-        <span class="date">
-            <span class="icon">
-                <a-icon type="calendar" theme="filled" />
-            </span>
-            2024/3/20
-        </span>
-
-    </div>
-
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            
-            <h1 id="Welcome-to-My-Blog"><a href="#Welcome-to-My-Blog" class="headerlink" title="Welcome to My Blog"></a>Welcome to My Blog</h1><p>Hello and welcome to my new blog! This is my first post, and I’m excited to share my thoughts and experiences with you.</p>
-<h2 id="What-to-Expect"><a href="#What-to-Expect" class="headerlink" title="What to Expect"></a>What to Expect</h2><p>In this blog, I’ll be sharing:</p>
-<ul>
-<li>Technical tutorials and guides</li>
-<li>Personal experiences and insights</li>
-<li>Project updates and announcements</li>
-<li>And much more!</li>
-</ul>
-<h2 id="Code-Example"><a href="#Code-Example" class="headerlink" title="Code Example"></a>Code Example</h2><p>Here’s a simple code example to demonstrate code formatting:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">hello_world</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Hello, World!&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    hello_world()</span><br></pre></td></tr></table></figure>
-
-<h2 id="Stay-Connected"><a href="#Stay-Connected" class="headerlink" title="Stay Connected"></a>Stay Connected</h2><p>Feel free to connect with me on social media or leave a comment below. I’m always happy to hear from readers and engage in discussions.</p>
-<p>Thank you for visiting my blog!</p>
-
-            
-        </div>
-    </div>
-
-    <div class="post-tags">
-        
-        <span class="icon">
-            <a-icon type="tags" theme="filled" />
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/welcome" style=color:#ffa2c4>
-                welcome
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/first-post" style=color:#ffa2c4>
-                first-post
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/博客" style=color:#ffa2c4>
-                博客
-            </a>
-        </span>
-        
-    </div>
-
-    <a href="/2024/03/19/2024-03-20-welcome-to-my-blog/ " class="go-post">
-        阅读全文
-    </a>
-</div>
-
-
-             
-<div class="page-current">
-
-    <div class="prev">
-        
-    </div>
-
-    <div class="page-index">
-
-        
-
-        <span class="current">
-            1
-        </span>
-
-        
-
-    </div>
-
-    <div class="next">
-        
-    </div>
-
-</div>
-
-        </div>
-    </div>
+<div class="home-banner-container flex justify-center items-center transition-fade relative">
     
-    <div id="home-card">
-        <a-affix :offset-top="card_top">
-    <a-card class="card-style" style="width: 300px">
-        <div class="avatar">
-            <img src="images/avatar.png " alt="头像">
-        </div>
-        <div class="name">
-            大木头WU
-        </div>
-        <div class="descriptions">
+    <div class="content mt-8 flex flex-col justify-center items-center transition-fade-down">
+        <div class="description flex flex-col justify-center items-center w-screen font-medium text-center"
+        
+        >
+            Theme Redefine
             
-            <div class="description">
-                我的天空里没有太阳
-            </div>
             
-            <div class="description">
-                总是黑夜，但并不暗
-            </div>
-            
-            <div class="description">
-                因为有东西代替了太阳
-            </div>
+                <p><i id="subtitle"></i></p>
             
         </div>
-        <div class="icon-links">
-            
-            <span class="icon-link">
-                <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997">
-
-                    
-                    <a-icon type="github"
-                        theme="filled" />
-                    
-                </a>
-            </span>
-            
-        </div>
-        <div class="friend-links">
-            
-            <div class="friend-link">
-                <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997">
-                    GitHub 主页
-                </a>
-            </div>
-            
-            <div class="friend-link">
-                <a target="_blank" rel="noopener" href="https://github.com/Wuxy1997/Federated-Reinforcement-Learning-for-Mobile-Edge-Computing-Rebuild-t">
-                    联邦学习项目
-                </a>
-            </div>
-            
-        </div>
-    </a-card>
-</a-affix>
-    </div>
-    
-</div>
-                     
-<footer id="footer">
-    <div class="footer-wrap">
-        <div>
-            © 2024 - 2026 大木头WU的 Blog
-            <span class="footer-icon">
-                <a-icon type="flag" theme="filled" /></span>
-            @大木头WU
-        </div>
-        <div></div>
-        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
-                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
         
     </div>
-
-</footer>
-
-<script src="/js/highlight.min.js"></script>
-<script src="/js/particle.js"></script>
-                </div>
-            </div>
-        </transition>
-    </div>
-
     <script>
-    new Vue({
-        el: "#layout",
-        data: {
-            show_page: false,
-            onload_menu: false,
-            menu_show: false,
-            card_top: 100
-        },
-        created: function () {
-            var that = this
-            window.onload = function () {
-                that.show_page = true
-                document.getElementById("loadcontent").style.opacity = 0
-                setTimeout(function () {
-                    document.getElementById("loadleft").style.width = 0
-                    document.getElementById("loadright").style.width = 0
-                }, 300)
-                setTimeout(function () {
-                    document.getElementById("loading").style = "display:none"
-                }, 600)
-            }
-        },
-        mounted: function () {
-            var that = this
-            window.addEventListener('scroll', function (e) {
-                that.menu_show = false
-            })
-        },
-        methods: {
-            home_click: function () {
-                window.scrollTo({
-                    top: window.innerHeight - 80,
-                    behavior: "smooth",
+        const scrollToMain = ()=> {
+            console.log('scroll');
+            const target = document.querySelector('.main-content-container');
+            target.scrollIntoView({ behavior: 'smooth'});
+        }
+
+        // QR code mobile interaction handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const qrToggleItems = document.querySelectorAll('.qr-toggle-item');
+            let activeQrItem = null;
+
+            // Handle QR code toggle for mobile
+            qrToggleItems.forEach(item => {
+                const trigger = item.querySelector('.qr-trigger');
+                const popup = item.querySelector('.qr-popup');
+
+                // Add click event for mobile
+                trigger.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Close any other open QR codes
+                    qrToggleItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('qr-active');
+                        }
+                    });
+
+                    // Toggle current QR code
+                    const isActive = item.classList.contains('qr-active');
+                    if (isActive) {
+                        item.classList.remove('qr-active');
+                        activeQrItem = null;
+                    } else {
+                        item.classList.add('qr-active');
+                        activeQrItem = item;
+                    }
                 });
+
+                // Remove focus styles on blur for mobile
+                trigger.addEventListener('blur', function() {
+                    // Small delay to allow for potential click events
+                    setTimeout(() => {
+                        if (activeQrItem !== item) {
+                            item.classList.remove('qr-active');
+                        }
+                    }, 100);
+                });
+            });
+
+            // Close QR codes when clicking outside
+            document.addEventListener('click', function(e) {
+                const isQrElement = e.target.closest('.qr-toggle-item');
+                if (!isQrElement && activeQrItem) {
+                    activeQrItem.classList.remove('qr-active');
+                    activeQrItem = null;
+                }
+            });
+        });
+    </script>
+    <style>
+        /* Mobile-specific QR code styles */
+        .qr-toggle-item.qr-active .qr-popup {
+            visibility: visible !important;
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+        
+        /* Prevent button from staying in focus/hover state on mobile */
+        @media (hover: none) and (pointer: coarse) {
+            .qr-toggle-item:focus,
+            .qr-toggle-item:hover {
+                background-color: transparent;
+            }
+            
+            .qr-toggle-item .qr-trigger:focus,
+            .qr-toggle-item .qr-trigger:hover {
+                background-color: transparent;
+                color: inherit;
+            }
+            
+            /* Only show active state when explicitly toggled */
+            .qr-popup {
+                visibility: hidden !important;
+                opacity: 0 !important;
             }
         }
-    })
+    </style>
+</div>
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar has-home-banner">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                <h1>
+                Theme Redefine
+                </h1>
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="active"
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    首页
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/"
+                        >
+                            <span>
+                                首页
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">25</div>
+        <div class="label text-third-text-color text-sm">标签</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">6</div>
+        <div class="label text-third-text-color text-sm">分类</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">7</div>
+        <div class="label text-third-text-color text-sm">文章</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+			<div class="home-sidebar-container">
+    <div class="sticky-container sticky">
+        
+        
+            
+            <div class="sidebar-content" >
+                <div class="avatar flex justify-center">
+    <img src="/images/redefine-avatar.svg">
+</div>
+                <div class="author flex flex-col justify-center my-2.5 mx-0">
+    <div class="name">The Redefine Team</div>
+    
+        <div class="label">Lv1</div>
+    
+</div>
+                <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">25</div>
+        <div class="label text-third-text-color text-sm">标签</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">6</div>
+        <div class="label text-third-text-color text-sm">分类</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">7</div>
+        <div class="label text-third-text-color text-sm">文章</div>
+    </a>
+</div>
+            </div>
+        
+
+    </div>
+</div>
+
+			
+
+			<div class="main-content">
+				<div class="home-content-container">
+    <ul class="home-article-list">
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2026/01/07/hello-world/">
+                            Hello World
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
+Qu...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Wed Jan 07 2026 13:18:03 GMT+0800">
+                
+                    2026-01-07
+                
+            </span>
+        </span>
+        
+        
+    </div>
+
+    <a href="/2026/01/07/hello-world/">阅读全文<span class="seo-reader-text">Hello World</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2026/01/06/2026-01-07-federated-learning-edge-computing/">
+                            联邦学习与边缘计算：保护隐私的 AI 未来
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            联邦学习与边缘计算：保护隐私的 AI 未来在我的研究项目 Federated Reinforcement Learning for Mobile Edge Computing 中，我深入探索了联邦学习在边缘计算场景中的应用。今天和大家分享一些心得。
+🤔 什么是联邦学习？联邦学习（Federated Learning）是一种机器学习范式，它能让多个参与方在不共享原始数据的情况下，协同训练一个...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Wed Jan 07 2026 00:00:00 GMT+0800">
+                
+                    2026-01-07
+                
+            </span>
+        </span>
+        
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6/">技术研究</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/">联邦学习</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2026/01/06/2026-01-07-federated-learning-edge-computing/">阅读全文<span class="seo-reader-text">联邦学习与边缘计算：保护隐私的 AI 未来</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2026/01/06/2026-01-07-my-open-source-projects/">
+                            我的开源项目集合
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            我的开源项目集合这里是我在 GitHub 上的一些开源项目，涵盖了人工智能、云计算、工具开发和游戏等多个领域。
+🔬 研究与 AI 项目Federated Reinforcement Learning for Mobile Edge Computing语言: Python | ⭐ Stars: 1
+这是一个关于移动边缘计算环境下联邦强化学习的研究项目。项目探索了如何在边缘计算场景中应用联邦学...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Wed Jan 07 2026 00:00:00 GMT+0800">
+                
+                    2026-01-07
+                
+            </span>
+        </span>
+        
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E9%A1%B9%E7%9B%AE%E5%B1%95%E7%A4%BA/">项目展示</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/%E5%BC%80%E6%BA%90/">开源</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/GitHub/">GitHub</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E9%A1%B9%E7%9B%AE/">项目</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2026/01/06/2026-01-07-my-open-source-projects/">阅读全文<span class="seo-reader-text">我的开源项目集合</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2026/01/06/2026-01-07-python-development-tips/">
+                            Python 开发技巧分享
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            Python 开发技巧分享作为一名经常使用 Python 的开发者，我在实际项目中积累了一些实用的技巧和最佳实践。今天分享给大家。
+🎯 项目结构最佳实践一个清晰的项目结构能让代码更易维护：
+1234567891011my_project/├── src/│   ├── __init__.py│   ├── main.py│   └── utils/├── tests/│   ├── __i...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Wed Jan 07 2026 00:00:00 GMT+0800">
+                
+                    2026-01-07
+                
+            </span>
+        </span>
+        
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/">技术分享</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/Python/">Python</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">最佳实践</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2026/01/06/2026-01-07-python-development-tips/">阅读全文<span class="seo-reader-text">Python 开发技巧分享</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2026/01/06/2026-01-07-web-development-journey/">
+                            从零开始的 Web 开发之旅
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            从零开始的 Web 开发之旅作为一名开发者，我在 Web 开发领域积累了不少经验。从 TypeScript 到 Vue.js，从前端到全栈，今天分享一些实战经验。
+🎯 技术栈选择在我的项目中，我主要使用以下技术栈：
+前端框架
+Vue.js: 渐进式框架，易学易用
+TypeScript: 类型安全的 JavaScript
+Vite: 极速的构建工具
+
+项目实例
+Com6102gp5 - Ty...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Wed Jan 07 2026 00:00:00 GMT+0800">
+                
+                    2026-01-07
+                
+            </span>
+        </span>
+        
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/">技术教程</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/Web%E5%BC%80%E5%8F%91/">Web开发</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/TypeScript/">TypeScript</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/Vue-js/">Vue.js</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2026/01/06/2026-01-07-web-development-journey/">阅读全文<span class="seo-reader-text">从零开始的 Web 开发之旅</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2025/05/30/2025-05-31-white-night-walk/">
+                            白夜行摘录
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            白夜行摘录我的天空里没有太阳，总是黑夜，但并不暗，因为有东西代替了太阳。虽然没有太阳那么明亮，但对我来说已经足够。凭借着这份光，我便能把黑夜当成白天。
+他们只是想保护自己的灵魂。结果，雪穗从不以真面目示人，亮司则至今仍在黑暗的通风管中徘徊
+
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Sat May 31 2025 00:00:00 GMT+0800">
+                
+                    2025-05-31
+                
+            </span>
+        </span>
+        
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/%E5%B0%8F%E8%AF%B4/">小说</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E4%B8%9C%E9%87%8E%E5%9C%AD%E5%90%BE/">东野圭吾</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E8%AF%BB%E4%B9%A6/">读书</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2025/05/30/2025-05-31-white-night-walk/">阅读全文<span class="seo-reader-text">白夜行摘录</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2024/03/19/2024-03-20-welcome-to-my-blog/">
+                            Welcome to My Blog
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            Welcome to My BlogHello and welcome to my new blog! This is my first post, and I’m excited to share my thoughts and experiences with you.
+What to ExpectIn this blog, I’ll be sharing:
+
+Technical tut...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Wed Mar 20 2024 00:00:00 GMT+0800">
+                
+                    2024-03-20
+                
+            </span>
+        </span>
+        
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%8D%9A%E5%AE%A2%E6%97%A5%E5%BF%97/">博客日志</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/welcome/">welcome</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/first-post/">first-post</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E5%8D%9A%E5%AE%A2/">博客</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2024/03/19/2024-03-20-welcome-to-my-blog/">阅读全文<span class="seo-reader-text">Welcome to My Blog</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+    </ul>
+
+    <div class="home-paginator px-7 py-5">
+        <div class="paginator">
+	<span class="page-number current">1</span>
+</div>
+  
+    </div>
+</div>
+
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">The Redefine Team</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        共撰写了 7 篇文章
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">访问人数</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">总访问量</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">由 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a> 驱动</span>
+            <span class="text-sm lg:block">主题&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.5</a></span>
+        </div>
+        
+        
+            <div>
+                博客已运行 <span class="odometer" id="runtime_days" ></span> 天 <span class="odometer" id="runtime_hours"></span> 小时 <span class="odometer" id="runtime_minutes"></span> 分钟 <span class="odometer" id="runtime_seconds"></span> 秒
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
 </script>
 
+
+
+
+	
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/runtime.js"></script>
+
+    
+<script src="/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/build/libs/Typed.min.js"></script>
+
+  
+<script src="/js/build/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/build/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
 </body>
 
 </html>
