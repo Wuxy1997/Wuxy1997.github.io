@@ -1,12 +1,14 @@
 ---
 title: "我的开源项目集合"
 date: 2026-01-07
-tags: 
-  - projects
-  - open-source
-  - github
 categories:
   - 项目展示
+tags: 
+  - 开源
+  - GitHub
+  - 项目
+  - AI
+  - Python
 ---
 
 # 我的开源项目集合

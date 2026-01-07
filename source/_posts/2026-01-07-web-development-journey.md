@@ -1,13 +1,14 @@
 ---
 title: "从零开始的 Web 开发之旅"
 date: 2026-01-07
-tags: 
-  - web开发
-  - typescript
-  - vue
-  - javascript
 categories:
   - 技术教程
+tags: 
+  - Web开发
+  - TypeScript
+  - Vue.js
+  - JavaScript
+  - 前端
 ---
 
 # 从零开始的 Web 开发之旅

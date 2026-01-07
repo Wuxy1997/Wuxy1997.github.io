@@ -1,12 +1,13 @@
 ---
 title: "Python 开发技巧分享"
 date: 2026-01-07
-tags: 
-  - python
-  - programming
-  - tips
 categories:
   - 技术分享
+tags: 
+  - Python
+  - 编程
+  - 最佳实践
+  - 代码技巧
 ---
 
 # Python 开发技巧分享

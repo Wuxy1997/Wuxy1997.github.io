@@ -1,9 +1,12 @@
 ---
 title: "Welcome to My Blog"
 date: 2024-03-20
+categories:
+  - 博客日志
 tags: 
   - welcome
   - first-post
+  - 博客
 ---
 
 # Welcome to My Blog
