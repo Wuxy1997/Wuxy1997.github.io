@@ -1,1814 +1,351 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<!doctype html>
+<html lang="zh-CN" data-theme="paper">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="Python, TypeScript, Vue.js, 人工智能, 机器学习, 联邦学习, 边缘计算, Web开发, 开源项目, GitHub">
-    
-    <meta name="author" content="大木头WU (Wuxy1997)">
-    
-    <!-- Completely eliminate flash of wrong theme -->
-    <script>
-        (function() {
-            const THEME_KEY = "REDEFINE-THEME-STATUS";
-            const DARK = "dark", LIGHT = "light";
-            
-            // Get preferred theme
-            function getTheme() {
-                try {
-                    const saved = localStorage.getItem(THEME_KEY);
-                    if (saved) {
-                        const { isDark } = JSON.parse(saved);
-                        return isDark ? DARK : LIGHT;
-                    }
-                } catch (e) {}
-                
-                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
-            }
-            
-            // Apply theme to document
-            function applyTheme(theme) {
-                const isDark = theme === DARK;
-                const root = document.documentElement;
-                
-                // Set classes for compatibility
-                root.classList.add(theme);
-                root.classList.remove(isDark ? LIGHT : DARK);
-                root.style.colorScheme = theme;
-            }
-            
-            // Initial application
-            const theme = getTheme();
-            applyTheme(theme);
-            
-            // Listen for system preference changes
-            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
-                // Only update if using system preference (no localStorage entry)
-                if (!localStorage.getItem(THEME_KEY)) {
-                    applyTheme(matches ? DARK : LIGHT);
-                }
-            });
-            
-            // Set body classes ASAP (before DOMContentLoaded)
-            (function() {
-                const addBodyClass = () => {
-                    const b = document.body;
-                    if (!b) return false;
-                    b.classList.add(theme + "-mode");
-                    return true;
-                };
-
-                // Try immediately
-                if (addBodyClass()) return;
-
-                // Observe until body exists
-                const mo = new MutationObserver(() => {
-                    if (addBodyClass()) mo.disconnect();
-                });
-                mo.observe(document.documentElement, { childList: true, subtree: true });
-            })();
-        })();
-    </script>
-    
-    <!-- preconnect -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    
-    <!--- Seo Part-->
-    
-    <link rel="canonical" href="https://Wuxy1997.github.io/"/>
-    <meta name="robots" content="index,follow">
-    <meta name="googlebot" content="index,follow">
-    <meta name="revisit-after" content="1 days">
-    
-    
-    
-        
-        <meta name="description" content="专注于人工智能、联邦学习、边缘计算和全栈开发的技术博客。分享项目经验、开源代码和学习心得。">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>大木头WU / Wuxy1997</title>
+<meta name="description" content="大木头WU（Wuxy1997）的个人主页：工程师 · 人工智能与全栈开发。代码改变世界，开源连接你我">
+<meta name="author" content="大木头WU (Wuxy1997)">
+<meta name="theme-color" content="#d3cdb8">
 <meta property="og:type" content="website">
-<meta property="og:title" content="大木头WU的技术博客">
-<meta property="og:url" content="https://wuxy1997.github.io/index.html">
-<meta property="og:site_name" content="大木头WU的技术博客">
-<meta property="og:description" content="专注于人工智能、联邦学习、边缘计算和全栈开发的技术博客。分享项目经验、开源代码和学习心得。">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://wuxy1997.github.io/images/redefine-og.webp">
-<meta property="article:author" content="大木头WU (Wuxy1997)">
-<meta property="article:tag" content="Python, TypeScript, Vue.js, 人工智能, 机器学习, 联邦学习, 边缘计算, Web开发, 开源项目, GitHub">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://wuxy1997.github.io/images/redefine-og.webp">
-    
-    
-    <!--- Icon Part-->
-    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
-    <meta name="theme-color" content="#A31F34">
-    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
-    <!--- Page Info-->
-    
-    <title>
-        
-            大木头WU的技术博客 - 代码改变世界，开源连接你我
-        
-    </title>
-
-    
-<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
-
-
-    <!--- Inject Part-->
-    
-
-    
-<link rel="stylesheet" href="/css/style.css">
-
-
-    
-        
-<link rel="stylesheet" href="/css/build/tailwind.css">
-
-    
-
-    
-<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
-
-    
-<link rel="stylesheet" href="/fonts/Geist/geist.css">
-
-    <!--- Font Part-->
-    
-    
-    
-    
-    
-    
-
-    <script id="hexo-configurations">
-    window.config = {"hostname":"wuxy1997.github.io","root":"/","language":"zh-CN"};
-    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"专注于人工智能、联邦学习、边缘计算和全栈开发的技术博客。分享项目经验、开源代码和学习心得。"},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"大木头WU的技术世界","subtitle":{"text":["人工智能 · 联邦学习 · 边缘计算","Python · TypeScript · Vue.js","代码改变世界，开源连接你我","探索技术，分享知识，持续成长"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":{"github":"https://github.com/Wuxy1997","instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.5","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"About":{"path":"/about","icon":"fa-regular fa-user"},"GitHub":{"path":"https://github.com/Wuxy1997","icon":"fa-brands fa-github"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"欢迎来到我的技术博客！专注于AI、联邦学习和全栈开发 🚀","show_on_mobile":true,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"},"GitHub":{"path":"https://github.com/Wuxy1997","icon":"fa-brands fa-github"}}},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
-    window.lang_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
-    window.data = {"masonry":false};
-  </script>
-    
-    <!--- Fontawesome Part-->
-    
-<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
-
-    
-<link rel="stylesheet" href="/fontawesome/brands.min.css">
-
-    
-<link rel="stylesheet" href="/fontawesome/solid.min.css">
-
-    
-<link rel="stylesheet" href="/fontawesome/regular.min.css">
-
-    
-    
-    
-    
-<meta name="generator" content="Hexo 8.1.1"></head>
-
-
-
-<body>
-	<div class="progress-bar-container">
-	
-
-	
-	<span class="pjax-progress-bar"></span>
-	<!--        <span class="swup-progress-icon">-->
-	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
-	<!--        </span>-->
-	
-</div>
-
-<main class="page-container" id="swup">
-
-	
-	
-    <style>
-        .home-banner-container {
-            background: none !important;
-        }
-        .home-article-item,
-        .sidebar-links,
-        .sidebar-content,
-        a.page-number,
-        a.extend,
-        .sidebar-links .links:hover,
-        .right-bottom-tools,
-        footer.footer {
-            background-color: var(--background-color-transparent-80) !important;
-        }
-        .right-bottom-tools:hover,
-        a.page-number:hover,
-        a.extend:hover {
-            background-color: var(--primary-color) !important;
-        }
-        .site-info,
-        .home-article-sticky-label {
-            background-color: var(--background-color-transparent-15) !important;
-        }
-        .home-article-sticky-label {
-            backdrop-filter: none !important;
-        }
-    </style>
-    <div class="home-banner-background transition-fade fixed top-0 left-0 w-screen h-screen scale-125 sm:scale-110 box-border will-change-transform bg-cover">
-        <img src="/images/wallhaven-wqery6-light.webp" alt="home-banner-background" class="w-full h-full object-cover dark:hidden">
-        <img src="/images/wallhaven-wqery6-dark.webp" alt="home-banner-background" class="w-full h-full object-cover hidden dark:block">
-    </div>
-
-
-<div class="home-banner-container flex justify-center items-center transition-fade relative">
-    
-    <div class="content mt-8 flex flex-col justify-center items-center transition-fade-down">
-        <div class="description flex flex-col justify-center items-center w-screen font-medium text-center"
-        
-        >
-            大木头WU的技术世界
-            
-            
-                <p><i id="subtitle"></i></p>
-            
-        </div>
-        
-            
-            <div class="absolute bottom-0.5 flex flex-row justify-between max-w-[1340px] items-center w-full px-8 sm:px-12">
-                <div class="flex p-3 bg-gray-300/50 dark:bg-gray-500/40 backdrop-blur-lg border border-white/20 dark:border-gray-500/30 group rounded-full cursor-pointer flex justify-center items-center aspect-square h-full shadow-redefine-flat hover:shadow-redefine-flat-hover transition-shadow" onclick="scrollToMain()" >
-                    <i class="fa-solid fa-arrow-down fa-fw fa-lg group-hover:translate-y-1 transition-transform"></i>
-                </div>
-                <div class="social-contacts px-6 py-3 bg-gray-300/50 dark:bg-gray-500/40 backdrop-blur-lg border border-white/20 dark:border-gray-500/30 shadow-redefine-flat rounded-full flex flex-row gap-3 items-center">
-                    
-                        
-                            
-                                <span class="social-contact-item github">
-                                    <a target="_blank" href="https://github.com/Wuxy1997">
-                                        <i class="fa-brands fa-fw fa-lg fa-github"></i>
-                                    </a>
-                                </span>
-                            
-                        
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                    
-                </div>
-            </div>
-        
-    </div>
-    <script>
-        const scrollToMain = ()=> {
-            console.log('scroll');
-            const target = document.querySelector('.main-content-container');
-            target.scrollIntoView({ behavior: 'smooth'});
-        }
-
-        // QR code mobile interaction handling
-        document.addEventListener('DOMContentLoaded', function() {
-            const qrToggleItems = document.querySelectorAll('.qr-toggle-item');
-            let activeQrItem = null;
-
-            // Handle QR code toggle for mobile
-            qrToggleItems.forEach(item => {
-                const trigger = item.querySelector('.qr-trigger');
-                const popup = item.querySelector('.qr-popup');
-
-                // Add click event for mobile
-                trigger.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // Close any other open QR codes
-                    qrToggleItems.forEach(otherItem => {
-                        if (otherItem !== item) {
-                            otherItem.classList.remove('qr-active');
-                        }
-                    });
-
-                    // Toggle current QR code
-                    const isActive = item.classList.contains('qr-active');
-                    if (isActive) {
-                        item.classList.remove('qr-active');
-                        activeQrItem = null;
-                    } else {
-                        item.classList.add('qr-active');
-                        activeQrItem = item;
-                    }
-                });
-
-                // Remove focus styles on blur for mobile
-                trigger.addEventListener('blur', function() {
-                    // Small delay to allow for potential click events
-                    setTimeout(() => {
-                        if (activeQrItem !== item) {
-                            item.classList.remove('qr-active');
-                        }
-                    }, 100);
-                });
-            });
-
-            // Close QR codes when clicking outside
-            document.addEventListener('click', function(e) {
-                const isQrElement = e.target.closest('.qr-toggle-item');
-                if (!isQrElement && activeQrItem) {
-                    activeQrItem.classList.remove('qr-active');
-                    activeQrItem = null;
-                }
-            });
-        });
-    </script>
-    <style>
-        /* Mobile-specific QR code styles */
-        .qr-toggle-item.qr-active .qr-popup {
-            visibility: visible !important;
-            opacity: 1 !important;
-            transform: translateY(0) !important;
-        }
-        
-        /* Prevent button from staying in focus/hover state on mobile */
-        @media (hover: none) and (pointer: coarse) {
-            .qr-toggle-item:focus,
-            .qr-toggle-item:hover {
-                background-color: transparent;
-            }
-            
-            .qr-toggle-item .qr-trigger:focus,
-            .qr-toggle-item .qr-trigger:hover {
-                background-color: transparent;
-                color: inherit;
-            }
-            
-            /* Only show active state when explicitly toggled */
-            .qr-popup {
-                visibility: hidden !important;
-                opacity: 0 !important;
-            }
-        }
-    </style>
-</div>
-	
-
-	<div class="main-content-container flex flex-col justify-between min-h-dvh">
-		<div class="main-content-header">
-			<header class="navbar-container px-6 md:px-12">
-    <div class="navbar-content transition-navbar has-home-banner">
-        <div class="left">
-            
-            <a class="logo-title" href="/">
-                <h1>
-                大木头WU的技术博客
-                </h1>
-            </a>
-        </div>
-
-        <div class="right">
-            <!-- PC -->
-            <div class="desktop">
-                <ul class="navbar-list">
-                    
-                        
-                            
-
-                            <li class="navbar-item">
-                                <!-- Menu -->
-                                <a class="active"
-                                   href="/"
-                                        >
-                                    <i class="fa-regular fa-house fa-fw"></i>
-                                    首页
-                                    
-                                </a>
-
-                                <!-- Submenu -->
-                                
-                            </li>
-                    
-                        
-                            
-
-                            <li class="navbar-item">
-                                <!-- Menu -->
-                                <a class=""
-                                   href="/archives"
-                                        >
-                                    <i class="fa-regular fa-archive fa-fw"></i>
-                                    归档
-                                    
-                                </a>
-
-                                <!-- Submenu -->
-                                
-                            </li>
-                    
-                        
-                            
-
-                            <li class="navbar-item">
-                                <!-- Menu -->
-                                <a class=""
-                                   href="/categories"
-                                        >
-                                    <i class="fa-regular fa-folder fa-fw"></i>
-                                    分类
-                                    
-                                </a>
-
-                                <!-- Submenu -->
-                                
-                            </li>
-                    
-                        
-                            
-
-                            <li class="navbar-item">
-                                <!-- Menu -->
-                                <a class=""
-                                   href="/tags"
-                                        >
-                                    <i class="fa-regular fa-tags fa-fw"></i>
-                                    标签
-                                    
-                                </a>
-
-                                <!-- Submenu -->
-                                
-                            </li>
-                    
-                        
-                            
-
-                            <li class="navbar-item">
-                                <!-- Menu -->
-                                <a class=""
-                                   href="/about"
-                                        >
-                                    <i class="fa-regular fa-user fa-fw"></i>
-                                    关于
-                                    
-                                </a>
-
-                                <!-- Submenu -->
-                                
-                            </li>
-                    
-                        
-                            
-
-                            <li class="navbar-item">
-                                <!-- Menu -->
-                                <a class=""
-                                   target="_blank" rel="noopener" href="https://github.com/Wuxy1997"
-                                        >
-                                    <i class="fa-brands fa-github fa-fw"></i>
-                                    GITHUB
-                                    
-                                </a>
-
-                                <!-- Submenu -->
-                                
-                            </li>
-                    
-                    
-                </ul>
-            </div>
-            <!-- Mobile -->
-            <div class="mobile">
-                
-                <div class="icon-item navbar-bar">
-                    <div class="navbar-bar-middle"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Mobile sheet -->
-    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
-        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
-            
-                
-                    
-
-                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
-                        
-                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
-                           href="/"
-                        >
-                            <span>
-                                首页
-                            </span>
-                            
-                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
-                            
-                        </a>
-                        
-
-                        
-                    </li>
-            
-                
-                    
-
-                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
-                        
-                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
-                           href="/archives"
-                        >
-                            <span>
-                                归档
-                            </span>
-                            
-                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
-                            
-                        </a>
-                        
-
-                        
-                    </li>
-            
-                
-                    
-
-                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
-                        
-                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
-                           href="/categories"
-                        >
-                            <span>
-                                分类
-                            </span>
-                            
-                                <i class="fa-regular fa-folder fa-sm fa-fw"></i>
-                            
-                        </a>
-                        
-
-                        
-                    </li>
-            
-                
-                    
-
-                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
-                        
-                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
-                           href="/tags"
-                        >
-                            <span>
-                                标签
-                            </span>
-                            
-                                <i class="fa-regular fa-tags fa-sm fa-fw"></i>
-                            
-                        </a>
-                        
-
-                        
-                    </li>
-            
-                
-                    
-
-                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
-                        
-                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
-                           href="/about"
-                        >
-                            <span>
-                                关于
-                            </span>
-                            
-                                <i class="fa-regular fa-user fa-sm fa-fw"></i>
-                            
-                        </a>
-                        
-
-                        
-                    </li>
-            
-                
-                    
-
-                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
-                        
-                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
-                           target="_blank" rel="noopener" href="https://github.com/Wuxy1997"
-                        >
-                            <span>
-                                GITHUB
-                            </span>
-                            
-                                <i class="fa-brands fa-github fa-sm fa-fw"></i>
-                            
-                        </a>
-                        
-
-                        
-                    </li>
-            
-
-            
-            
-                
-                    
-                    
-                    
-                    
-            
-        </ul>
-
-        <div class="statistics flex justify-around my-2.5">
-    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">31</div>
-        <div class="label text-third-text-color text-sm">标签</div>
-    </a>
-    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">6</div>
-        <div class="label text-third-text-color text-sm">分类</div>
-    </a>
-    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">10</div>
-        <div class="label text-third-text-color text-sm">文章</div>
-    </a>
-</div>
-    </div>
-
-    <div class="window-mask"></div>
-
-</header>
-
-
-		</div>
-
-		<div class="main-content-body transition-fade-up">
-			
-			<div class="home-sidebar-container">
-    <div class="sticky-container sticky">
-        
-        
-            
-                <div class="sidebar-links">
-                    <div class="site-info">
-                        <div class="site-name">大木头WU的技术博客</div>
-                        
-                            <div class="announcement">
-                                欢迎来到我的技术博客！专注于AI、联邦学习和全栈开发 🚀
-                            </div>
-                        
-                    </div>
-                    
-                        
-                            
-                                <a class="links" href="/archives">
-                                    
-                                        <i class="fa-regular fa-archive icon-space"></i>
-                                    
-                                    <span class="link-name">Archives</span>
-                                </a>
-                            
-                        
-                            
-                                <a class="links" href="/tags">
-                                    
-                                        <i class="fa-regular fa-tags icon-space"></i>
-                                    
-                                    <span class="link-name">Tags</span>
-                                </a>
-                            
-                        
-                            
-                                <a class="links" href="/categories">
-                                    
-                                        <i class="fa-regular fa-folder icon-space"></i>
-                                    
-                                    <span class="link-name">Categories</span>
-                                </a>
-                            
-                        
-                            
-                                <a class="links" target="_blank" rel="noopener" href="https://github.com/Wuxy1997">
-                                    
-                                        <i class="fa-brands fa-github icon-space"></i>
-                                    
-                                    <span class="link-name">GitHub</span>
-                                </a>
-                            
-                        
-                    
-                </div>
-            
-            <div class="sidebar-content"  marginTop >
-                <div class="avatar flex justify-center">
-    <img src="/images/redefine-avatar.svg">
-</div>
-                <div class="author flex flex-col justify-center my-2.5 mx-0">
-    <div class="name">大木头WU (Wuxy1997)</div>
-    
-        <div class="label">Lv2</div>
-    
-</div>
-                <div class="statistics flex justify-around my-2.5">
-    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">31</div>
-        <div class="label text-third-text-color text-sm">标签</div>
-    </a>
-    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">6</div>
-        <div class="label text-third-text-color text-sm">分类</div>
-    </a>
-    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">10</div>
-        <div class="label text-third-text-color text-sm">文章</div>
-    </a>
-</div>
-            </div>
-        
-
-    </div>
-</div>
-
-			
-
-			<div class="main-content">
-				<div class="home-content-container">
-    <ul class="home-article-list">
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2026/01/07/2026-01-07-typescript-vue3-best-practices/">
-                            TypeScript + Vue 3 实战：现代前端开发最佳实践
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            
-                            TypeScript + Vue 3 实战：现代前端开发最佳实践在参与 Com6102gp5 团队项目的过程中，我深入实践了 TypeScript 和 Vue 3 的组合开发。这篇文章分享一些实战经验和最佳实践。
-🎯 为什么选择 TypeScript + Vue 3？TypeScript 的优势
-类型安全：编译时捕获错误，减少运行时 bug
-智能提示：IDE 提供更好的代码补全和提示
-代码...
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Wed Jan 07 2026 16:00:00 GMT+0800">
-                
-                    2026-01-07
-                
-            </span>
-        </span>
-        
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/">技术分享</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">最佳实践</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/TypeScript/">TypeScript</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/Vue-js/">Vue.js</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2026/01/07/2026-01-07-typescript-vue3-best-practices/">阅读全文<span class="seo-reader-text">TypeScript + Vue 3 实战：现代前端开发最佳实践</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2026/01/07/2026-01-07-federated-reinforcement-learning-project/">
-                            联邦强化学习：隐私保护下的分布式学习探索
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            
-                            联邦强化学习：隐私保护下的分布式学习探索在移动边缘计算（Mobile Edge Computing, MEC）环境下，如何在保护用户隐私的同时实现高效的资源分配和决策优化？这是我在 Federated-Reinforcement-Learning-for-Mobile-Edge-Computing 项目中探索的核心问题。
-🎯 项目背景随着 5G 和物联网技术的快速发展，移动边缘计算成为了解...
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Wed Jan 07 2026 14:00:00 GMT+0800">
-                
-                    2026-01-07
-                
-            </span>
-        </span>
-        
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6/">技术研究</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/">联邦学习</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2026/01/07/2026-01-07-federated-reinforcement-learning-project/">阅读全文<span class="seo-reader-text">联邦强化学习：隐私保护下的分布式学习探索</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2026/01/07/2026-01-07-python-efficiency-tips/">
-                            Python 开发效率提升技巧：从新手到进阶
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            
-                            Python 开发效率提升技巧：从新手到进阶在开发各种 Python 项目的过程中，从 PDF 处理工具到联邦学习系统，我积累了一些实用的开发技巧。这篇文章分享我的 Python 开发效率提升经验。
-🎯 开发环境配置虚拟环境管理为什么需要虚拟环境？
-
-隔离项目依赖
-避免包版本冲突
-便于项目迁移
-
-推荐工具：venv + pip
-123456789101112# 创建虚拟环境python -...
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Wed Jan 07 2026 12:00:00 GMT+0800">
-                
-                    2026-01-07
-                
-            </span>
-        </span>
-        
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/">技术教程</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/Python/">Python</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">最佳实践</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2026/01/07/2026-01-07-python-efficiency-tips/">阅读全文<span class="seo-reader-text">Python 开发效率提升技巧：从新手到进阶</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2026/01/07/2026-01-07-alicloud-oss-tool/">
-                            从零开始打造阿里云 OSS 批量管理工具
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            
-                            从零开始打造阿里云 OSS 批量管理工具在日常工作中，我经常需要管理阿里云 OSS 上的大量文件。官方提供的控制台虽然功能完善，但在处理批量操作时效率不高。于是我开发了这个 阿里云 OSS 批量管理工具，大幅提升了工作效率。
-🤔 为什么要开发这个工具？痛点场景
-文件整理需求：OSS 中累积了数千个文件，需要按修改时间整理到不同文件夹
-批量移动操作：官方控制台不支持基于时间规则的批量移动
-效...
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Wed Jan 07 2026 10:00:00 GMT+0800">
-                
-                    2026-01-07
-                
-            </span>
-        </span>
-        
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/%E9%A1%B9%E7%9B%AE%E5%B1%95%E7%A4%BA/">项目展示</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/%E5%BC%80%E6%BA%90/">开源</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/C/">C#</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/%E9%98%BF%E9%87%8C%E4%BA%91/">阿里云</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2026/01/07/2026-01-07-alicloud-oss-tool/">阅读全文<span class="seo-reader-text">从零开始打造阿里云 OSS 批量管理工具</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2026/01/06/2026-01-07-federated-learning-edge-computing/">
-                            联邦学习与边缘计算：保护隐私的 AI 未来
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            
-                            联邦学习与边缘计算：保护隐私的 AI 未来在我的研究项目 Federated Reinforcement Learning for Mobile Edge Computing 中，我深入探索了联邦学习在边缘计算场景中的应用。今天和大家分享一些心得。
-🤔 什么是联邦学习？联邦学习（Federated Learning）是一种机器学习范式，它能让多个参与方在不共享原始数据的情况下，协同训练一个...
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Wed Jan 07 2026 00:00:00 GMT+0800">
-                
-                    2026-01-07
-                
-            </span>
-        </span>
-        
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6/">技术研究</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/">联邦学习</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2026/01/06/2026-01-07-federated-learning-edge-computing/">阅读全文<span class="seo-reader-text">联邦学习与边缘计算：保护隐私的 AI 未来</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2026/01/06/2026-01-07-my-open-source-projects/">
-                            我的开源项目集合
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            
-                            我的开源项目集合这里是我在 GitHub 上的一些开源项目，涵盖了人工智能、云计算、工具开发和游戏等多个领域。
-🔬 研究与 AI 项目Federated Reinforcement Learning for Mobile Edge Computing语言: Python | ⭐ Stars: 1
-这是一个关于移动边缘计算环境下联邦强化学习的研究项目。项目探索了如何在边缘计算场景中应用联邦学...
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Wed Jan 07 2026 00:00:00 GMT+0800">
-                
-                    2026-01-07
-                
-            </span>
-        </span>
-        
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/%E9%A1%B9%E7%9B%AE%E5%B1%95%E7%A4%BA/">项目展示</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/%E5%BC%80%E6%BA%90/">开源</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/Python/">Python</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/GitHub/">GitHub</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2026/01/06/2026-01-07-my-open-source-projects/">阅读全文<span class="seo-reader-text">我的开源项目集合</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2026/01/06/2026-01-07-python-development-tips/">
-                            Python 开发技巧分享
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            
-                            Python 开发技巧分享作为一名经常使用 Python 的开发者，我在实际项目中积累了一些实用的技巧和最佳实践。今天分享给大家。
-🎯 项目结构最佳实践一个清晰的项目结构能让代码更易维护：
-1234567891011my_project/├── src/│   ├── __init__.py│   ├── main.py│   └── utils/├── tests/│   ├── __i...
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Wed Jan 07 2026 00:00:00 GMT+0800">
-                
-                    2026-01-07
-                
-            </span>
-        </span>
-        
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/">技术分享</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/Python/">Python</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">最佳实践</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2026/01/06/2026-01-07-python-development-tips/">阅读全文<span class="seo-reader-text">Python 开发技巧分享</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2026/01/06/2026-01-07-web-development-journey/">
-                            从零开始的 Web 开发之旅
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            
-                            从零开始的 Web 开发之旅作为一名开发者，我在 Web 开发领域积累了不少经验。从 TypeScript 到 Vue.js，从前端到全栈，今天分享一些实战经验。
-🎯 技术栈选择在我的项目中，我主要使用以下技术栈：
-前端框架
-Vue.js: 渐进式框架，易学易用
-TypeScript: 类型安全的 JavaScript
-Vite: 极速的构建工具
-
-项目实例
-Com6102gp5 - Ty...
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Wed Jan 07 2026 00:00:00 GMT+0800">
-                
-                    2026-01-07
-                
-            </span>
-        </span>
-        
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/">技术教程</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/TypeScript/">TypeScript</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/Vue-js/">Vue.js</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/%E5%89%8D%E7%AB%AF/">前端</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2026/01/06/2026-01-07-web-development-journey/">阅读全文<span class="seo-reader-text">从零开始的 Web 开发之旅</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2025/05/30/2025-05-31-white-night-walk/">
-                            白夜行摘录
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            
-                            白夜行摘录我的天空里没有太阳，总是黑夜，但并不暗，因为有东西代替了太阳。虽然没有太阳那么明亮，但对我来说已经足够。凭借着这份光，我便能把黑夜当成白天。
-他们只是想保护自己的灵魂。结果，雪穗从不以真面目示人，亮司则至今仍在黑暗的通风管中徘徊
-
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Sat May 31 2025 00:00:00 GMT+0800">
-                
-                    2025-05-31
-                
-            </span>
-        </span>
-        
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/%E5%B0%8F%E8%AF%B4/">小说</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/%E4%B8%9C%E9%87%8E%E5%9C%AD%E5%90%BE/">东野圭吾</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/%E8%AF%BB%E4%B9%A6/">读书</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2025/05/30/2025-05-31-white-night-walk/">阅读全文<span class="seo-reader-text">白夜行摘录</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2024/03/19/2024-03-20-welcome-to-my-blog/">
-                            Welcome to My Blog
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            
-                            Welcome to My BlogHello and welcome to my new blog! This is my first post, and I’m excited to share my thoughts and experiences with you.
-What to ExpectIn this blog, I’ll be sharing:
-
-Technical tut...
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Wed Mar 20 2024 00:00:00 GMT+0800">
-                
-                    2024-03-20
-                
-            </span>
-        </span>
-        
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/%E5%8D%9A%E5%AE%A2%E6%97%A5%E5%BF%97/">博客日志</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/welcome/">welcome</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/first-post/">first-post</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/%E5%8D%9A%E5%AE%A2/">博客</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2024/03/19/2024-03-20-welcome-to-my-blog/">阅读全文<span class="seo-reader-text">Welcome to My Blog</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-    </ul>
-
-    <div class="home-paginator px-7 py-5">
-        <div class="paginator">
-	<span class="page-number current">1</span>
-</div>
-  
-    </div>
-</div>
-
-			</div>
-
-			
-		</div>
-
-		<div class="main-content-footer">
-			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
-    <div class="info-container py-3 text-center">
-        
-        <div class="text-center">
-            &copy;
-            
-              <span>2022</span>
-              -
-            
-            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">大木头WU (Wuxy1997)</a>
-            
-                
-                <p class="post-count space-x-0.5">
-                    <span>
-                        共撰写了 10 篇文章
-                    </span>
-                    
-                </p>
-            
-        </div>
-        
-            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
-            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
-                
-                    <span id="busuanzi_container_site_uv" class="lg:!block">
-                        <span class="text-sm">访问人数</span>
-                        <span id="busuanzi_value_site_uv"></span>
-                    </span>
-                
-                
-                    <span id="busuanzi_container_site_pv" class="lg:!block">
-                        <span class="text-sm">总访问量</span>
-                        <span id="busuanzi_value_site_pv"></span>
-                    </span>
-                
-            </div>
-        
-        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
-            <span class="lg:block text-sm">由 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a> 驱动</span>
-            <span class="text-sm lg:block">主题&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.5</a></span>
-        </div>
-        
-        
-            <div>
-                博客已运行 <span class="odometer" id="runtime_days" ></span> 天 <span class="odometer" id="runtime_hours"></span> 小时 <span class="odometer" id="runtime_minutes"></span> 分钟 <span class="odometer" id="runtime_seconds"></span> 秒
-            </div>
-        
-        
-            <script data-swup-reload-script>
-                try {
-                    function odometer_init() {
-                    const elements = document.querySelectorAll('.odometer');
-                    elements.forEach(el => {
-                        new Odometer({
-                            el,
-                            format: '( ddd).dd',
-                            duration: 200
-                        });
-                    });
-                    }
-                    odometer_init();
-                } catch (error) {}
-            </script>
-        
-        
-        
-    </div>  
-</footer>
-		</div>
-	</div>
-
-	
-
-	<div class="right-side-tools-container">
-		<div class="side-tools-container">
-	<ul class="hidden-tools-list">
-		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
-			<i class="fa-regular fa-magnifying-glass-plus"></i>
-		</li>
-
-		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
-			<i class="fa-regular fa-magnifying-glass-minus"></i>
-		</li>
-
-		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
-			<i class="fa-regular fa-moon"></i>
-		</li>
-
-		<!-- rss -->
-		
-
-		
-
-		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
-			<i class="fa-regular fa-arrow-down"></i>
-		</li>
-	</ul>
-
-	<ul class="visible-tools-list">
-		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
-			<i class="fa-regular fa-cog fa-spin"></i>
-		</li>
-		
-		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
-			<i class="arrow-up fas fa-arrow-up"></i>
-			<span class="percent"></span>
-		</li>
-		
-		
-	</ul>
-</div>
-	</div>
-
-	<div class="image-viewer-container">
-	<img src="">
-</div>
-
-	
-
-</main>
-
-
-
-<script src="/js/build/libs/Swup.min.js"></script>
-
-<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
-
-<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
-
-<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
-
-<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
-
-<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
-
+<meta property="og:title" content="大木头WU / Wuxy1997">
+<meta property="og:description" content="大木头WU（Wuxy1997）的个人主页：工程师 · 人工智能与全栈开发。代码改变世界，开源连接你我">
+<meta property="og:url" content="https://wuxy1997.github.io/">
+<meta property="og:image" content="https://wuxy1997.github.io/og.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css">
 <script>
-    const swup = new Swup({
-        plugins: [
-            new SwupScriptsPlugin({
-                optin: true,
-            }),
-            new SwupProgressPlugin(),
-            new SwupScrollPlugin({
-                offset: 80,
-            }),
-            new SwupSlideTheme({
-                mainElement: ".main-content-body",
-            }),
-            new SwupPreloadPlugin(),
-        ],
-        containers: ["#swup"],
-    });
+(function () {
+  var root = document.documentElement;
+  root.classList.add('js');
+  try {
+    var saved = localStorage.getItem('wuxy-theme');
+    if (saved === 'void') root.dataset.theme = 'void';
+    var calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!calm && !sessionStorage.getItem('wuxy-booted')) root.classList.add('boot');
+  } catch (e) {}
+})();
 </script>
+<script defer src="gl.js"></script>
+<script defer src="app.js"></script>
+</head>
+<body>
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="cross" aria-hidden="true"><i></i><b></b></div>
 
+<div class="shell">
+  <header class="top">
+    <a class="brand" href="#status">
+      <span class="sq"></span>
+      <span class="brand-cn">大木头WU</span>
+      <span class="brand-en">WUXY1997 // RECORD</span>
+    </a>
+    <nav class="tabs" aria-label="页面">
+      <a class="tab" href="#status"><small>01</small>状态<span>STATUS</span></a>
+      <a class="tab" href="#projects"><small>02</small>项目<span>PROJECTS</span></a>
+      <a class="tab" href="#logs"><small>03</small>日志<span>LOG</span></a>
+      <a class="tab" href="#comms"><small>04</small>通信<span>COMMS</span></a>
+    </nav>
+    <div class="clock" aria-hidden="true">
+      <span id="clock">----</span>
+      <small id="sector">SECTOR 01 / 04</small>
+    </div>
+  </header>
+  <div class="ruler" aria-hidden="true"></div>
 
+  <main class="stage" id="stage">
 
+    <section class="view" id="status" aria-label="状态">
+      <article class="plate invert idcard stagger">
+        <span class="ghost" aria-hidden="true">WU</span>
+        <div class="id-top"><span class="sq"></span>WUXY1997 // PERSONAL RECORD<span class="live"><i></i>ONLINE</span></div>
+        <h1 class="name chars">大木头WU</h1>
+        <div class="id-rule" aria-hidden="true"><i></i></div>
+        <p class="role">工程师 · 人工智能与全栈开发</p>
+        <p class="en">ENGINEER / AI AND FULL-STACK DEVELOPMENT</p>
+        <p class="intro">喜欢用代码解决实际问题，在 GitHub 上分享开源项目和学习心得。</p>
+        <p class="motto">代码改变世界，开源连接你我</p>
+        <p class="en">CODE CHANGES THE WORLD. OPEN SOURCE CONNECTS US ALL.</p>
+        <div class="chips solid"><span>人工智能与机器学习</span><span>边缘计算</span><span>隐私保护</span><span>全栈开发</span></div>
+        <ul class="ticks-list"><li>深度学习在边缘计算中的应用</li><li>隐私保护机器学习</li><li>现代 Web 技术栈</li><li>跨平台应用开发</li><li>用户体验与前端工程化</li></ul>
+        <div class="id-foot">
+          <svg class="barcode" viewBox="0 0 240 34" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 0h3v34h-3zM4 0h2v34h-2zM9 0h2v34h-2zM12 0h4v34h-4zM20 0h3v34h-3zM24 0h1v34h-1zM27 0h2v34h-2zM33 0h3v34h-3zM37 0h1v34h-1zM39 0h1v34h-1zM44 0h3v34h-3zM49 0h3v34h-3zM53 0h1v34h-1zM55 0h1v34h-1zM57 0h3v34h-3zM61 0h1v34h-1zM66 0h3v34h-3zM70 0h3v34h-3zM74 0h2v34h-2zM77 0h2v34h-2zM81 0h2v34h-2zM85 0h1v34h-1zM89 0h3v34h-3zM94 0h2v34h-2zM100 0h2v34h-2zM106 0h3v34h-3zM110 0h3v34h-3zM116 0h2v34h-2zM119 0h4v34h-4zM124 0h4v34h-4zM130 0h3v34h-3zM136 0h2v34h-2zM139 0h1v34h-1zM141 0h1v34h-1zM143 0h2v34h-2zM147 0h3v34h-3zM151 0h2v34h-2zM157 0h2v34h-2zM160 0h2v34h-2zM164 0h2v34h-2zM168 0h1v34h-1zM172 0h3v34h-3zM179 0h1v34h-1zM181 0h4v34h-4zM189 0h1v34h-1zM192 0h2v34h-2zM195 0h4v34h-4zM201 0h1v34h-1zM204 0h1v34h-1zM208 0h4v34h-4zM214 0h2v34h-2zM220 0h1v34h-1zM222 0h1v34h-1zM225 0h1v34h-1zM227 0h1v34h-1zM229 0h4v34h-4zM234 0h1v34h-1zM238 0h1v34h-1z"/></svg>
+          <p>SINCE 2023<br>SYNC 2026-11-02</p>
+        </div>
+      </article>
 
-	
-<script src="/js/build/tools/imageViewer.js" type="module"></script>
+      <div class="core" data-anchor aria-hidden="true">
+        <div class="tag tag-a"><small>PUBLIC REPOS</small><b>018</b><svg class="lead" viewBox="0 0 96 48"><path d="M96 1H52L6 44"/><rect x="2" y="41" width="6" height="6"/></svg></div>
+        <div class="tag tag-b"><small>LOG ENTRIES</small><b>010</b><svg class="lead" viewBox="0 0 96 48"><path d="M96 1H52L6 44"/><rect x="2" y="41" width="6" height="6"/></svg></div>
+        <div class="tag tag-c"><small>LAST PUSH</small><b>2026-08-01</b><svg class="lead" viewBox="0 0 96 48"><path d="M96 1H52L6 44"/><rect x="2" y="41" width="6" height="6"/></svg></div>
+        <div class="tag tag-d"><small>OBSERVATION</small><b>RECORD 01</b></div>
+      </div>
 
-<script src="/js/build/utils.js" type="module"></script>
+      <div class="side stagger">
+        <section class="plate panel">
+          <h2 class="bar"><span class="sq"></span>状态<em>STATUS</em><small>SYNC 2026-11-02</small></h2>
+          <div class="cells">
+            <div><span>公开仓库</span><small>PUBLIC REPOS</small><b>018</b></div>
+            <div class="hot"><span>日志条目</span><small>LOG ENTRIES</small><b>010</b></div>
+            <div><span>记录起始</span><small>ACTIVE SINCE</small><b>2023</b></div>
+          </div>
+          <dl class="facts">
+            <div><dt>最近推送</dt><dd><time>2026-08-01</time><a href="https://github.com/Wuxy1997/AI-video">AI-video</a></dd></div>
+            <div><dt>最近日志</dt><dd><time>2026-01-07</time><a href="https://wuxy1997.github.io/2026/01/07/2026-01-07-typescript-vue3-best-practices/">TypeScript + Vue 3 实战：现代前端开发最佳实践</a></dd></div>
+          </dl>
+        </section>
+        <section class="plate panel">
+          <h2 class="bar"><span class="sq"></span>语言<em>LANGUAGES</em><small>PUBLIC REPOS</small></h2>
+          <ul class="meters"><li><span>TypeScript</span><i style="--v:100.0"></i><small>37.0</small></li><li><span>Vue</span><i style="--v:70.3"></i><small>26.0</small></li><li><span>JavaScript</span><i style="--v:58.6"></i><small>21.7</small></li><li><span>Python</span><i style="--v:35.7"></i><small>13.2</small></li><li><span>C#</span><i style="--v:5.1"></i><small>1.9</small></li></ul>
+        </section>
+        <section class="plate panel">
+          <h2 class="bar"><span class="sq"></span>装备<em>LOADOUT</em></h2>
+          <div class="loadout">
+            <div class="load-row"><p>语言<small>LANG</small></p><div class="chips"><span>Python</span><span>TypeScript</span><span>JavaScript</span><span>C#</span><span>Java</span></div></div>
+            <div class="load-row"><p>工具<small>TOOLS</small></p><div class="chips"><span>Git</span><span>Docker</span><span>GitHub Actions</span><span>阿里云</span><span>Hexo</span><span>VS Code</span></div></div>
+          </div>
+        </section>
+      </div>
+    </section>
 
-<script src="/js/build/main.js" type="module"></script>
+    <section class="view" id="projects" aria-label="项目">
+      <header class="vhead">
+        <span class="sq"></span><h2 class="chars">项目</h2><em>PROJECTS</em><i class="hatch"></i>
+        <a href="https://github.com/Wuxy1997?tab=repositories">ALL REPOSITORIES</a>
+      </header>
+      <div class="projects">
+        <ol class="menu stagger"><li class="item on">
+  <button class="row" type="button" aria-expanded="true" aria-controls="p-storyboarder">
+    <small>01</small><strong>StoryboardER</strong><span>AI 分镜创作工具</span><em>WEB / AI</em>
+  </button>
+  <article class="plate detail" id="p-storyboarder">
+    <h3 class="bar"><span class="sq"></span>StoryboardER<small>WEB / AI</small></h3>
+    <div class="d-top">
+      <div class="pict-box"><svg class="pict" viewBox="0 0 120 120" aria-hidden="true"><rect x="2" y="8" width="54" height="36" fill="none" stroke="currentColor" stroke-width="1.2"/><rect x="64" y="8" width="54" height="36" fill="none" stroke="currentColor" stroke-width="1.2"/><rect x="2" y="52" width="54" height="36" fill="none" stroke="currentColor" stroke-width="1.2"/><rect x="64" y="52" width="54" height="36" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M69.0 8.0L64.0 13.0M74.0 8.0L64.0 18.0M79.0 8.0L64.0 23.0M84.0 8.0L64.0 28.0M89.0 8.0L64.0 33.0M94.0 8.0L64.0 38.0M99.0 8.0L64.0 43.0M104.0 8.0L68.0 44.0M109.0 8.0L73.0 44.0M114.0 8.0L78.0 44.0M118.0 9.0L83.0 44.0M118.0 14.0L88.0 44.0M118.0 19.0L93.0 44.0M118.0 24.0L98.0 44.0M118.0 29.0L103.0 44.0M118.0 34.0L108.0 44.0M118.0 39.0L113.0 44.0" fill="none" stroke="currentColor" stroke-width=".9"/><path d="M8 36L22 22L32 31L40 25L50 36" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="44.0" cy="18.0" r="3" fill="currentColor"/><rect x="64" y="52" width="54" height="36" fill="currentColor"/><path d="M84 61l16 9-16 9z" fill="var(--pict-bg,#d3cdb8)"/><path d="M8 62H50M8 70H42M8 78H46" fill="none" stroke="currentColor" stroke-width="1"/><rect x="4" y="96" width="4" height="4" fill="currentColor"/><rect x="4" y="112" width="4" height="4" fill="currentColor"/><rect x="12" y="96" width="4" height="4" fill="currentColor"/><rect x="12" y="112" width="4" height="4" fill="currentColor"/><rect x="20" y="96" width="4" height="4" fill="currentColor"/><rect x="20" y="112" width="4" height="4" fill="currentColor"/><rect x="28" y="96" width="4" height="4" fill="currentColor"/><rect x="28" y="112" width="4" height="4" fill="currentColor"/><rect x="36" y="96" width="4" height="4" fill="currentColor"/><rect x="36" y="112" width="4" height="4" fill="currentColor"/><rect x="44" y="96" width="4" height="4" fill="currentColor"/><rect x="44" y="112" width="4" height="4" fill="currentColor"/><rect x="52" y="96" width="4" height="4" fill="currentColor"/><rect x="52" y="112" width="4" height="4" fill="currentColor"/><rect x="60" y="96" width="4" height="4" fill="currentColor"/><rect x="60" y="112" width="4" height="4" fill="currentColor"/><rect x="68" y="96" width="4" height="4" fill="currentColor"/><rect x="68" y="112" width="4" height="4" fill="currentColor"/><rect x="76" y="96" width="4" height="4" fill="currentColor"/><rect x="76" y="112" width="4" height="4" fill="currentColor"/><rect x="84" y="96" width="4" height="4" fill="currentColor"/><rect x="84" y="112" width="4" height="4" fill="currentColor"/><rect x="92" y="96" width="4" height="4" fill="currentColor"/><rect x="92" y="112" width="4" height="4" fill="currentColor"/><rect x="100" y="96" width="4" height="4" fill="currentColor"/><rect x="100" y="112" width="4" height="4" fill="currentColor"/><rect x="108" y="96" width="4" height="4" fill="currentColor"/><rect x="108" y="112" width="4" height="4" fill="currentColor"/><rect x="116" y="96" width="4" height="4" fill="currentColor"/><rect x="116" y="112" width="4" height="4" fill="currentColor"/><path d="M2 106H118" fill="none" stroke="currentColor" stroke-width="1" opacity="0.5"/><rect x="74" y="103" width="6" height="6" fill="currentColor"/></svg></div>
+      <div>
+        <p class="d-cn">AI 分镜创作工具</p>
+        <p class="d-desc">把无结构的故事大纲，变成可预览、可导出的视觉分镜序列。</p>
+      </div>
+    </div>
+    <ul class="ticks-list"><li>默认使用浏览器本地分镜引擎，不需要 API Key</li><li>可离线跑通核心流程</li><li>可选接入大模型拆镜和文生图</li></ul>
+    <dl class="d-meta">
+      <div><dt>LANGUAGE</dt><dd>TypeScript</dd></div>
+      <div><dt>LAST PUSH</dt><dd>2026-08-01</dd></div>
+      <div class="wide"><dt>REPOSITORY</dt><dd>AI-video</dd></div>
+    </dl>
+    <div class="d-foot"><code>Next.js / TypeScript / ffmpeg.wasm</code><a class="open" href="https://github.com/Wuxy1997/AI-video">打开仓库</a></div>
+  </article>
+</li>
+<li class="item">
+  <button class="row" type="button" aria-expanded="false" aria-controls="p-frl-mec">
+    <small>02</small><strong>FRL for MEC</strong><span>边缘计算联邦强化学习</span><em>RESEARCH</em>
+  </button>
+  <article class="plate detail" id="p-frl-mec">
+    <h3 class="bar"><span class="sq"></span>FRL for MEC<small>RESEARCH</small></h3>
+    <div class="d-top">
+      <div class="pict-box"><svg class="pict" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-width=".8" stroke-dasharray="2 5"/><path d="M60 60L60.0 16.0" fill="none" stroke="currentColor" stroke-width="1"/><path d="M60.0 16.0L98.1 38.0" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.55"/><path d="M60 60L98.1 38.0" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3"/><path d="M98.1 38.0L98.1 82.0" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.55"/><path d="M60 60L98.1 82.0" fill="none" stroke="currentColor" stroke-width="1"/><path d="M98.1 82.0L60.0 104.0" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.55"/><path d="M60 60L60.0 104.0" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3"/><path d="M60.0 104.0L21.9 82.0" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.55"/><path d="M60 60L21.9 82.0" fill="none" stroke="currentColor" stroke-width="1"/><path d="M21.9 82.0L21.9 38.0" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.55"/><path d="M60 60L21.9 38.0" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3"/><path d="M21.9 38.0L60.0 16.0" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.55"/><circle cx="60.0" cy="16.0" r="6.5" fill="currentColor"/><circle cx="98.1" cy="38.0" r="6.5" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="98.1" cy="38.0" r="2.4" fill="currentColor"/><circle cx="98.1" cy="82.0" r="6.5" fill="currentColor"/><circle cx="60.0" cy="104.0" r="6.5" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="60.0" cy="104.0" r="2.4" fill="currentColor"/><circle cx="21.9" cy="82.0" r="6.5" fill="currentColor"/><circle cx="21.9" cy="38.0" r="6.5" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="21.9" cy="38.0" r="2.4" fill="currentColor"/><rect x="49" y="49" width="22" height="22" fill="currentColor"/><rect x="55" y="55" width="10" height="10" fill="var(--pict-bg,#d3cdb8)"/></svg></div>
+      <div>
+        <p class="d-cn">边缘计算联邦强化学习</p>
+        <p class="d-desc">面向移动边缘计算的鲁棒联邦强化学习框架，聚焦微服务迁移优化。</p>
+      </div>
+    </div>
+    <ul class="ticks-list"><li>融合联邦学习与强化学习</li><li>包含鲁棒聚合方法的实现</li><li>在保护隐私的前提下做分布式资源优化</li></ul>
+    <dl class="d-meta">
+      <div><dt>LANGUAGE</dt><dd>Python</dd></div>
+      <div><dt>LAST PUSH</dt><dd>2025-07-11</dd></div>
+      <div class="wide"><dt>REPOSITORY</dt><dd>Federated-Reinforcement-Learning-for-Mobile-Edge-Computing-Rebuild-t</dd></div>
+    </dl>
+    <div class="d-foot"><code>Python / Federated Learning / RL</code><a class="open" href="https://github.com/Wuxy1997/Federated-Reinforcement-Learning-for-Mobile-Edge-Computing-Rebuild-t">打开仓库</a></div>
+  </article>
+</li>
+<li class="item">
+  <button class="row" type="button" aria-expanded="false" aria-controls="p-sars-analyzer">
+    <small>03</small><strong>SARS-CoV-2 AI Analyzer</strong><span>变异株分析平台</span><em>RESEARCH</em>
+  </button>
+  <article class="plate detail" id="p-sars-analyzer">
+    <h3 class="bar"><span class="sq"></span>SARS-CoV-2 AI Analyzer<small>RESEARCH</small></h3>
+    <div class="d-top">
+      <div class="pict-box"><svg class="pict" viewBox="0 0 120 120" aria-hidden="true"><path d="M78.3 7.8L41.7 7.8" fill="none" stroke="currentColor" stroke-width="1" opacity="0.6"/><rect x="57.0" y="4.800000000000001" width="6" height="6" fill="currentColor"/><path d="M95.0 15.5L25.0 15.5" fill="none" stroke="currentColor" stroke-width="1" opacity="0.6"/><path d="M96.6 23.3L23.4 23.3" fill="none" stroke="currentColor" stroke-width="1" opacity="0.6"/><path d="M82.3 31.0L37.7 31.0" fill="none" stroke="currentColor" stroke-width="1" opacity="0.6"/><rect x="57.0" y="28.0" width="6" height="6" fill="currentColor"/><path d="M58.4 38.7L61.6 38.7" fill="none" stroke="currentColor" stroke-width="1" opacity="0.6"/><path d="M35.2 46.5L84.8 46.5" fill="none" stroke="currentColor" stroke-width="1" opacity="0.6"/><path d="M22.7 54.2L97.3 54.2" fill="none" stroke="currentColor" stroke-width="1" opacity="0.6"/><rect x="57.0" y="51.2" width="6" height="6" fill="currentColor"/><path d="M26.3 61.9L93.7 61.9" fill="none" stroke="currentColor" stroke-width="1" opacity="0.6"/><path d="M44.5 69.7L75.5 69.7" fill="none" stroke="currentColor" stroke-width="1" opacity="0.6"/><path d="M69.5 77.4L50.5 77.4" fill="none" stroke="currentColor" stroke-width="1" opacity="0.6"/><rect x="57.0" y="74.4" width="6" height="6" fill="currentColor"/><path d="M90.3 85.1L29.7 85.1" fill="none" stroke="currentColor" stroke-width="1" opacity="0.6"/><path d="M98.0 92.9L22.0 92.9" fill="none" stroke="currentColor" stroke-width="1" opacity="0.6"/><path d="M89.3 100.6L30.7 100.6" fill="none" stroke="currentColor" stroke-width="1" opacity="0.6"/><rect x="57.0" y="97.6" width="6" height="6" fill="currentColor"/><path d="M67.9 108.3L52.1 108.3" fill="none" stroke="currentColor" stroke-width="1" opacity="0.6"/><path d="M43.1 116.1L76.9 116.1" fill="none" stroke="currentColor" stroke-width="1" opacity="0.6"/><path d="M60.0 2.0L66.3 3.9L72.5 5.9L78.3 7.8L83.6 9.7L88.2 11.7L92.1 13.6L95.0 15.5L97.0 17.5L97.9 19.4L97.8 21.3L96.6 23.3L94.4 25.2L91.2 27.1L87.1 29.1L82.3 31.0L76.9 32.9L71.0 34.9L64.8 36.8L58.4 38.7L52.1 40.7L46.0 42.6L40.3 44.5L35.2 46.5L30.7 48.4L27.1 50.3L24.4 52.3L22.7 54.2L22.0 56.1L22.4 58.1L23.9 60.0L26.3 61.9L29.7 63.9L34.0 65.8L39.0 67.7L44.5 69.7L50.5 71.6L56.8 73.5L63.2 75.5L69.5 77.4L75.5 79.3L81.0 81.3L86.0 83.2L90.3 85.1L93.7 87.1L96.1 89.0L97.6 90.9L98.0 92.9L97.3 94.8L95.6 96.7L92.9 98.7L89.3 100.6L84.8 102.5L79.7 104.5L74.0 106.4L67.9 108.3L61.6 110.3L55.2 112.2L49.0 114.1L43.1 116.1L37.7 118.0" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M60.0 2.0L53.7 3.9L47.5 5.9L41.7 7.8L36.4 9.7L31.8 11.7L27.9 13.6L25.0 15.5L23.0 17.5L22.1 19.4L22.2 21.3L23.4 23.3L25.6 25.2L28.8 27.1L32.9 29.1L37.7 31.0L43.1 32.9L49.0 34.9L55.2 36.8L61.6 38.7L67.9 40.7L74.0 42.6L79.7 44.5L84.8 46.5L89.3 48.4L92.9 50.3L95.6 52.3L97.3 54.2L98.0 56.1L97.6 58.1L96.1 60.0L93.7 61.9L90.3 63.9L86.0 65.8L81.0 67.7L75.5 69.7L69.5 71.6L63.2 73.5L56.8 75.5L50.5 77.4L44.5 79.3L39.0 81.3L34.0 83.2L29.7 85.1L26.3 87.1L23.9 89.0L22.4 90.9L22.0 92.9L22.7 94.8L24.4 96.7L27.1 98.7L30.7 100.6L35.2 102.5L40.3 104.5L46.0 106.4L52.1 108.3L58.4 110.3L64.8 112.2L71.0 114.1L76.9 116.1L82.3 118.0" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3"/></svg></div>
+      <div>
+        <p class="d-cn">变异株分析平台</p>
+        <p class="d-desc">结合机器学习与规则方法分析病毒突变，预测其潜在影响。</p>
+      </div>
+    </div>
+    <ul class="ticks-list"><li>突变影响预测</li><li>变异株跟踪与交互式可视化</li><li>面向公共卫生决策的分析</li></ul>
+    <dl class="d-meta">
+      <div><dt>LANGUAGE</dt><dd>JavaScript</dd></div>
+      <div><dt>LAST PUSH</dt><dd>2025-06-04</dd></div>
+      <div class="wide"><dt>REPOSITORY</dt><dd>SARS-CoV-2-AI-Analyzer</dd></div>
+    </dl>
+    <div class="d-foot"><code>JavaScript / Python / ML</code><a class="open" href="https://github.com/Wuxy1997/SARS-CoV-2-AI-Analyzer">打开仓库</a></div>
+  </article>
+</li>
+<li class="item">
+  <button class="row" type="button" aria-expanded="false" aria-controls="p-oss-manager">
+    <small>04</small><strong>Aliyun OSS Manager</strong><span>阿里云 OSS 桌面管理工具</span><em>TOOL</em>
+  </button>
+  <article class="plate detail" id="p-oss-manager">
+    <h3 class="bar"><span class="sq"></span>Aliyun OSS Manager<small>TOOL</small></h3>
+    <div class="d-top">
+      <div class="pict-box"><svg class="pict" viewBox="0 0 120 120" aria-hidden="true"><ellipse cx="46" cy="12" rx="42" ry="10" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M4 12V34A42 10 0 0 0 88 34V12" fill="none" stroke="currentColor" stroke-width="1.2"/><ellipse cx="46" cy="44" rx="42" ry="10" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M4 44V66A42 10 0 0 0 88 66V44" fill="none" stroke="currentColor" stroke-width="1.2"/><ellipse cx="46" cy="76" rx="42" ry="10" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M4 76V98A42 10 0 0 0 88 98V76" fill="none" stroke="currentColor" stroke-width="1.2"/><ellipse cx="46" cy="76" rx="42" ry="10" fill="currentColor"/><rect x="12" y="26" width="16" height="3" fill="currentColor"/><rect x="12" y="58" width="16" height="3" fill="currentColor"/><path d="M100 12V100H92M100 56H92M100 12H92" fill="none" stroke="currentColor" stroke-width="1"/><rect x="96" y="52" width="8" height="8" fill="currentColor"/><rect x="96" y="96" width="8" height="8" fill="currentColor"/><rect x="96" y="8" width="8" height="8" fill="currentColor"/><path d="M104 56H118" fill="none" stroke="currentColor" stroke-width="1" opacity="0.6" stroke-dasharray="2 2"/></svg></div>
+      <div>
+        <p class="d-cn">阿里云 OSS 桌面管理工具</p>
+        <p class="d-desc">Windows 桌面应用，按修改时间排序并批量移动 OSS 存储桶里的文件。</p>
+      </div>
+    </div>
+    <ul class="ticks-list"><li>文件夹层级导航与路径历史</li><li>按最后修改时间排序</li><li>批量移动与文件上传</li></ul>
+    <dl class="d-meta">
+      <div><dt>LANGUAGE</dt><dd>C#</dd></div>
+      <div><dt>LAST PUSH</dt><dd>2025-11-21</dd></div>
+      <div class="wide"><dt>REPOSITORY</dt><dd>Alicloud-oss-last-edited-time-sort-and-batch-move</dd></div>
+    </dl>
+    <div class="d-foot"><code>C# / WPF</code><a class="open" href="https://github.com/Wuxy1997/Alicloud-oss-last-edited-time-sort-and-batch-move">打开仓库</a></div>
+  </article>
+</li>
+<li class="item">
+  <button class="row" type="button" aria-expanded="false" aria-controls="p-pdf-splitter">
+    <small>05</small><strong>PDF Splitter</strong><span>PDF 分割合并工具</span><em>TOOL</em>
+  </button>
+  <article class="plate detail" id="p-pdf-splitter">
+    <h3 class="bar"><span class="sq"></span>PDF Splitter<small>TOOL</small></h3>
+    <div class="d-top">
+      <div class="pict-box"><svg class="pict" viewBox="0 0 120 120" aria-hidden="true"><path d="M8 6H52L66 20V82H8Z" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M52 6V20H66" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M16 30H56M16 38H58M16 46H48M16 54H56M16 62H42" fill="none" stroke="currentColor" stroke-width="1"/><rect x="54" y="38" width="54" height="76" fill="currentColor"/><path d="M60 46h42v60H60z" fill="none" stroke="var(--pict-bg,#d3cdb8)" stroke-width="1"/><path d="M66 58h30M66 66h26M66 74h30M66 82h18" fill="none" stroke="var(--pict-bg,#d3cdb8)" stroke-width="1"/><path d="M0 100L52 24" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="4 4"/></svg></div>
+      <div>
+        <p class="d-cn">PDF 分割合并工具</p>
+        <p class="d-desc">按页码范围、页数或书签分割 PDF，也能合并多个文件，界面中英双语。</p>
+      </div>
+    </div>
+    <ul class="ticks-list"><li>四种分割方式：范围、页数、书签、自定义</li><li>多文件合并</li><li>中英双语界面</li></ul>
+    <dl class="d-meta">
+      <div><dt>LANGUAGE</dt><dd>Python</dd></div>
+      <div><dt>LAST PUSH</dt><dd>2025-06-19</dd></div>
+      <div class="wide"><dt>REPOSITORY</dt><dd>PDFsplitmerger</dd></div>
+    </dl>
+    <div class="d-foot"><code>Python</code><a class="open" href="https://github.com/Wuxy1997/PDFsplitmerger">打开仓库</a></div>
+  </article>
+</li>
+<li class="item">
+  <button class="row" type="button" aria-expanded="false" aria-controls="p-health-tracker">
+    <small>06</small><strong>Health Tracker</strong><span>AI 健康管理应用</span><em>WEB / AI</em>
+  </button>
+  <article class="plate detail" id="p-health-tracker">
+    <h3 class="bar"><span class="sq"></span>Health Tracker<small>WEB / AI</small></h3>
+    <div class="d-top">
+      <div class="pict-box"><svg class="pict" viewBox="0 0 120 120" aria-hidden="true"><rect x="2" y="18" width="116" height="84" fill="none" stroke="currentColor" stroke-width="1"/><path d="M22 18V102" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.4"/><path d="M42 18V102" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.4"/><path d="M62 18V102" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.4"/><path d="M82 18V102" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.4"/><path d="M102 18V102" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.4"/><path d="M2 46H118" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.4"/><path d="M2 74H118" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.4"/><path d="M2 66H30L38 66L44 44L54 92L64 28L72 80L78 66H118" fill="none" stroke="currentColor" stroke-width="2"/><rect x="61" y="25" width="6" height="6" fill="currentColor"/><rect x="4" y="108" width="7" height="8" fill="currentColor"/><rect x="14" y="108" width="7" height="8" fill="currentColor"/><rect x="24" y="108" width="7" height="8" fill="currentColor"/><rect x="34" y="108" width="7" height="8" fill="currentColor"/><rect x="44" y="108" width="7" height="8" fill="currentColor"/><rect x="54" y="108" width="7" height="8" fill="currentColor"/><rect x="64" y="108" width="7" height="8" fill="currentColor"/><rect x="74" y="108" width="7" height="8" fill="currentColor"/><rect x="84" y="108" width="7" height="3" fill="currentColor"/><rect x="94" y="108" width="7" height="3" fill="currentColor"/><rect x="104" y="108" width="7" height="3" fill="currentColor"/><rect x="114" y="108" width="7" height="3" fill="currentColor"/></svg></div>
+      <div>
+        <p class="d-cn">AI 健康管理应用</p>
+        <p class="d-desc">记录运动、饮食和健康数据，由 Ollama 模型给出个性化建议。团队项目。</p>
+      </div>
+    </div>
+    <ul class="ticks-list"><li>运动、饮食与健康数据管理</li><li>基于 Ollama 的个性化建议</li><li>数据可视化、多语言和深色模式</li></ul>
+    <dl class="d-meta">
+      <div><dt>LANGUAGE</dt><dd>TypeScript</dd></div>
+      <div><dt>LAST PUSH</dt><dd>2025-05-26</dd></div>
+      <div class="wide"><dt>REPOSITORY</dt><dd>Com6102gp5</dd></div>
+    </dl>
+    <div class="d-foot"><code>Next.js / TypeScript / Ollama</code><a class="open" href="https://github.com/Wuxy1997/Com6102gp5">打开仓库</a></div>
+  </article>
+</li>
+<li class="item">
+  <button class="row" type="button" aria-expanded="false" aria-controls="p-auto-reports">
+    <small>07</small><strong>Auto Report Generator</strong><span>数据报告自动生成工具</span><em>WEB / AI</em>
+  </button>
+  <article class="plate detail" id="p-auto-reports">
+    <h3 class="bar"><span class="sq"></span>Auto Report Generator<small>WEB / AI</small></h3>
+    <div class="d-top">
+      <div class="pict-box"><svg class="pict" viewBox="0 0 120 120" aria-hidden="true"><rect x="2" y="4" width="116" height="112" fill="none" stroke="currentColor" stroke-width="1.2"/><rect x="12" y="52" width="9" height="22" fill="currentColor"/><rect x="25" y="34" width="9" height="40" fill="currentColor"/><rect x="38" y="44" width="9" height="30" fill="currentColor"/><rect x="51" y="16" width="9" height="58" fill="currentColor"/><rect x="64" y="28" width="9" height="46" fill="currentColor"/><rect x="77" y="4" width="9" height="70" fill="currentColor"/><path d="M10 76H94" fill="none" stroke="currentColor" stroke-width="1"/><path d="M102.0 14.0L98.0 18.0M106.0 14.0L98.0 22.0M110.0 14.0L98.0 26.0M110.0 18.0L98.0 30.0M110.0 22.0L98.0 34.0M110.0 26.0L98.0 38.0M110.0 30.0L98.0 42.0M110.0 34.0L98.0 46.0M110.0 38.0L98.0 50.0M110.0 42.0L98.0 54.0M110.0 46.0L98.0 58.0M110.0 50.0L98.0 62.0M110.0 54.0L98.0 66.0M110.0 58.0L98.0 70.0M110.0 62.0L98.0 74.0M110.0 66.0L102.0 74.0M110.0 70.0L106.0 74.0" fill="none" stroke="currentColor" stroke-width=".9"/><path d="M12 88H108M12 96H92M12 104H100" fill="none" stroke="currentColor" stroke-width="1"/></svg></div>
+      <div>
+        <p class="d-cn">数据报告自动生成工具</p>
+        <p class="d-desc">自动分析数据集，生成可视化图表和 AI 洞察，输出完整报告。</p>
+      </div>
+    </div>
+    <ul class="ticks-list"><li>缺失值、异常值与归一化处理</li><li>多种图表和 AI 洞察</li><li>中英双语，支持多种报告格式</li></ul>
+    <dl class="d-meta">
+      <div><dt>LANGUAGE</dt><dd>HTML</dd></div>
+      <div><dt>LAST PUSH</dt><dd>2025-04-25</dd></div>
+      <div class="wide"><dt>REPOSITORY</dt><dd>6104gp-ai-auto-reports</dd></div>
+    </dl>
+    <div class="d-foot"><code>Python / AI</code><a class="open" href="https://github.com/Wuxy1997/6104gp-ai-auto-reports">打开仓库</a></div>
+  </article>
+</li>
+<li class="item">
+  <button class="row" type="button" aria-expanded="false" aria-controls="p-mini-games">
+    <small>08</small><strong>Mini Games</strong><span>经典小游戏集合</span><em>PLAY</em>
+  </button>
+  <article class="plate detail" id="p-mini-games">
+    <h3 class="bar"><span class="sq"></span>Mini Games<small>PLAY</small></h3>
+    <div class="d-top">
+      <div class="pict-box"><svg class="pict" viewBox="0 0 120 120" aria-hidden="true"><rect x="9.5" y="9.5" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="29.0" y="9.5" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="48.5" y="9.5" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="68.0" y="9.5" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="87.5" y="9.5" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="107.0" y="9.5" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="3.0" y="22.5" width="16" height="16" fill="currentColor"/><rect x="22.5" y="22.5" width="16" height="16" fill="currentColor"/><rect x="42.0" y="22.5" width="16" height="16" fill="currentColor"/><rect x="61.5" y="22.5" width="16" height="16" fill="currentColor"/><rect x="87.5" y="29.0" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="107.0" y="29.0" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="9.5" y="48.5" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="29.0" y="48.5" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="48.5" y="48.5" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="61.5" y="42.0" width="16" height="16" fill="currentColor"/><rect x="87.5" y="48.5" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="107.0" y="48.5" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="9.5" y="68.0" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="29.0" y="68.0" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="42.0" y="61.5" width="16" height="16" fill="currentColor"/><rect x="61.5" y="61.5" width="16" height="16" fill="currentColor"/><rect x="87.5" y="68.0" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="107.0" y="68.0" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="9.5" y="87.5" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="29.0" y="87.5" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="48.5" y="87.5" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="68.0" y="87.5" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="87.5" y="87.5" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="107.0" y="87.5" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="9.5" y="107.0" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="29.0" y="107.0" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="48.5" y="107.0" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="68.0" y="107.0" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="87.5" y="107.0" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="107.0" y="107.0" width="3" height="3" fill="none" stroke="currentColor" stroke-width="0.8"/><rect x="84" y="84" width="16" height="16" fill="currentColor"/></svg></div>
+      <div>
+        <p class="d-cn">经典小游戏集合</p>
+        <p class="d-desc">贪吃蛇、井字棋、猜数字和 Icebreak，写来练手的小游戏。</p>
+      </div>
+    </div>
+    <ul class="ticks-list"><li>贪吃蛇：Python</li><li>井字棋：Python</li><li>猜数字、Icebreak：Java</li></ul>
+    <dl class="d-meta">
+      <div><dt>LANGUAGE</dt><dd>Python</dd></div>
+      <div><dt>LAST PUSH</dt><dd>2023-11-17</dd></div>
+      <div class="wide"><dt>REPOSITORY</dt><dd>Snake-game-</dd></div>
+    </dl>
+    <div class="d-foot"><code>Python / Java</code><a class="open" href="https://github.com/Wuxy1997/Snake-game-">打开仓库</a></div>
+  </article>
+</li></ol>
+        <div class="detail-anchor" data-anchor aria-hidden="true"></div>
+      </div>
+    </section>
 
-<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+    <section class="view" id="logs" aria-label="日志">
+      <header class="vhead">
+        <span class="sq"></span><h2 class="chars">日志</h2><em>LOG</em><i class="hatch"></i>
+        <a href="https://wuxy1997.github.io/archives/">ARCHIVE 010</a>
+      </header>
+      <div class="logs">
+        <div class="filters" role="group" aria-label="按分类筛选"><button type="button" class="on" data-cat=""><span>全部</span><small>10</small></button><button type="button" data-cat="技术分享"><span>技术分享</span><small>02</small></button><button type="button" data-cat="技术研究"><span>技术研究</span><small>02</small></button><button type="button" data-cat="技术教程"><span>技术教程</span><small>02</small></button><button type="button" data-cat="项目展示"><span>项目展示</span><small>02</small></button><button type="button" data-cat="读书笔记"><span>读书笔记</span><small>01</small></button><button type="button" data-cat="博客日志"><span>博客日志</span><small>01</small></button><div class="filter-foot" aria-hidden="true"><svg class="barcode" viewBox="0 0 172 26" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 0h2v26h-2zM5 0h3v26h-3zM10 0h3v26h-3zM14 0h3v26h-3zM20 0h3v26h-3zM26 0h3v26h-3zM33 0h1v26h-1zM37 0h1v26h-1zM39 0h2v26h-2zM43 0h3v26h-3zM49 0h2v26h-2zM53 0h2v26h-2zM57 0h1v26h-1zM60 0h3v26h-3zM65 0h3v26h-3zM72 0h1v26h-1zM74 0h3v26h-3zM80 0h1v26h-1zM84 0h3v26h-3zM89 0h4v26h-4zM94 0h3v26h-3zM99 0h1v26h-1zM103 0h4v26h-4zM109 0h1v26h-1zM112 0h1v26h-1zM114 0h2v26h-2zM119 0h1v26h-1zM121 0h3v26h-3zM126 0h2v26h-2zM130 0h2v26h-2zM135 0h1v26h-1zM140 0h1v26h-1zM143 0h1v26h-1zM145 0h1v26h-1zM149 0h3v26h-3zM153 0h3v26h-3zM157 0h4v26h-4zM165 0h2v26h-2z"/></svg><p>ENTRIES 010<br>FIRST 2024-03-20<br>LAST 2026-01-07</p></div></div>
+        <ol class="loglist stagger"><li class="log" data-cat="技术分享"><a href="https://wuxy1997.github.io/2026/01/07/2026-01-07-typescript-vue3-best-practices/"><small>01</small><time>2026-01-07</time><em>技术分享</em><strong>TypeScript + Vue 3 实战：现代前端开发最佳实践</strong></a></li>
+<li class="log" data-cat="技术研究"><a href="https://wuxy1997.github.io/2026/01/07/2026-01-07-federated-reinforcement-learning-project/"><small>02</small><time>2026-01-07</time><em>技术研究</em><strong>联邦强化学习：隐私保护下的分布式学习探索</strong></a></li>
+<li class="log" data-cat="技术教程"><a href="https://wuxy1997.github.io/2026/01/07/2026-01-07-python-efficiency-tips/"><small>03</small><time>2026-01-07</time><em>技术教程</em><strong>Python 开发效率提升技巧：从新手到进阶</strong></a></li>
+<li class="log" data-cat="项目展示"><a href="https://wuxy1997.github.io/2026/01/07/2026-01-07-alicloud-oss-tool/"><small>04</small><time>2026-01-07</time><em>项目展示</em><strong>从零开始打造阿里云 OSS 批量管理工具</strong></a></li>
+<li class="log" data-cat="技术研究"><a href="https://wuxy1997.github.io/2026/01/06/2026-01-07-federated-learning-edge-computing/"><small>05</small><time>2026-01-07</time><em>技术研究</em><strong>联邦学习与边缘计算：保护隐私的 AI 未来</strong></a></li>
+<li class="log" data-cat="项目展示"><a href="https://wuxy1997.github.io/2026/01/06/2026-01-07-my-open-source-projects/"><small>06</small><time>2026-01-07</time><em>项目展示</em><strong>我的开源项目集合</strong></a></li>
+<li class="log" data-cat="技术教程"><a href="https://wuxy1997.github.io/2026/01/06/2026-01-07-web-development-journey/"><small>07</small><time>2026-01-07</time><em>技术教程</em><strong>从零开始的 Web 开发之旅</strong></a></li>
+<li class="log" data-cat="技术分享"><a href="https://wuxy1997.github.io/2026/01/06/2026-01-07-python-development-tips/"><small>08</small><time>2026-01-07</time><em>技术分享</em><strong>Python 开发技巧分享</strong></a></li>
+<li class="log" data-cat="读书笔记"><a href="https://wuxy1997.github.io/2025/05/30/2025-05-31-white-night-walk/"><small>09</small><time>2025-05-31</time><em>读书笔记</em><strong>白夜行摘录</strong></a></li>
+<li class="log" data-cat="博客日志"><a href="https://wuxy1997.github.io/2024/03/19/2024-03-20-welcome-to-my-blog/"><small>10</small><time>2024-03-20</time><em>博客日志</em><strong>Welcome to My Blog</strong></a></li></ol>
+        <div class="log-anchor" data-anchor aria-hidden="true"></div>
+      </div>
+    </section>
 
-<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+    <section class="view" id="comms" aria-label="通信">
+      <header class="vhead">
+        <span class="sq"></span><h2 class="chars">通信</h2><em>COMMS</em><i class="hatch"></i>
+      </header>
+      <div class="comms">
+        <div class="stagger">
+          <ul class="channels"><li><a href="https://github.com/Wuxy1997"><strong>GitHub</strong><em>SOURCE</em><span>github.com/Wuxy1997</span></a></li><li><a href="https://wuxy1997.github.io/archives/"><strong>日志归档</strong><em>ARCHIVE</em><span>wuxy1997.github.io/archives</span></a></li><li><a href="https://wuxy1997.github.io/about/"><strong>关于</strong><em>ABOUT</em><span>wuxy1997.github.io/about</span></a></li><li><a href="https://github.com/Wuxy1997?tab=repositories"><strong>全部仓库</strong><em>REPOSITORIES</em><span>18 public</span></a></li></ul>
+          <div class="plate invert closing">
+            <p class="motto">代码改变世界，开源连接你我</p>
+            <p class="en">CODE CHANGES THE WORLD. OPEN SOURCE CONNECTS US ALL.</p>
+            <svg class="barcode" viewBox="0 0 240 34" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 0h3v34h-3zM4 0h2v34h-2zM9 0h2v34h-2zM12 0h4v34h-4zM20 0h3v34h-3zM24 0h1v34h-1zM27 0h2v34h-2zM33 0h3v34h-3zM37 0h1v34h-1zM39 0h1v34h-1zM44 0h3v34h-3zM49 0h3v34h-3zM53 0h1v34h-1zM55 0h1v34h-1zM57 0h3v34h-3zM61 0h1v34h-1zM66 0h3v34h-3zM70 0h3v34h-3zM74 0h2v34h-2zM77 0h2v34h-2zM81 0h2v34h-2zM85 0h1v34h-1zM89 0h3v34h-3zM94 0h2v34h-2zM100 0h2v34h-2zM106 0h3v34h-3zM110 0h3v34h-3zM116 0h2v34h-2zM119 0h4v34h-4zM124 0h4v34h-4zM130 0h3v34h-3zM136 0h2v34h-2zM139 0h1v34h-1zM141 0h1v34h-1zM143 0h2v34h-2zM147 0h3v34h-3zM151 0h2v34h-2zM157 0h2v34h-2zM160 0h2v34h-2zM164 0h2v34h-2zM168 0h1v34h-1zM172 0h3v34h-3zM179 0h1v34h-1zM181 0h4v34h-4zM189 0h1v34h-1zM192 0h2v34h-2zM195 0h4v34h-4zM201 0h1v34h-1zM204 0h1v34h-1zM208 0h4v34h-4zM214 0h2v34h-2zM220 0h1v34h-1zM222 0h1v34h-1zM225 0h1v34h-1zM227 0h1v34h-1zM229 0h4v34h-4zM234 0h1v34h-1zM238 0h1v34h-1z"/></svg>
+          </div>
+          <p class="credit">界面风格致敬 NieR:Automata，非官方作品，与游戏版权方无关。字体与全部素材均为开源或原创。</p>
+        </div>
+        <div class="comms-anchor" data-anchor aria-hidden="true"></div>
+      </div>
+    </section>
 
-<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+  </main>
 
-<script src="/js/build/layouts/categoryList.js" type="module"></script>
+  <div class="ruler flip" aria-hidden="true"></div>
+  <footer class="bottom">
+    <p id="ticker" aria-hidden="true">SYSTEM NOMINAL</p>
+    <p class="coord" id="coord" aria-hidden="true">X 0000 Y 0000</p>
+    <button class="theme" id="theme" type="button"><i></i><span>VOID</span></button>
+  </footer>
+</div>
 
-
-
-
-
-    
-<script src="/js/build/tools/codeBlock.js" type="module"></script>
-
-
-
-
-    
-<script src="/js/build/layouts/lazyload.js" type="module"></script>
-
-
-
-
-    
-<script src="/js/build/tools/runtime.js"></script>
-
-    
-<script src="/js/build/libs/odometer.min.js"></script>
-
-    
-<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
-
-
-
-
-  
-<script src="/js/build/libs/Typed.min.js"></script>
-
-  
-<script src="/js/build/plugins/typed.js" type="module"></script>
-
-
-
-
-
-
-
-
-    
-<script src="/js/build/libs/anime.min.js"></script>
-
-
-
-
-
-    
-<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
-
-<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
-
-<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
-
-
-
-
-<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
-
-
-<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
-
-
-
-
-
-	
+<div id="bootlayer" aria-hidden="true"><pre id="bootlog"></pre></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+<script type="application/json" id="facts">["PUBLIC REPOS 018", "LOG ENTRIES 010", "LAST PUSH 2026-08-01", "ACTIVE SINCE 2023", "TOP LANGUAGE TYPESCRIPT"]</script>
 </body>
-
 </html>
