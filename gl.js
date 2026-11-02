@@ -103,7 +103,7 @@ void main(){ if(vA<.01) discard; o=vec4(vCol,vA); }`;
 
   // Point targets: x, y, z, tone. tone 1 stays visible; anything else is stippled by the light.
   const mobile = Math.min(innerWidth, innerHeight) < 700;
-  let count = mobile ? 18000 : 46000;
+  let count = Math.min(+canvas.dataset.points || 46000, mobile ? 18000 : 46000);
   const N = count;
   const rand = (() => { let a = 72; return () => { a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; })();
   const fract = (x) => x - Math.floor(x);
@@ -304,6 +304,7 @@ void main(){ if(vA<.01) discard; o=vec4(vCol,vA); }`;
 
   function setTheme(css) {
     theme = { paper: hex(css.paper), ink: hex(css.ink), ember: hex(css.ember), line: css.void ? 1 : -1, invert: css.void ? 1 : 0 };
+    if (!W) return;
     bakePaper();
     if (calm) draw(performance.now());
   }

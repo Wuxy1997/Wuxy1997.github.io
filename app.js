@@ -1,71 +1,8 @@
 'use strict';
-// Routing, block-dissolve transitions and the HUD. Every section is plain HTML first:
-// without this script they simply stack, and all links still work.
+// Homepage: routing, project menu, log filter and the boot sequence. Every section is plain HTML
+// first: without this script they simply stack, and all links still work.
 (() => {
-  const $ = (s, el = document) => el.querySelector(s);
-  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
-  const root = document.documentElement;
-  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const raf = (f) => requestAnimationFrame(f);
-  const store = {
-    get(area, k) { try { return area.getItem(k); } catch (e) { return null; } },
-    set(area, k, v) { try { area.setItem(k, v); } catch (e) { /* private window */ } },
-  };
-
-  const hash12 = (x, y) => {
-    const fract = (v) => v - Math.floor(v);
-    let a = fract(x * .1031), b = fract(y * .1031), c = fract(x * .1031);
-    const d = a * (b + 33.33) + b * (c + 33.33) + c * (a + 33.33);
-    a += d; b += d; c += d;
-    return fract((a + b) * c);
-  };
-
-  // The film's block dissolve: 22 rows of cells whose order is noise leaning from top to bottom.
-  const FX = (() => {
-    const canvas = $('#fx');
-    const c = canvas.getContext('2d');
-    let cells = [], size = 40, dpr = 1;
-    function layout() {
-      dpr = Math.min(devicePixelRatio || 1, 2);
-      canvas.width = innerWidth * dpr;
-      canvas.height = innerHeight * dpr;
-      size = innerHeight / 22;
-      const cols = Math.ceil(innerWidth / size);
-      cells = [];
-      for (let r = 0; r < 22; r++) {
-        for (let k = 0; k < cols; k++) {
-          const n = hash12(k + 3, r + 3) * .65 + (r / 22) * .35;
-          cells.push([k * size, r * size, (n + .18) / 1.36]);
-        }
-      }
-    }
-    function paint(on, color) {
-      c.setTransform(dpr, 0, 0, dpr, 0, 0);
-      c.clearRect(0, 0, innerWidth, innerHeight);
-      c.fillStyle = color;
-      c.beginPath();
-      for (const cell of cells) if (on(cell[2])) c.rect(cell[0], cell[1], size + .5, size + .5);
-      c.fill();
-    }
-    // dir 1 fills the screen with blocks, dir -1 clears them.
-    function run(dir, ms, color) {
-      return new Promise((done) => {
-        if (document.hidden) { paint(() => dir > 0, color); done(); return; }
-        const t0 = performance.now();
-        const frame = (now) => {
-          const k = Math.min(1, (now - t0) / ms) * .76 + .12;
-          paint((t) => (dir > 0 ? t <= k : t > k), color);
-          if (k >= .88) { paint(() => dir > 0, color); done(); } else raf(frame);
-        };
-        raf(frame);
-      });
-    }
-    layout();
-    addEventListener('resize', layout);
-    return { run };
-  })();
-
-  const ink = () => getComputedStyle(root).getPropertyValue('--i').trim();
+  const { $, $$, root, calm, canHover, store, FX, ink } = Shell;
 
   // Routing
   const views = $$('.view');
@@ -114,17 +51,8 @@
   });
   views.forEach((v) => v.setAttribute('tabindex', '-1'));
 
-  // Per-character titles and staggered children.
-  $$('.chars').forEach((el) => {
-    const text = el.textContent;
-    el.setAttribute('aria-label', text);
-    el.innerHTML = [...text].map((ch, i) => `<span style="--n:${i}" aria-hidden="true">${ch}</span>`).join('');
-  });
-  $$('.stagger').forEach((list) => [...list.children].forEach((el, i) => el.style.setProperty('--n', i)));
-
   // Projects: the cursor selects as in a game menu; touch and keyboard select by press.
   const items = $$('.item');
-  const canHover = matchMedia('(hover:hover) and (pointer:fine)').matches;
   function select(item) {
     items.forEach((it) => {
       const on = it === item;
@@ -153,59 +81,6 @@
     $$('.log').forEach((row) => { row.hidden = !!btn.dataset.cat && row.dataset.cat !== btn.dataset.cat; });
   }));
 
-  // HUD
-  const clock = $('#clock');
-  const tick = () => {
-    clock.textContent = new Date().toLocaleString('sv-SE', { timeZone: 'Asia/Shanghai', hour12: false }) + ' UTC+8';
-  };
-  tick();
-  setInterval(tick, 1000);
-
-  const facts = JSON.parse($('#facts').textContent);
-  const ticker = $('#ticker');
-  let factAt = 0;
-  ticker.textContent = facts[0];
-  if (!calm) setInterval(() => { factAt = (factAt + 1) % facts.length; ticker.textContent = facts[factAt]; }, 4200);
-
-  const cross = $('.cross');
-  const [crossX, crossY] = [$('i', cross), $('b', cross)];
-  const coord = $('#coord');
-  let pending = null;
-  if (canHover) {
-    addEventListener('pointermove', (e) => {
-      if (!pending) raf(() => {
-        crossX.style.transform = `translateY(${pending.y}px)`;
-        crossY.style.transform = `translateX(${pending.x}px)`;
-        coord.textContent = `X ${String(pending.x).padStart(4, '0')} Y ${String(pending.y).padStart(4, '0')}`;
-        cross.classList.add('on');
-        pending = null;
-      });
-      pending = { x: Math.round(e.clientX), y: Math.round(e.clientY) };
-    }, { passive: true });
-    document.addEventListener('pointerleave', () => cross.classList.remove('on'));
-  }
-
-  // Theme
-  const themeBtn = $('#theme');
-  function applyTheme(name) {
-    root.dataset.theme = name;
-    $('span', themeBtn).textContent = name === 'void' ? 'PAPER' : 'VOID';
-    themeBtn.setAttribute('aria-label', name === 'void' ? '切换到米色纸面' : '切换到深色');
-    $('meta[name=theme-color]').content = name === 'void' ? '#14120f' : '#d3cdb8';
-    const css = getComputedStyle(root);
-    const get = (k) => css.getPropertyValue(k).trim();
-    if (Backdrop) Backdrop.setTheme({ paper: get('--p'), ink: get('--i'), ember: get('--e'), void: name === 'void' });
-  }
-  async function toggleTheme() {
-    const next = root.dataset.theme === 'void' ? 'paper' : 'void';
-    store.set(localStorage, 'wuxy-theme', next);
-    if (calm) { applyTheme(next); return; }
-    await FX.run(1, 220, ink());
-    applyTheme(next);
-    await FX.run(-1, 300, getComputedStyle(root).getPropertyValue('--i').trim());
-  }
-  themeBtn.addEventListener('click', toggleTheme);
-
   addEventListener('keydown', (e) => {
     if (e.altKey || e.ctrlKey || e.metaKey) return;
     const at = ids.indexOf(active);
@@ -217,7 +92,8 @@
   // Boot: real numbers, short, once per session, any input skips it.
   async function boot() {
     const log = $('#bootlog');
-    const lines = ['MEMORY CHECK ............ OK', 'MOUNT /RECORD ........... OK', ...facts.slice(0, 3).map((f) => `${f}`), 'ALL SYSTEMS NOMINAL'];
+    const facts = JSON.parse($('#facts').textContent);
+    const lines = ['MEMORY CHECK ............ OK', 'MOUNT /RECORD ........... OK', ...facts.slice(0, 3), 'ALL SYSTEMS NOMINAL'];
     let skip = false;
     const stop = () => { skip = true; };
     addEventListener('pointerdown', stop, { once: true });
@@ -234,7 +110,7 @@
   }
 
   // Start
-  applyTheme(root.dataset.theme === 'void' ? 'void' : 'paper');
+  Shell.start();
   const first = fromHash();
   views.forEach((v) => { v.hidden = v.id !== first; });
   if (Backdrop) Backdrop.start(calm);

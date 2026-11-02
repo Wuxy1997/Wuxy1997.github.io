@@ -20,14 +20,20 @@
   var root = document.documentElement;
   root.classList.add('js');
   try {
-    var saved = localStorage.getItem('wuxy-theme');
-    if (saved === 'void') root.dataset.theme = 'void';
+    if (localStorage.getItem('wuxy-theme') === 'void') root.dataset.theme = 'void';
     var calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!calm && !sessionStorage.getItem('wuxy-booted')) root.classList.add('boot');
+    if (sessionStorage.getItem('wuxy-transit')) {
+      sessionStorage.removeItem('wuxy-transit');
+      sessionStorage.setItem('wuxy-booted', '1');
+      root.classList.add('transit');
+    } else if (!calm && !sessionStorage.getItem('wuxy-booted')) {
+      root.classList.add('boot');
+    }
   } catch (e) {}
 })();
 </script>
 <script defer src="gl.js"></script>
+<script defer src="shared.js"></script>
 <script defer src="app.js"></script>
 </head>
 <body>
@@ -92,7 +98,7 @@
           </div>
           <dl class="facts">
             <div><dt>最近推送</dt><dd><time>2026-08-01</time><a href="https://github.com/Wuxy1997/AI-video">AI-video</a></dd></div>
-            <div><dt>最近日志</dt><dd><time>2026-01-07</time><a href="https://wuxy1997.github.io/2026/01/07/2026-01-07-typescript-vue3-best-practices/">TypeScript + Vue 3 实战：现代前端开发最佳实践</a></dd></div>
+            <div><dt>最近日志</dt><dd><time>2026-01-07</time><a href="/2026/01/07/2026-01-07-typescript-vue3-best-practices/">TypeScript + Vue 3 实战：现代前端开发最佳实践</a></dd></div>
           </dl>
         </section>
         <section class="plate panel">
@@ -298,20 +304,20 @@
     <section class="view" id="logs" aria-label="日志">
       <header class="vhead">
         <span class="sq"></span><h2 class="chars">日志</h2><em>LOG</em><i class="hatch"></i>
-        <a href="https://wuxy1997.github.io/archives/">ARCHIVE 010</a>
+        <a href="/archives/">ARCHIVE 010</a>
       </header>
       <div class="logs">
         <div class="filters" role="group" aria-label="按分类筛选"><button type="button" class="on" data-cat=""><span>全部</span><small>10</small></button><button type="button" data-cat="技术分享"><span>技术分享</span><small>02</small></button><button type="button" data-cat="技术研究"><span>技术研究</span><small>02</small></button><button type="button" data-cat="技术教程"><span>技术教程</span><small>02</small></button><button type="button" data-cat="项目展示"><span>项目展示</span><small>02</small></button><button type="button" data-cat="读书笔记"><span>读书笔记</span><small>01</small></button><button type="button" data-cat="博客日志"><span>博客日志</span><small>01</small></button><div class="filter-foot" aria-hidden="true"><svg class="barcode" viewBox="0 0 172 26" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 0h2v26h-2zM5 0h3v26h-3zM10 0h3v26h-3zM14 0h3v26h-3zM20 0h3v26h-3zM26 0h3v26h-3zM33 0h1v26h-1zM37 0h1v26h-1zM39 0h2v26h-2zM43 0h3v26h-3zM49 0h2v26h-2zM53 0h2v26h-2zM57 0h1v26h-1zM60 0h3v26h-3zM65 0h3v26h-3zM72 0h1v26h-1zM74 0h3v26h-3zM80 0h1v26h-1zM84 0h3v26h-3zM89 0h4v26h-4zM94 0h3v26h-3zM99 0h1v26h-1zM103 0h4v26h-4zM109 0h1v26h-1zM112 0h1v26h-1zM114 0h2v26h-2zM119 0h1v26h-1zM121 0h3v26h-3zM126 0h2v26h-2zM130 0h2v26h-2zM135 0h1v26h-1zM140 0h1v26h-1zM143 0h1v26h-1zM145 0h1v26h-1zM149 0h3v26h-3zM153 0h3v26h-3zM157 0h4v26h-4zM165 0h2v26h-2z"/></svg><p>ENTRIES 010<br>FIRST 2024-03-20<br>LAST 2026-01-07</p></div></div>
-        <ol class="loglist stagger"><li class="log" data-cat="技术分享"><a href="https://wuxy1997.github.io/2026/01/07/2026-01-07-typescript-vue3-best-practices/"><small>01</small><time>2026-01-07</time><em>技术分享</em><strong>TypeScript + Vue 3 实战：现代前端开发最佳实践</strong></a></li>
-<li class="log" data-cat="技术研究"><a href="https://wuxy1997.github.io/2026/01/07/2026-01-07-federated-reinforcement-learning-project/"><small>02</small><time>2026-01-07</time><em>技术研究</em><strong>联邦强化学习：隐私保护下的分布式学习探索</strong></a></li>
-<li class="log" data-cat="技术教程"><a href="https://wuxy1997.github.io/2026/01/07/2026-01-07-python-efficiency-tips/"><small>03</small><time>2026-01-07</time><em>技术教程</em><strong>Python 开发效率提升技巧：从新手到进阶</strong></a></li>
-<li class="log" data-cat="项目展示"><a href="https://wuxy1997.github.io/2026/01/07/2026-01-07-alicloud-oss-tool/"><small>04</small><time>2026-01-07</time><em>项目展示</em><strong>从零开始打造阿里云 OSS 批量管理工具</strong></a></li>
-<li class="log" data-cat="技术研究"><a href="https://wuxy1997.github.io/2026/01/06/2026-01-07-federated-learning-edge-computing/"><small>05</small><time>2026-01-07</time><em>技术研究</em><strong>联邦学习与边缘计算：保护隐私的 AI 未来</strong></a></li>
-<li class="log" data-cat="项目展示"><a href="https://wuxy1997.github.io/2026/01/06/2026-01-07-my-open-source-projects/"><small>06</small><time>2026-01-07</time><em>项目展示</em><strong>我的开源项目集合</strong></a></li>
-<li class="log" data-cat="技术教程"><a href="https://wuxy1997.github.io/2026/01/06/2026-01-07-web-development-journey/"><small>07</small><time>2026-01-07</time><em>技术教程</em><strong>从零开始的 Web 开发之旅</strong></a></li>
-<li class="log" data-cat="技术分享"><a href="https://wuxy1997.github.io/2026/01/06/2026-01-07-python-development-tips/"><small>08</small><time>2026-01-07</time><em>技术分享</em><strong>Python 开发技巧分享</strong></a></li>
-<li class="log" data-cat="读书笔记"><a href="https://wuxy1997.github.io/2025/05/30/2025-05-31-white-night-walk/"><small>09</small><time>2025-05-31</time><em>读书笔记</em><strong>白夜行摘录</strong></a></li>
-<li class="log" data-cat="博客日志"><a href="https://wuxy1997.github.io/2024/03/19/2024-03-20-welcome-to-my-blog/"><small>10</small><time>2024-03-20</time><em>博客日志</em><strong>Welcome to My Blog</strong></a></li></ol>
+        <ol class="loglist stagger"><li class="log" data-cat="技术分享"><a href="/2026/01/07/2026-01-07-typescript-vue3-best-practices/"><small>01</small><time>2026-01-07</time><em>技术分享</em><strong>TypeScript + Vue 3 实战：现代前端开发最佳实践</strong></a></li>
+<li class="log" data-cat="技术研究"><a href="/2026/01/07/2026-01-07-federated-reinforcement-learning-project/"><small>02</small><time>2026-01-07</time><em>技术研究</em><strong>联邦强化学习：隐私保护下的分布式学习探索</strong></a></li>
+<li class="log" data-cat="技术教程"><a href="/2026/01/07/2026-01-07-python-efficiency-tips/"><small>03</small><time>2026-01-07</time><em>技术教程</em><strong>Python 开发效率提升技巧：从新手到进阶</strong></a></li>
+<li class="log" data-cat="项目展示"><a href="/2026/01/07/2026-01-07-alicloud-oss-tool/"><small>04</small><time>2026-01-07</time><em>项目展示</em><strong>从零开始打造阿里云 OSS 批量管理工具</strong></a></li>
+<li class="log" data-cat="技术研究"><a href="/2026/01/06/2026-01-07-federated-learning-edge-computing/"><small>05</small><time>2026-01-07</time><em>技术研究</em><strong>联邦学习与边缘计算：保护隐私的 AI 未来</strong></a></li>
+<li class="log" data-cat="项目展示"><a href="/2026/01/06/2026-01-07-my-open-source-projects/"><small>06</small><time>2026-01-07</time><em>项目展示</em><strong>我的开源项目集合</strong></a></li>
+<li class="log" data-cat="技术教程"><a href="/2026/01/06/2026-01-07-web-development-journey/"><small>07</small><time>2026-01-07</time><em>技术教程</em><strong>从零开始的 Web 开发之旅</strong></a></li>
+<li class="log" data-cat="技术分享"><a href="/2026/01/06/2026-01-07-python-development-tips/"><small>08</small><time>2026-01-07</time><em>技术分享</em><strong>Python 开发技巧分享</strong></a></li>
+<li class="log" data-cat="读书笔记"><a href="/2025/05/30/2025-05-31-white-night-walk/"><small>09</small><time>2025-05-31</time><em>读书笔记</em><strong>白夜行摘录</strong></a></li>
+<li class="log" data-cat="博客日志"><a href="/2024/03/19/2024-03-20-welcome-to-my-blog/"><small>10</small><time>2024-03-20</time><em>博客日志</em><strong>Welcome to My Blog</strong></a></li></ol>
         <div class="log-anchor" data-anchor aria-hidden="true"></div>
       </div>
     </section>
@@ -322,7 +328,7 @@
       </header>
       <div class="comms">
         <div class="stagger">
-          <ul class="channels"><li><a href="https://github.com/Wuxy1997"><strong>GitHub</strong><em>SOURCE</em><span>github.com/Wuxy1997</span></a></li><li><a href="https://wuxy1997.github.io/archives/"><strong>日志归档</strong><em>ARCHIVE</em><span>wuxy1997.github.io/archives</span></a></li><li><a href="https://wuxy1997.github.io/about/"><strong>关于</strong><em>ABOUT</em><span>wuxy1997.github.io/about</span></a></li><li><a href="https://github.com/Wuxy1997?tab=repositories"><strong>全部仓库</strong><em>REPOSITORIES</em><span>18 public</span></a></li></ul>
+          <ul class="channels"><li><a href="https://github.com/Wuxy1997"><strong>GitHub</strong><em>SOURCE</em><span>github.com/Wuxy1997</span></a></li><li><a href="/archives/"><strong>日志归档</strong><em>ARCHIVE</em><span>wuxy1997.github.io/archives</span></a></li><li><a href="/about/"><strong>关于</strong><em>ABOUT</em><span>wuxy1997.github.io/about</span></a></li><li><a href="https://github.com/Wuxy1997?tab=repositories"><strong>全部仓库</strong><em>REPOSITORIES</em><span>18 public</span></a></li></ul>
           <div class="plate invert closing">
             <p class="motto">代码改变世界，开源连接你我</p>
             <p class="en">CODE CHANGES THE WORLD. OPEN SOURCE CONNECTS US ALL.</p>

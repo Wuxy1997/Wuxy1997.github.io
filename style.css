@@ -297,6 +297,10 @@ html:not(.js) .comms{grid-template-columns:minmax(0,1fr)}
 .cross b{top:0;bottom:0;left:0;width:1px}
 @media (hover:hover) and (pointer:fine){.cross.on{opacity:1}}
 
+/* page change */
+@keyframes transit-off{to{background:transparent}}
+.transit #fx{background:var(--i);animation:transit-off 0s linear 2s forwards}
+
 /* boot */
 #bootlayer{display:none;position:fixed;inset:0;z-index:40;padding:clamp(20px,6vw,72px);background:#0b0a08}
 .boot #bootlayer{display:block}
