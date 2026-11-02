@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="paper">
+<head>
+<%- partial('_partial/head') %>
+</head>
+<body class="doc">
+<canvas id="gl" data-points="20000" data-shape="<%= doc_shape() %>" aria-hidden="true"></canvas>
+<div class="cross" aria-hidden="true"><i></i><b></b></div>
+
+<div class="shell">
+  <%- partial('_partial/top') %>
+  <div class="ruler" aria-hidden="true"></div>
+  <main class="docmain"><%- body %></main>
+  <div class="ruler flip" aria-hidden="true"></div>
+  <footer class="bottom">
+    <p id="ticker" aria-hidden="true">SYSTEM NOMINAL</p>
+    <p class="coord" id="coord" aria-hidden="true">X 0000 Y 0000</p>
+    <button class="theme" id="theme" type="button"><i></i><span>VOID</span></button>
+  </footer>
+</div>
+
+<canvas id="fx" aria-hidden="true"></canvas>
+<script type="application/json" id="facts"><%- doc_facts() %></script>
+</body>
+</html>

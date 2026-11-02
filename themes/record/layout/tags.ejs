@@ -1,0 +1,19 @@
+<% var max = 1; site.tags.forEach(function (t) { max = Math.max(max, t.length); }); %>
+<%- partial('_partial/band', { active: 'tag' }) %>
+<div class="listgrid wide">
+  <div class="listmain">
+    <div class="list-title stagger">
+      <h1 class="chars">标签</h1>
+      <p>TAGS</p>
+      <span><%= pad(site.tags.length) %> MARKS</span>
+    </div>
+    <ul class="tagwall stagger">
+      <% site.tags.sort('length', -1).forEach(function (tag) { %>
+        <li><a href="<%= url_for(tag.path) %>"><span><%= tag.name %></span><small><%= pad(tag.length, 2) %></small><i style="--v:<%= tag.length * 100 / max %>" aria-hidden="true"></i></a></li>
+      <% }) %>
+    </ul>
+  </div>
+  <aside class="cloud-slot" data-anchor aria-hidden="true">
+    <div class="tag tag-d"><small>OBSERVATION</small><b>TAGS <%= pad(site.tags.length) %></b></div>
+  </aside>
+</div>

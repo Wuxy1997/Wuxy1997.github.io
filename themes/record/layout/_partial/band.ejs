@@ -1,0 +1,9 @@
+<header class="vhead doc-band">
+  <span class="sq"></span><p class="band-cn">日志</p><em>LOG</em><i class="hatch"></i>
+  <a href="/archives/">ARCHIVE <%= pad(site.posts.length) %></a>
+</header>
+<nav class="subnav" aria-label="日志分区">
+  <% theme.subnav.forEach(function (item) { %>
+    <a href="<%= item.path %>"<% if (item.key === active) { %> aria-current="page"<% } %>><%= item.label %><span><%= item.en %></span></a>
+  <% }) %>
+</nav>

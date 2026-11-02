@@ -1,0 +1,33 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title><%= doc_title() %></title>
+<% var desc = is_post() ? entry_excerpt(page, 120) : config.description; %>
+<meta name="description" content="<%= desc %>">
+<meta name="author" content="<%= config.author %>">
+<meta name="theme-color" content="#d3cdb8">
+<meta property="og:type" content="<%= is_post() ? 'article' : 'website' %>">
+<meta property="og:title" content="<%= doc_title() %>">
+<meta property="og:description" content="<%= desc %>">
+<meta property="og:url" content="<%= page.permalink || (config.url + url_for(page.path || '')) %>">
+<meta property="og:image" content="https://wuxy1997.github.io/og.png">
+<link rel="canonical" href="<%= page.permalink || (config.url + url_for(page.path || '')) %>">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/record.css">
+<script>
+(function () {
+  var root = document.documentElement;
+  root.classList.add('js');
+  try {
+    if (localStorage.getItem('wuxy-theme') === 'void') root.dataset.theme = 'void';
+    if (sessionStorage.getItem('wuxy-transit')) {
+      sessionStorage.removeItem('wuxy-transit');
+      root.classList.add('transit');
+    }
+  } catch (e) {}
+})();
+</script>
+<script defer src="/gl.js"></script>
+<script defer src="/shared.js"></script>
+<script defer src="/record.js"></script>

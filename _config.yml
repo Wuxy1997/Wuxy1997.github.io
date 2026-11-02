@@ -33,6 +33,7 @@ skip_render:
   - style.css
   - app.js
   - gl.js
+  - shared.js
   - favicon.svg
   - og.png
   - fonts/**
@@ -103,7 +104,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: redefine
+theme: record
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment

@@ -1,0 +1,6 @@
+subnav:
+  - { label: 全部, en: ALL, path: /blog/, key: all }
+  - { label: 归档, en: ARCHIVE, path: /archives/, key: archive }
+  - { label: 分类, en: CATEGORIES, path: /categories/, key: category }
+  - { label: 标签, en: TAGS, path: /tags/, key: tag }
+  - { label: 关于, en: ABOUT, path: /about/, key: about }

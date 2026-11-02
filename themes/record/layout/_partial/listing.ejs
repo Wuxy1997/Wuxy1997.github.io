@@ -1,0 +1,43 @@
+<%- partial('_partial/band', { active: active }) %>
+<div class="listgrid">
+  <aside class="rail stagger">
+    <section class="plate panel">
+      <h2 class="bar"><span class="sq"></span>分类<em>CATEGORIES</em></h2>
+      <ul class="rail-links">
+        <% site.categories.sort('name').forEach(function (cat) { %>
+          <li><a href="<%= url_for(cat.path) %>"<% if (page.category === cat.name) { %> aria-current="page"<% } %>><span><%= cat.name %></span><small><%= pad(cat.length, 2) %></small></a></li>
+        <% }) %>
+      </ul>
+    </section>
+    <section class="plate panel rail-note">
+      <h2 class="bar"><span class="sq"></span>索引<em>INDEX</em></h2>
+      <dl>
+        <div><dt>ENTRIES</dt><dd><%= pad(site.posts.length) %></dd></div>
+        <div><dt>CATEGORIES</dt><dd><%= pad(site.categories.length) %></dd></div>
+        <div><dt>TAGS</dt><dd><%= pad(site.tags.length) %></dd></div>
+      </dl>
+      <%- barcode(14, 200, 26) %>
+    </section>
+  </aside>
+
+  <div class="listmain">
+    <div class="list-title stagger">
+      <h1 class="chars"><%= heading %></h1>
+      <p><%= sub %></p>
+      <span><%= pad(page.posts ? page.posts.length : site.posts.length) %> ENTRIES</span>
+    </div>
+    <ol class="entries stagger">
+      <% var offset = page.per_page ? (page.current - 1) * page.per_page : 0; %>
+      <% page.posts.each(function (post, i) { %>
+        <%- partial('_partial/entry', { post: post, index: offset + i }) %>
+      <% }) %>
+    </ol>
+    <% if (page.total > 1) { %>
+      <nav class="pager" aria-label="翻页"><%- paginator({ prev_text: 'PREV', next_text: 'NEXT' }) %></nav>
+    <% } %>
+  </div>
+
+  <aside class="cloud-slot" data-anchor aria-hidden="true">
+    <div class="tag tag-d"><small>OBSERVATION</small><b>LOG <%= pad(site.posts.length) %></b></div>
+  </aside>
+</div>

@@ -1,0 +1,14 @@
+<% var stats = read_stats(post.content); var cat = post.categories.length ? post.categories.first() : null; %>
+<li class="entry">
+  <a href="<%= url_for(post.path) %>">
+    <small><%= pad(index + 1, 2) %></small>
+    <div class="entry-head">
+      <time datetime="<%= date(post.date, 'YYYY-MM-DD') %>"><%= date(post.date, 'YYYY-MM-DD') %></time>
+      <% if (cat) { %><em><%= cat.name %></em><% } %>
+      <i aria-hidden="true"></i>
+      <span><%= stats.label %> 字 / <%= stats.minutes %> MIN</span>
+    </div>
+    <strong><%= post.title %></strong>
+    <p><%= entry_excerpt(post) %></p>
+  </a>
+</li>

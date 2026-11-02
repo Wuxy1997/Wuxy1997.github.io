@@ -1,0 +1,56 @@
+<%
+var stats = read_stats(page.content);
+var cat = page.categories.length ? page.categories.first() : null;
+var order = site.posts.sort('date', 1).toArray();
+var no = order.findIndex(function (p) { return p.path === page.path; }) + 1;
+var outline = clean_toc(toc(page.content, { list_number: false, min_depth: 2, max_depth: 3 }));
+%>
+<%- partial('_partial/band', { active: 'all' }) %>
+<div class="docgrid">
+  <aside class="rail stagger">
+    <section class="plate panel">
+      <h2 class="bar"><span class="sq"></span>档案<em>RECORD</em><small><%= pad(no) %></small></h2>
+      <dl class="record">
+        <div><dt>日期</dt><dd><%= date(page.date, 'YYYY-MM-DD') %></dd></div>
+        <% if (cat) { %><div><dt>分类</dt><dd><a href="<%= url_for(cat.path) %>"><%= cat.name %></a></dd></div><% } %>
+        <div><dt>字数</dt><dd><%= stats.label %></dd></div>
+        <div><dt>阅读</dt><dd><%= stats.minutes %> MIN</dd></div>
+      </dl>
+      <% if (page.tags.length) { %>
+        <div class="chips rail-tags">
+          <% page.tags.forEach(function (tag) { %><a href="<%= url_for(tag.path) %>"><%= tag.name %></a><% }) %>
+        </div>
+      <% } %>
+      <div class="rail-code"><%- barcode(no + 30, 200, 26) %></div>
+    </section>
+  </aside>
+
+  <article class="plate article">
+    <header class="art-head">
+      <div class="art-top"><span class="sq"></span>LOG ENTRY <%= pad(no) %> / <%= pad(site.posts.length) %><span class="live"><i></i>ARCHIVED</span></div>
+      <h1 class="art-title"><%= page.title %></h1>
+      <div class="id-rule" aria-hidden="true"><i></i></div>
+    </header>
+    <div class="prose">
+      <%- page.content %>
+    </div>
+    <footer class="art-foot">
+      <% if (page.prev) { %>
+        <a class="near" href="<%= url_for(page.prev.path) %>"><small>较新 NEWER</small><strong><%= page.prev.title %></strong></a>
+      <% } else { %><span></span><% } %>
+      <% if (page.next) { %>
+        <a class="near older" href="<%= url_for(page.next.path) %>"><small>较早 OLDER</small><strong><%= page.next.title %></strong></a>
+      <% } else { %><span></span><% } %>
+    </footer>
+  </article>
+
+  <aside class="rail">
+    <% if (outline) { %>
+      <section class="plate panel">
+        <h2 class="bar"><span class="sq"></span>目录<em>INDEX</em></h2>
+        <nav class="outline" aria-label="文章目录"><%- outline %></nav>
+      </section>
+    <% } %>
+    <div class="cloud-mini" data-anchor aria-hidden="true"></div>
+  </aside>
+</div>

@@ -1,0 +1,73 @@
+<%
+var groups = [];
+page.posts.each(function (post) {
+  var key = post.date.format('YYYY');
+  var year = groups[groups.length - 1];
+  if (!year || year.key !== key) { year = { key: key, months: [] }; groups.push(year); }
+  var mkey = post.date.format('MM');
+  var month = year.months[year.months.length - 1];
+  if (!month || month.key !== mkey) { month = { key: mkey, posts: [] }; year.months.push(month); }
+  month.posts.push(post);
+});
+var heading = page.month ? page.year + ' / ' + String(page.month).padStart(2, '0') : page.year ? String(page.year) : '归档';
+%>
+<%- partial('_partial/band', { active: 'archive' }) %>
+<div class="listgrid">
+  <aside class="rail stagger">
+    <section class="plate panel">
+      <h2 class="bar"><span class="sq"></span>时间<em>TIMELINE</em></h2>
+      <ul class="rail-links">
+        <li><a href="/archives/"<% if (!page.year) { %> aria-current="page"<% } %>><span>全部</span><small><%= pad(site.posts.length, 2) %></small></a></li>
+        <% archive_tree().forEach(function (y) { %>
+          <li><a href="/archives/<%= y.year %>/"<% if (String(page.year) === y.year && !page.month) { %> aria-current="page"<% } %>><span><%= y.year %></span><small><%= pad(y.count, 2) %></small></a></li>
+          <% y.months.forEach(function (m) { %>
+            <li class="sub"><a href="/archives/<%= y.year %>/<%= m.month %>/"<% if (String(page.year) === y.year && String(page.month).padStart(2, '0') === m.month) { %> aria-current="page"<% } %>><span><%= m.month %> 月</span><small><%= pad(m.count, 2) %></small></a></li>
+          <% }) %>
+        <% }) %>
+      </ul>
+    </section>
+    <section class="plate panel rail-note">
+      <h2 class="bar"><span class="sq"></span>索引<em>INDEX</em></h2>
+      <dl>
+        <div><dt>ENTRIES</dt><dd><%= pad(page.posts.length) %></dd></div>
+        <div><dt>YEARS</dt><dd><%= pad(archive_tree().length) %></dd></div>
+      </dl>
+      <%- barcode(23, 200, 26) %>
+    </section>
+  </aside>
+
+  <div class="listmain">
+    <div class="list-title stagger">
+      <h1 class="chars"><%= heading %></h1>
+      <p>ARCHIVE</p>
+      <span><%= pad(page.posts.length) %> ENTRIES</span>
+    </div>
+    <% var n = 0; groups.forEach(function (year) { %>
+      <section class="year stagger">
+        <h2 class="year-head"><span><%= year.key %></span><i aria-hidden="true"></i></h2>
+        <% year.months.forEach(function (month) { %>
+          <div class="month">
+            <h3><%= month.key %><small>MONTH</small></h3>
+            <ol>
+              <% month.posts.forEach(function (post) { n++; var cat = post.categories.length ? post.categories.first() : null; %>
+                <li><a href="<%= url_for(post.path) %>">
+                  <small><%= pad(n, 2) %></small>
+                  <time datetime="<%= date(post.date, 'YYYY-MM-DD') %>"><%= date(post.date, 'MM-DD') %></time>
+                  <em><%= cat ? cat.name : '' %></em>
+                  <strong><%= post.title %></strong>
+                </a></li>
+              <% }) %>
+            </ol>
+          </div>
+        <% }) %>
+      </section>
+    <% }) %>
+    <% if (page.total > 1) { %>
+      <nav class="pager" aria-label="翻页"><%- paginator({ prev_text: 'PREV', next_text: 'NEXT' }) %></nav>
+    <% } %>
+  </div>
+
+  <aside class="cloud-slot" data-anchor aria-hidden="true">
+    <div class="tag tag-d"><small>OBSERVATION</small><b>ARCHIVE <%= pad(site.posts.length) %></b></div>
+  </aside>
+</div>

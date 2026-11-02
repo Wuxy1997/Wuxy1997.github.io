@@ -1,0 +1,29 @@
+<% var max = 1; site.categories.forEach(function (c) { max = Math.max(max, c.length); }); %>
+<%- partial('_partial/band', { active: 'category' }) %>
+<div class="listgrid wide">
+  <div class="listmain">
+  <div class="list-title stagger">
+    <h1 class="chars">分类</h1>
+    <p>CATEGORIES</p>
+    <span><%= pad(site.categories.length) %> GROUPS</span>
+  </div>
+  <ul class="tiles stagger">
+    <% site.categories.sort('length', -1).forEach(function (cat, i) { %>
+      <li class="plate tile">
+        <a class="tile-head" href="<%= url_for(cat.path) %>">
+          <small><%= pad(i + 1, 2) %></small><strong><%= cat.name %></strong><b><%= pad(cat.length, 2) %></b>
+        </a>
+        <i class="tile-meter" style="--v:<%= cat.length * 100 / max %>" aria-hidden="true"></i>
+        <ol>
+          <% cat.posts.sort('date', -1).limit(3).forEach(function (post) { %>
+            <li><a href="<%= url_for(post.path) %>"><time><%= date(post.date, 'YYYY-MM-DD') %></time><span><%= post.title %></span></a></li>
+          <% }) %>
+        </ol>
+      </li>
+    <% }) %>
+  </ul>
+  </div>
+  <aside class="cloud-slot" data-anchor aria-hidden="true">
+    <div class="tag tag-d"><small>OBSERVATION</small><b>GROUPS <%= pad(site.categories.length) %></b></div>
+  </aside>
+</div>

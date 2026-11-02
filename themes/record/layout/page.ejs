@@ -1,0 +1,42 @@
+<% var outline = clean_toc(toc(page.content, { list_number: false, min_depth: 2, max_depth: 3 })); %>
+<%- partial('_partial/band', { active: 'about' }) %>
+<div class="docgrid">
+  <aside class="rail stagger">
+    <section class="plate panel">
+      <h2 class="bar"><span class="sq"></span>身份<em>IDENTITY</em></h2>
+      <dl class="record">
+        <div><dt>名称</dt><dd>大木头WU</dd></div>
+        <div><dt>编号</dt><dd>WUXY1997</dd></div>
+        <div><dt>日志</dt><dd><%= pad(site.posts.length) %></dd></div>
+      </dl>
+      <div class="rail-code"><%- barcode(9, 200, 26) %></div>
+    </section>
+    <section class="plate panel">
+      <h2 class="bar"><span class="sq"></span>通信<em>COMMS</em></h2>
+      <ul class="rail-links">
+        <li><a href="https://github.com/Wuxy1997"><span>GitHub</span><small>SOURCE</small></a></li>
+        <li><a href="/blog/"><span>全部日志</span><small>LOG</small></a></li>
+        <li><a href="/#projects"><span>项目</span><small>PROJECTS</small></a></li>
+      </ul>
+    </section>
+  </aside>
+
+  <article class="plate article">
+    <header class="art-head">
+      <div class="art-top"><span class="sq"></span>PERSONAL RECORD<span class="live"><i></i>ONLINE</span></div>
+      <h1 class="art-title"><%= page.title %></h1>
+      <div class="id-rule" aria-hidden="true"><i></i></div>
+    </header>
+    <div class="prose"><%- page.content %></div>
+  </article>
+
+  <aside class="rail">
+    <% if (outline) { %>
+      <section class="plate panel">
+        <h2 class="bar"><span class="sq"></span>目录<em>INDEX</em></h2>
+        <nav class="outline" aria-label="页面目录"><%- outline %></nav>
+      </section>
+    <% } %>
+    <div class="cloud-mini" data-anchor aria-hidden="true"></div>
+  </aside>
+</div>
